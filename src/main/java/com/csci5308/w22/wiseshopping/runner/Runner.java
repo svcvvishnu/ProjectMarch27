@@ -30,7 +30,8 @@ public class Runner implements CommandLineRunner {
 
             //TODO: Dummy code to validate jar
             //merchantService.registerMerchant("John Doe","johndoe@xyz.com","password123");
-            userService.loginUser("johndoe@xyz.com","Password123!");
+            //userService.loginUser("johndoe@xyz.com","Password123!");
+            merchantService.loginMerchant("johndoe@xyz.com","password123");
 
         }
         catch (DataAccessException e){
