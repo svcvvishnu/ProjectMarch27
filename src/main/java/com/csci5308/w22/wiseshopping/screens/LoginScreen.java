@@ -61,10 +61,10 @@ public class LoginScreen implements Screen{
             success = merchant!=null;
         }
         if (Constants.USER.equalsIgnoreCase(input)){
-            LOGGER.info("Enter <username> <password>");
-            String username =scan(scanner);
+            LOGGER.info("Enter <email> <password>");
+            String email =scan(scanner);
             String password = scan(scanner);
-            User user = userService.loginUser(username, password);
+            User user = userService.loginUser(email, password);
             success = user!=null;
         }}
         catch (MenuInterruptedException e){

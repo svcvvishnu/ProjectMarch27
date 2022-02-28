@@ -2,6 +2,7 @@ package com.csci5308.w22.wiseshopping.service;
 
 import com.csci5308.w22.wiseshopping.exceptions.UserAlreadyRegisteredException;
 import com.csci5308.w22.wiseshopping.models.Merchant;
+import com.csci5308.w22.wiseshopping.models.User;
 import com.csci5308.w22.wiseshopping.repository.MerchantRepository;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,12 +69,38 @@ public class MerchantService {
         return false;
     }
 
-    public Merchant loginMerchant(String username, String password) {
-        //TODO: implement later
-        return new Merchant();
+    @Transactional
+    public Merchant loginMerchant(String email, String password) {
+        if (email == null) {
+            throw new NullPointerException("email cannot be null");
+        }
+        if (email.isEmpty() || email.isBlank()) {
+            throw new IllegalArgumentException("email cannot be empty");
+        }
+
+        if (!EmailValidator.getInstance().isValid(email)) {
+            throw new IllegalArgumentException("given email id is not valid");
+        }
+
+        if(password==null)
+        {
+            throw new NullPointerException("password cannot be null");
+        }
+        if(password.isBlank() || password.isEmpty())
+        {
+            throw new IllegalArgumentException("password cannot be empty");
+        }
+
+        Merchant merchant = merchantRepository.findMerchantByEmail(email);
+        return merchant;
+
+
+
     }
+
 
     public Merchant getMerchantByEmail(String email){
         return merchantRepository.findMerchantByEmail(email);
     }
+
 }

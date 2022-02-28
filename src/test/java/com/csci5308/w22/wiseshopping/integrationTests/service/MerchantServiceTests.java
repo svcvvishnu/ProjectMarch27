@@ -2,20 +2,21 @@ package com.csci5308.w22.wiseshopping.integrationTests.service;
 
 import com.csci5308.w22.wiseshopping.models.Merchant;
 import com.csci5308.w22.wiseshopping.service.MerchantService;
+import net.bytebuddy.build.Plugin;
 import org.aspectj.lang.annotation.After;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.event.annotation.AfterTestMethod;
 
 /**
  * @author Elizabeth James
  */
 @SpringBootTest
 @ActiveProfiles(profiles = "dev")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class MerchantServiceTests {
     @Autowired
     private MerchantService merchantService;
@@ -27,28 +28,39 @@ public class MerchantServiceTests {
         merchant = new Merchant("John Doe", "johndoe@xyz.com", "password123");
     }
 
-    @AfterEach()
+    @AfterAll()
     public void cleanUp(){
         merchantService.removeMerchant("johndoe@xyz.com");
     }
     @Test
+    @Order(1)
     public void testRegisterMerchant(){
         Merchant actualMerchant = merchantService.registerMerchant("John Doe","johndoe@xyz.com","password123");
         merchant.setMerchantId(actualMerchant.getMerchantId());
         Assertions.assertEquals(merchant,actualMerchant);
 
     }
-
     @Test
+    @Order(2)
+    public void testLoginMerchant(){
+        Merchant actualMerchant = merchantService.loginMerchant("johndoe@xyz.com","password123");
+        Assertions.assertEquals(merchant.getPassword(),actualMerchant.getPassword());
+
+    }
+    @Test
+    @Order(3)
     public void testRemoveExistingMerchant(){
-        merchantService.registerMerchant("John Doe","johndoe@xyz.com","password123");
-        Assertions.assertTrue(merchantService.removeMerchant("johndoe@xyz.com"));
+        merchantService.registerMerchant("John Doe2","johndoe2@xyz.com","password123");
+        Assertions.assertTrue(merchantService.removeMerchant("johndoe2@xyz.com"));
     }
 
     @Test
+    @Order(4)
     public void testRemoveNonExistingMerchant(){
         Assertions.assertFalse(merchantService.removeMerchant("johndoe2@xyz.com"));
     }
+
+
 
 
 }
