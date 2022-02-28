@@ -37,10 +37,12 @@
 
     <root level = "INFO">
         <appender-ref ref = "FILE"/>
-        <appender-ref ref = "STDOUT"/>
+<!--        <appender-ref ref = "STDOUT"/>-->
     </root>
 
-    <logger name="com.csci5308.w22.wiseshopping.runner.Runner" level="debug">
+    <logger name="com.csci5308.w22.wiseshopping.screens" level="debug">
         <appender-ref ref="STDOUT-RUNNER" />
     </logger>
 </configuration>
+
+<!-- reference : https://dzone.com/articles/configuring-logback-with-spring-boot -->
