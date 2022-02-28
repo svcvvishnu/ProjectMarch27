@@ -2,6 +2,7 @@ package com.csci5308.w22.wiseshopping.integrationTests.service;
 
 import com.csci5308.w22.wiseshopping.models.Merchant;
 import com.csci5308.w22.wiseshopping.service.MerchantService;
+import net.bytebuddy.build.Plugin;
 import org.aspectj.lang.annotation.After;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -38,7 +39,12 @@ public class MerchantServiceTests {
         Assertions.assertEquals(merchant,actualMerchant);
 
     }
+    @Test
+    public void testLoginMerchant(){
+        Merchant actualMerchant = merchantService.loginMerchant("johndoe@xyz.com","password123");
+        Assertions.assertEquals(merchant.getPassword(),actualMerchant.getPassword());
 
+    }
     @Test
     public void testRemoveExistingMerchant(){
         merchantService.registerMerchant("John Doe","johndoe@xyz.com","password123");
@@ -49,6 +55,8 @@ public class MerchantServiceTests {
     public void testRemoveNonExistingMerchant(){
         Assertions.assertFalse(merchantService.removeMerchant("johndoe2@xyz.com"));
     }
+
+
 
 
 }

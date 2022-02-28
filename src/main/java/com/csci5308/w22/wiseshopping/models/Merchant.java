@@ -32,6 +32,11 @@ public class Merchant {
         this.email = email;
     }
 
+    public Merchant(String email , String password) {
+        this.password = encode(password);
+        this.email = email;
+    }
+
 
     public Merchant(){
 
