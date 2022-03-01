@@ -35,6 +35,9 @@ public class User {
     @Column(name = "register_at" ,columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp register_at;
 
+    @Column(name =  "user_name")
+    private String userName;
+
     public User(String userID,String userFirstName,String userLastName, String email , String password, String contact, Timestamp register_at) {
         this.userFirstName = userFirstName;
         this.userLastName = userLastName;
@@ -47,6 +50,12 @@ public class User {
     public User(String email , String password) {
         this.email = email;
         this.password = encode(password);
+    }
+
+    public User(String userName, String email , String password) {
+        this.userName = userName;
+        this.password = encode(password);
+        this.email = email;
     }
 
 
@@ -118,6 +127,14 @@ public class User {
 
     public void setRegister_at(Timestamp register_at) {
         this.register_at = register_at;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
 
