@@ -6,12 +6,12 @@ cache:
     - target/
 
 stages:
-  - codequality
+  - code_quality
   - test
   - build
   - develop
   - production
-#code quality
+
 code_quality:
   image: ubuntu:latest
   stage: code_quality
@@ -29,8 +29,7 @@ code_quality:
     - echo $CI_PROJECT_PATH
     - java -jar 'DesigniteJava.jar' -ci -repo $CI_PROJECT_PATH -pat $PAT -host "git.cs.dal.ca"
     - 'eval "$UPLOAD_QUALITY_REPORT"'
-  except:
-    main
+
 # test stage will compile the code and run all the unit tests present in the
 # test folder.
 test:
