@@ -226,8 +226,4 @@ public class MerchantServiceTests {
         Assertions.assertTrue(ex.getMessage().contains("Could not find category with given Id:"));
     }
 
-
-
-
-
 }

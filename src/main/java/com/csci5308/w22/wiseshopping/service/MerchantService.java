@@ -96,9 +96,7 @@ public class MerchantService {
         Merchant merchant = merchantRepository.findMerchantByEmail(email);
         return merchant;
 
-
     }
-
 
     public Merchant getMerchantByEmail(String email){
         return merchantRepository.findMerchantByEmail(email);

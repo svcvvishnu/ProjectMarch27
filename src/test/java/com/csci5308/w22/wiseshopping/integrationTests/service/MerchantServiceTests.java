@@ -45,10 +45,8 @@ public class MerchantServiceTests {
     public void testLoginMerchant(){
         Merchant actualMerchant = merchantService.loginMerchant("johndoe@xyz.com","password123");
         Assertions.assertEquals(merchant.getPassword(),actualMerchant.getPassword());
-
     }
 
-    //ADd my updated test
 
     @Test
     @Order(3)
