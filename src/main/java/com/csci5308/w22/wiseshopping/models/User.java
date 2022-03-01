@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * @author Pavithra Gunasekaran
+ * @author Harsh Hariramani
  */
 @EqualsAndHashCode
 @Entity
@@ -36,7 +36,7 @@ public class User {
     private Timestamp register_at;
 
     @Column(name =  "user_name")
-    private String userName;
+    private String name;
 
     public User(String userID,String userFirstName,String userLastName, String email , String password, String contact, Timestamp register_at) {
         this.userFirstName = userFirstName;
@@ -52,12 +52,11 @@ public class User {
         this.password = encode(password);
     }
 
-    public User(String userName, String email , String password) {
-        this.userName = userName;
+    public User(String name, String email , String password) {
+        this.name = name;
         this.password = encode(password);
         this.email = email;
     }
-
 
     public User(){
 
@@ -129,12 +128,12 @@ public class User {
         this.register_at = register_at;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getname() {
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setname(String name) {
+        this.name = name;
     }
 
 
