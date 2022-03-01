@@ -40,7 +40,7 @@ public class StoreScreen implements Screen {
         this.scanner = scanner;
         this.storeService = storeService;
         this.locationService = locationService;
-        validScreens = List.of("login", "dummy");
+        validScreens = List.of(Constants.MERCHANT_MENU, Constants.LOGOUT);
 
     }
 
@@ -74,6 +74,7 @@ public class StoreScreen implements Screen {
             } else if (input.equals(Constants.DELETE)) {
                 List<Store> storeList = storeService.getAllStoresBelongingToAMerchant(merchant);
                 storeList.stream().forEach(s -> LOGGER.info( "Store id:  {}, name: {}", s.getStoreId(), s.getStoreName()));
+                LOGGER.info("Enter the id to be deleted");
                 String idToBeDeleted = scan(scanner);
                 success = storeService.remove(Integer.parseInt(idToBeDeleted));
                 

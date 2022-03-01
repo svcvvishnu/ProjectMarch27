@@ -5,6 +5,8 @@ import com.csci5308.w22.wiseshopping.models.Merchant;
 import com.csci5308.w22.wiseshopping.models.User;
 import com.csci5308.w22.wiseshopping.repository.MerchantRepository;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,8 +19,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MerchantService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(MerchantService.class);
+
     @Autowired
     MerchantRepository merchantRepository;
+
 
     /**
      * inserts a merchant into table
@@ -49,6 +55,7 @@ public class MerchantService {
         }
         merchant = new Merchant(name, email, password);
         merchantRepository.save(merchant);
+        LOGGER.info("You have been registered successfully");
         return merchant;
     }
 
@@ -92,6 +99,7 @@ public class MerchantService {
         }
 
         Merchant merchant = merchantRepository.findMerchantByEmail(email);
+        LOGGER.info("You have logged in successfully");
         return merchant;
 
 
