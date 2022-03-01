@@ -22,7 +22,7 @@
 
     <appender name = "STDOUT-RUNNER" class = "ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%-5level - %msg%n</pattern>
+            <pattern>%msg%n</pattern>
         </encoder>
     </appender>
 
@@ -40,7 +40,7 @@
 <!--        <appender-ref ref = "STDOUT"/>-->
     </root>
 
-    <logger name="com.csci5308.w22.wiseshopping.screens" level="debug">
+    <logger name="com.csci5308.w22.wiseshopping" level="debug">
         <appender-ref ref="STDOUT-RUNNER" />
     </logger>
 </configuration>

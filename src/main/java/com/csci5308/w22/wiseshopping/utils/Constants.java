@@ -16,4 +16,6 @@ public class Constants {
     public static final String MERCHANT_MENU = "merchant";
     public static final String OPTION_TWO = "2";
     public static final String DELETE = "delete" ;
+    public static final String LOGOUT = "logout";
+    public static final String USER_MENU = "user";
 }
