@@ -37,7 +37,11 @@ public class User {
     @Column(name = "register_at" ,columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp register_at;
 
-    public User(String userID,String userFirstName,String userLastName, String email , String password, String contact, Timestamp register_at) {
+    public User(int userId) {
+        this.userId = userId;
+    }
+
+    public User(String userID, String userFirstName, String userLastName, String email , String password, String contact, Timestamp register_at) {
         this.userFirstName = userFirstName;
         this.userLastName = userLastName;
         this.email = email;

@@ -48,6 +48,14 @@ public class StoreServiceTests {
     }
 
     @Test
+    public void testAddStore(){
+        when(mockedStoreRepository.save(any(Store.class))).thenReturn(store);
+        Store actualStore = storeService.addStore("Timbuktu","private","11","12","John Doe", new Merchant(), new Location());
+        Assertions.assertEquals(store,actualStore);
+
+    }
+
+    @Test
     public void testInputParametersForAddLocation(){
         IllegalArgumentException exceptionForName1 = Assertions.assertThrows(IllegalArgumentException.class, () -> storeService.addStore(null,"private","11","12","John Doe", new Merchant(), new Location()));
         Assertions.assertEquals("storeName cannot be null or empty or blank",exceptionForName1.getMessage());
@@ -94,6 +102,7 @@ public class StoreServiceTests {
     @Test
     public void testRemoveStore(){
         Assertions.assertTrue(storeService.remove(store));
+
     }
 
     @Test

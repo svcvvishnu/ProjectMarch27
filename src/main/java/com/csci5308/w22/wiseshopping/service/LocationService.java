@@ -40,6 +40,7 @@ public class LocationService {
             throw new IllegalArgumentException("country cannot be null or empty or blank");
         }
 
+        // TODO : check for uniqueness
         Location location = new Location(name,zipcode, province, country);
         locationRepository.save(location);
         return location;

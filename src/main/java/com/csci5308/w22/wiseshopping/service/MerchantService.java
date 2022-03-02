@@ -1,8 +1,12 @@
 package com.csci5308.w22.wiseshopping.service;
 
+import com.csci5308.w22.wiseshopping.exceptions.UserAlreadyRegisteredException;
 import com.csci5308.w22.wiseshopping.models.Merchant;
+import com.csci5308.w22.wiseshopping.models.User;
 import com.csci5308.w22.wiseshopping.repository.MerchantRepository;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,8 +19,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MerchantService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(MerchantService.class);
+
     @Autowired
     MerchantRepository merchantRepository;
+
 
     /**
      * inserts a merchant into table
@@ -41,8 +49,13 @@ public class MerchantService {
             throw new IllegalArgumentException("given email is not valid");
         }
 
-        Merchant merchant = new Merchant(name, email, password);
+        Merchant merchant = merchantRepository.findMerchantByEmail(email);
+        if (merchant!=null){
+            throw new UserAlreadyRegisteredException(email + " is already registered");
+        }
+        merchant = new Merchant(name, email, password);
         merchantRepository.save(merchant);
+        LOGGER.info("You have been registered successfully");
         return merchant;
     }
 
@@ -63,6 +76,39 @@ public class MerchantService {
         return false;
     }
 
-    public void loginMerchant(String username, String password) {
+    @Transactional
+    public Merchant loginMerchant(String email, String password) {
+        if (email == null) {
+            throw new NullPointerException("email cannot be null");
+        }
+        if (email.isEmpty() || email.isBlank()) {
+            throw new IllegalArgumentException("email cannot be empty");
+        }
+
+        if (!EmailValidator.getInstance().isValid(email)) {
+            throw new IllegalArgumentException("given email id is not valid");
+        }
+
+        if(password==null)
+        {
+            throw new NullPointerException("password cannot be null");
+        }
+        if(password.isBlank() || password.isEmpty())
+        {
+            throw new IllegalArgumentException("password cannot be empty");
+        }
+
+        Merchant merchant = merchantRepository.findMerchantByEmail(email);
+        LOGGER.info("You have logged in successfully");
+        return merchant;
+
+
+
     }
+
+
+    public Merchant getMerchantByEmail(String email){
+        return merchantRepository.findMerchantByEmail(email);
+    }
+
 }

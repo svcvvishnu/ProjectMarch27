@@ -1,9 +1,7 @@
 package com.csci5308.w22.wiseshopping.factory;
 
 import com.csci5308.w22.wiseshopping.exceptions.InvalidScreenException;
-import com.csci5308.w22.wiseshopping.screens.LoginScreen;
-import com.csci5308.w22.wiseshopping.screens.RegistrationScreen;
-import com.csci5308.w22.wiseshopping.screens.Screen;
+import com.csci5308.w22.wiseshopping.screens.*;
 import com.csci5308.w22.wiseshopping.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +16,13 @@ public class ScreenFactory {
     private LoginScreen loginScreen;
     @Autowired
     private RegistrationScreen registrationScreen;
+    @Autowired
+    private StoreScreen storeScreen;
+    @Autowired
+    private LogOutScreen logOutScreen;
+
+    @Autowired
+    private MerchantMenuScreen merchantMenu;
 
 
 
@@ -26,6 +31,9 @@ public class ScreenFactory {
         switch (screen){
             case Constants.LOGIN: return loginScreen;
             case Constants.REGISTER: return registrationScreen;
+            case Constants.STORE_MENU: return storeScreen;
+            case Constants.MERCHANT: return merchantMenu;
+            case Constants.LOGOUT: return logOutScreen;
             default: throw new InvalidScreenException("No such screen");
         }
     }

@@ -1,17 +1,16 @@
 package com.csci5308.w22.wiseshopping.screens;
 
 import com.csci5308.w22.wiseshopping.exceptions.MenuInterruptedException;
+import com.csci5308.w22.wiseshopping.factory.ScreenFactory;
 import com.csci5308.w22.wiseshopping.models.Merchant;
 import com.csci5308.w22.wiseshopping.models.User;
 import com.csci5308.w22.wiseshopping.service.MerchantService;
 import com.csci5308.w22.wiseshopping.service.UserService;
 import com.csci5308.w22.wiseshopping.utils.Constants;
-import com.csci5308.w22.wiseshopping.factory.ScreenFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 
 import java.util.List;
 import java.util.Scanner;
@@ -20,7 +19,7 @@ import java.util.Scanner;
  * @author Elizabeth James
  */
 @Component
-public class RegistrationScreen implements Screen {
+public class MerchantMenuScreen implements Screen {
     private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationScreen.class);
 
     private Scanner scanner;
@@ -32,48 +31,39 @@ public class RegistrationScreen implements Screen {
     private List<String> validScreens;
 
     private Merchant merchant;
+
     private User user;
 
 
     @Autowired
-    public RegistrationScreen(Scanner scanner, MerchantService merchantService, UserService userService) {
+    public MerchantMenuScreen(Scanner scanner, MerchantService merchantService, UserService userService) {
         this.scanner = scanner;
         this.merchantService = merchantService;
         this.userService = userService;
-        validScreens = List.of(Constants.LOGIN);
+        validScreens = List.of(Constants.LOGOUT);
 
     }
 
-
     @Override
     public boolean render(ScreenFactory screenFactory) {
+        LOGGER.info("****MERCHANT MENU****");
+        LOGGER.info("");
         boolean success = false;
-        LOGGER.info("***REGISTRATION****");
-        LOGGER.info("use : for additional navigation");
         try {
             String input = "";
-            LOGGER.info("Are you a merchant or a user?");
-            input = scan(scanner);
+            LOGGER.info("Choose one of the following");
 
-            if (Constants.MERCHANT.equalsIgnoreCase(input)) {
-                LOGGER.info("Enter <name> <email> <password>");
-                String name = scan(scanner);
-                String email = scan(scanner);
-                String password = scan(scanner);
-                merchant = merchantService.registerMerchant(name, email, password);
-                Screen screen = screenFactory.getScreen(Constants.MERCHANT_MENU);
+            LOGGER.info("1. add/update store details");
+            LOGGER.info("2. add/update product details");
+            input = scan(scanner);
+            if(input.equals(Constants.OPTION_ONE)){
+                Screen screen = screenFactory.getScreen( Constants.STORE_MENU);
                 screen.setMerchant(merchant);
                 success = screen.render(screenFactory);
             }
-            if (Constants.USER.equalsIgnoreCase(input)) {
-                LOGGER.info("Enter <name> <email> <password>");
-                String name = scan(scanner);
-                String email = scan(scanner);
-                String password = scan(scanner);
-                User user = userService.registerUser(name, email, password);
-                success = user!=null;
+            else if(input.equals(Constants.OPTION_TWO)){
+                //TODO
             }
-
         } catch (MenuInterruptedException e) {
             getNavigations(screenFactory, validScreens, LOGGER, scanner);
         }
@@ -88,7 +78,6 @@ public class RegistrationScreen implements Screen {
     @Override
     public void setUser(User user) {
         this.user = user;
+
     }
-
-
 }
