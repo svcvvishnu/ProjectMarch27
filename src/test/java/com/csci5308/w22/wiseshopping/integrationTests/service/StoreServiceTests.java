@@ -6,6 +6,7 @@ import com.csci5308.w22.wiseshopping.models.Store;
 import com.csci5308.w22.wiseshopping.service.LocationService;
 import com.csci5308.w22.wiseshopping.service.MerchantService;
 import com.csci5308.w22.wiseshopping.service.StoreService;
+import com.csci5308.w22.wiseshopping.utils.Constants;
 import com.csci5308.w22.wiseshopping.utils.Util;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -16,7 +17,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.Assert;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Elizabeth James
@@ -50,6 +53,24 @@ public class StoreServiceTests {
         expectedStore.setStoreId(actualStore.getStoreId());
         Assertions.assertEquals(expectedStore, actualStore);
         storeService.remove(expectedStore);
+
+    }
+
+    @Test
+    public void testUpdateStore() {
+
+        Store expectedStore  = new Store("Timbuktu", Util.parseTime("11"), Util.parseTime("12"), "private", "John Doe", location,merchant);
+
+        Store actualStore = storeService.addStore("Timbuktu", "private", "11", "12", "John Doe", merchant,location);
+        Map<String, String> map = new HashMap<>();
+        map.put(Constants.KEY_TYPE_OF_BUSINESS, "none");
+        map.put(Constants.KEY_CONTACT, "1");
+        map.put(Constants.KEY_NAME, "walmart");
+        map.put(Constants.KEY_START_TIME, "11");
+        map.put(Constants.KEY_END_TIME,"12");
+        Store updatedStore = storeService.updateStore(actualStore, map);
+        Assertions.assertNotNull(updatedStore);
+        storeService.remove(updatedStore);
 
     }
 

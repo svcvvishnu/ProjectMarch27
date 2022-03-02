@@ -18,4 +18,11 @@ public class Constants {
     public static final String DELETE = "delete" ;
     public static final String LOGOUT = "logout";
     public static final String USER_MENU = "user";
+    public static final String KEY_NAME = "name";
+    public static final String KEY_START_TIME = "start time";
+    public static final String KEY_END_TIME = "end time";
+    public static final String KEY_TYPE_OF_BUSINESS = "type of business";
+    public static final String KEY_CONTACT = "contact";
+    public static final String KEY_LOCATION = "location";
+    public static final String UPDATE = "update";
 }
