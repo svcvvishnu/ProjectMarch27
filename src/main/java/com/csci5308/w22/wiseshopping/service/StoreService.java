@@ -4,12 +4,16 @@ import com.csci5308.w22.wiseshopping.models.Location;
 import com.csci5308.w22.wiseshopping.models.Merchant;
 import com.csci5308.w22.wiseshopping.models.Store;
 import com.csci5308.w22.wiseshopping.repository.StoreRepository;
+import com.csci5308.w22.wiseshopping.screens.LoginScreen;
 import com.csci5308.w22.wiseshopping.utils.Util;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Time;
+import java.util.List;
 
 /**
  * this method acts like a service for store
@@ -17,6 +21,9 @@ import java.sql.Time;
  */
 @Service
 public class StoreService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(StoreService.class);
+
     @Autowired
     private StoreRepository storeRepository;
 
@@ -66,6 +73,7 @@ public class StoreService {
         Time endingTime = Util.parseTime(endTime);
         Store store = new Store(name,startingTime,endingTime,businessType,contact,location,merchant);
         storeRepository.save(store);
+        LOGGER.info("Store {} is added",store.getStoreName());
 
         return store;
     }
@@ -82,5 +90,20 @@ public class StoreService {
         }
         storeRepository.delete(store);
         return true;
+    }
+
+    @Transactional
+    public List<Store> getAllStoresBelongingToAMerchant(Merchant merchant){
+        return storeRepository.findByMerchantID(merchant.getMerchantId());
+    }
+
+    @Transactional
+    public boolean remove(int id){
+        int deletedId = storeRepository.deleteByStoreId(id);
+        if (deletedId > 0){
+            LOGGER.info("Store id {} is deleted",id);
+            return true;
+        }
+        return false;
     }
 }

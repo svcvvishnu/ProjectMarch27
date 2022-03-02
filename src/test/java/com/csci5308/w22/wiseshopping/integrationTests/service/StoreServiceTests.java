@@ -7,12 +7,16 @@ import com.csci5308.w22.wiseshopping.service.LocationService;
 import com.csci5308.w22.wiseshopping.service.MerchantService;
 import com.csci5308.w22.wiseshopping.service.StoreService;
 import com.csci5308.w22.wiseshopping.utils.Util;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.util.Assert;
+
+import java.util.List;
 
 /**
  * @author Elizabeth James
@@ -28,19 +32,42 @@ public class StoreServiceTests {
     @Autowired
     private LocationService locationService;
 
+    private Merchant merchant;
+    private Location location;
 
+    @BeforeEach
+    public void setUp(){
+        merchant = merchantService.registerMerchant("dummy", "dummy@dummy.com", "dummy");
+        location =  locationService.addLocation("dummy","dummy","dummy","dummy");
+
+    }
     @Test
     public void testAddStore() {
 
-        Merchant merchant = merchantService.registerMerchant("dummy", "dummy@dummy.com", "dummy");
-        Location  location =  locationService.addLocation("dummy","dummy","dummy","dummy");
         Store expectedStore  = new Store("Timbuktu", Util.parseTime("11"), Util.parseTime("12"), "private", "John Doe", location,merchant);
 
         Store actualStore = storeService.addStore("Timbuktu", "private", "11", "12", "John Doe", merchant,location);
         expectedStore.setStoreId(actualStore.getStoreId());
         Assertions.assertEquals(expectedStore, actualStore);
         storeService.remove(expectedStore);
-        merchantService.removeMerchant("dummy@dummy.com");
-        locationService.remove(location);
+
     }
+
+
+    @Test
+    public void testRemoveStores(){
+        storeService.addStore("Timbuktu", "private", "11", "12", "John Doe", merchant,location);
+
+        Merchant merchant2 = merchantService.getMerchantByEmail("dummy@dummy.com");
+        List<Store> storeList = storeService.getAllStoresBelongingToAMerchant(merchant2);
+        Assertions.assertTrue(storeService.remove(storeList.stream().findFirst().get().getStoreId()));
+    }
+
+    @AfterEach
+    public void cleanUp(){
+        locationService.remove(location);
+        merchantService.removeMerchant("dummy@dummy.com");
+
+    }
+
 }

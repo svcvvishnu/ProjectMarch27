@@ -58,4 +58,8 @@ public class LocationService {
         locationRepository.delete(location);
         return true;
     }
+
+    public Location getLocationByID(String s) {
+       return locationRepository.findById(Integer.parseInt(s)).orElse(null);
+    }
 }
