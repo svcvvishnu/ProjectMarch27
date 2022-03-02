@@ -4,7 +4,7 @@ import com.csci5308.w22.wiseshopping.models.Location;
 import com.csci5308.w22.wiseshopping.models.Merchant;
 import com.csci5308.w22.wiseshopping.models.Store;
 import com.csci5308.w22.wiseshopping.repository.StoreRepository;
-import com.csci5308.w22.wiseshopping.screens.LoginScreen;
+import com.csci5308.w22.wiseshopping.utils.Constants;
 import com.csci5308.w22.wiseshopping.utils.Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Time;
 import java.util.List;
+import java.util.Map;
 
 /**
  * this method acts like a service for store
@@ -26,6 +27,9 @@ public class StoreService {
 
     @Autowired
     private StoreRepository storeRepository;
+
+    @Autowired
+    private LocationService locationService;
 
 
     /**
@@ -78,6 +82,49 @@ public class StoreService {
         return store;
     }
 
+    public Store updateStore(Store store, Map<String, String> attributes){
+        // validate inputs
+        if (store == null || attributes == null){
+            throw new IllegalArgumentException("Store or attributes cannot be null");
+        }
+        boolean recorded = false;
+
+
+        for (Map.Entry<String, String> entry : attributes.entrySet()) {
+
+            if ("none".equals(entry.getValue())) {
+
+                switch (entry.getKey()) {
+                    case Constants.KEY_NAME:
+                        store.setStoreName(attributes.get(Constants.KEY_NAME));
+                        break;
+                    case Constants.KEY_START_TIME:
+                        Time startTime = Util.parseTime(attributes.get(Constants.KEY_START_TIME));
+                        store.setStartTime(startTime);
+                        break;
+                    case Constants.KEY_END_TIME:
+                        Time endTime = Util.parseTime(attributes.get(Constants.KEY_END_TIME));
+                        store.setStartTime(endTime);
+                        break;
+                    case Constants.KEY_TYPE_OF_BUSINESS:
+                        store.setType(attributes.get(Constants.KEY_TYPE_OF_BUSINESS));
+                        break;
+                    case Constants.KEY_CONTACT:
+                        store.setContact(attributes.get(Constants.KEY_CONTACT));
+                        break;
+                    case Constants.KEY_LOCATION:
+                        //TODO
+                        Location location = locationService.getLocationByID(attributes.get(Constants.KEY_LOCATION));
+                        store.setLocation(location);
+                        break;
+                }
+            }
+        }
+        Store updatedStore = storeRepository.save(store);
+        LOGGER.info("Store {} is updated",store.getStoreName());
+        return updatedStore;
+    }
+
     /**
      * deletes a store from table
      * @param store store
@@ -105,5 +152,9 @@ public class StoreService {
             return true;
         }
         return false;
+    }
+
+    public Store getStoreById(int id) {
+        return storeRepository.findById(id).orElse(null);
     }
 }

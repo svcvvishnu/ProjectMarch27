@@ -4,6 +4,7 @@ import com.csci5308.w22.wiseshopping.models.Location;
 import com.csci5308.w22.wiseshopping.models.Merchant;
 import com.csci5308.w22.wiseshopping.models.Store;
 import com.csci5308.w22.wiseshopping.repository.StoreRepository;
+import com.csci5308.w22.wiseshopping.utils.Constants;
 import com.csci5308.w22.wiseshopping.utils.Util;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +15,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.sql.Time;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -106,5 +109,21 @@ public class StoreServiceTests {
     public void testInvalidArgumentsRemoveStore(){
         IllegalArgumentException exceptionForMerchant = Assertions.assertThrows(IllegalArgumentException.class, () -> storeService.remove(null));
         Assertions.assertEquals("store cannot be null",exceptionForMerchant.getMessage());
+    }
+
+    @Test
+    public void testUpdateStore(){
+        when(mockedStoreRepository.save(any(Store.class))).thenReturn(store);
+        Map<String, String> map = new HashMap<>();
+        map.put(Constants.KEY_TYPE_OF_BUSINESS, "none");
+        map.put(Constants.KEY_CONTACT, "1");
+        map.put(Constants.KEY_NAME, "walmart");
+        map.put(Constants.KEY_START_TIME, "11");
+        map.put(Constants.KEY_END_TIME,"12");
+        Store actualStore = storeService.addStore("Timbuktu","private","11","12","John Doe", new Merchant(), new Location());
+        Store updatedStore = storeService.updateStore(actualStore, map);
+        Assertions.assertEquals(store,updatedStore);
+
+
     }
 }

@@ -42,6 +42,7 @@
 
     <logger name="com.csci5308.w22.wiseshopping" level="debug">
         <appender-ref ref="STDOUT-RUNNER" />
+        <appender-ref ref = "FILE"/>
     </logger>
 </configuration>
 
