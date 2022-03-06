@@ -1,18 +1,17 @@
 package com.csci5308.w22.wiseshopping.controllers;
 
 import com.csci5308.w22.wiseshopping.models.Store;
-import com.csci5308.w22.wiseshopping.models.Merchant;
-import com.csci5308.w22.wiseshopping.screens.StoreScreen;
-import com.csci5308.w22.wiseshopping.service.MerchantService;
 import com.csci5308.w22.wiseshopping.service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Elizabeth James
  */
 
-@RestController
+@Controller
 @RequestMapping("store")
 public class StoreController {
 
@@ -21,13 +20,12 @@ public class StoreController {
     private StoreService storeService;
 
     @PostMapping("/addstore")
-    public Store addStore(@RequestBody Store store, @RequestParam String startingTime, @RequestParam String endingTime){
+    public Store addStore(@Validated Store store, @Validated String startingTime, @Validated String endingTime){
         return storeService.addStore(store.getStoreName(), store.getType(), startingTime, endingTime ,store.getContact(), store.getMerchant(), store.getLocation());
     }
 
     @PostMapping("/removestore")
-    //TODO: set http as only cookies
-    public void removeStore(@RequestBody Store store){
+    public void removeStore(@Validated Store store){
         storeService.remove(store);
     }
 }

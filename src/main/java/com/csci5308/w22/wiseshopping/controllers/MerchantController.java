@@ -1,18 +1,16 @@
 package com.csci5308.w22.wiseshopping.controllers;
 
 import com.csci5308.w22.wiseshopping.models.Merchant;
-import com.csci5308.w22.wiseshopping.service.LocationService;
 import com.csci5308.w22.wiseshopping.service.MerchantService;
-import com.csci5308.w22.wiseshopping.service.StoreService;
-import com.csci5308.w22.wiseshopping.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Elizabeth James
  */
-@RestController
+@Controller
 @RequestMapping("merchant")
 public class MerchantController {
 
@@ -21,16 +19,22 @@ public class MerchantController {
     private MerchantService merchantService;
 
 
-
-    @PostMapping("/register")
-    public Merchant register(@RequestBody Merchant merchant){
-        return merchantService.registerMerchant(merchant.getMerchantName(), merchant.getEmail(), merchant.getPassword());
+    @GetMapping("/register")
+    public String register(Merchant merchant){
+        return "registerMerchant";
     }
+
+    @PostMapping("/addMerchant")
+    public String registerMerchant(@Validated Merchant merchant) {
+        merchantService.registerMerchant(merchant.getMerchantName(), merchant.getEmail(), merchant.getPassword());
+        return "index";
+      }
 
     @PostMapping("/login")
     //TODO: set http as only cookies
-    public Merchant login(@RequestBody Merchant merchant){
-        return merchantService.loginMerchant(merchant.getEmail(), merchant.getPassword());
+    public String login(@Validated Merchant merchant){
+        merchantService.loginMerchant(merchant.getEmail(), merchant.getPassword());
+        return "index";
     }
 
 }

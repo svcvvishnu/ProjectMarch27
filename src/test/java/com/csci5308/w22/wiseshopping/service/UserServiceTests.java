@@ -121,7 +121,7 @@ class UserServiceTests {
     @Test
     public void testInputParametersForLoginUser(){
 
-        NullPointerException emailNullException=Assertions.assertThrows(NullPointerException.class, () -> userService.loginUser(null,"test_password"));
+        IllegalArgumentException emailNullException=Assertions.assertThrows(IllegalArgumentException.class, () -> userService.loginUser(null,"test_password"));
         Assertions.assertEquals("email cannot be null",emailNullException.getMessage());
         IllegalArgumentException emailEmptyException=Assertions.assertThrows(IllegalArgumentException.class, () -> userService.loginUser("","test_password"));
         Assertions.assertEquals("email cannot be empty",emailEmptyException.getMessage());

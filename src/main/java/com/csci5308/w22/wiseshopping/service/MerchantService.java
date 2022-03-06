@@ -111,10 +111,7 @@ public class MerchantService {
         } else {
             throw new NoSuchUserException("Invalid credentials. Merchant does not exist");
         }
-
-
     }
-
 
     public Merchant getMerchantByEmail(String email) {
         return merchantRepository.findMerchantByEmail(email);

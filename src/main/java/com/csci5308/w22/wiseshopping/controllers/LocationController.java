@@ -5,12 +5,14 @@ import com.csci5308.w22.wiseshopping.models.Merchant;
 import com.csci5308.w22.wiseshopping.service.LocationService;
 import com.csci5308.w22.wiseshopping.service.MerchantService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Elizabeth James
  */
-@RestController
+@Controller
 @RequestMapping("location")
 public class LocationController {
 
@@ -18,13 +20,12 @@ public class LocationController {
     private LocationService locationService;
 
     @PostMapping("/addlocation")
-    public Location addLocation(@RequestBody Location location){
+    public Location addLocation(@Validated Location location){
         return locationService.addLocation(location.getName(), location.getZipcode(), location.getProvince(), location.getCountry());
     }
 
     @PostMapping("/removelocation")
-    //TODO: set http as only cookies
-    public void removeLocation(@RequestBody Location location){
+    public void removeLocation(@Validated Location location){
          locationService.remove(location);
     }
 }
