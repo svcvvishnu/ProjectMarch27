@@ -1,5 +1,6 @@
 package com.csci5308.w22.wiseshopping.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 
 import net.bytebuddy.dynamic.loading.InjectionClassLoader;
@@ -30,6 +31,7 @@ public class User {
     @Column(name =  "email")
     private String email;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(name =   "password")
     private String password;
 

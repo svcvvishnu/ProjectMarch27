@@ -1,6 +1,8 @@
 package com.csci5308.w22.wiseshopping.models;
 
 import lombok.EqualsAndHashCode;
+import lombok.NonNull;
+import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
 import java.sql.Time;

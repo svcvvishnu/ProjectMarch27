@@ -1,53 +1,18 @@
 package com.csci5308.w22.wiseshopping.service;
 
-
-import com.csci5308.w22.wiseshopping.models.Location;
-import com.csci5308.w22.wiseshopping.models.Merchant;
-import com.csci5308.w22.wiseshopping.models.Store;
 import com.csci5308.w22.wiseshopping.models.User;
-import com.csci5308.w22.wiseshopping.repository.MerchantRepository;
 import com.csci5308.w22.wiseshopping.repository.UserRepository;
 
-import com.trilead.ssh2.auth.AuthenticationManager;
-
-import com.csci5308.w22.wiseshopping.utils.Util;
-
 import org.apache.commons.validator.routines.EmailValidator;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-import com.csci5308.w22.wiseshopping.models.Merchant;
-import com.csci5308.w22.wiseshopping.models.User;
-import com.csci5308.w22.wiseshopping.repository.MerchantRepository;
-import com.csci5308.w22.wiseshopping.repository.UserRepository;
-import com.trilead.ssh2.auth.AuthenticationManager;
-import org.apache.commons.validator.routines.EmailValidator;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.text.html.Option;
-import java.util.List;
 
 import java.util.Map;
-import java.util.Optional;
-
-//import org.springframework.security.authentication.AuthenticationManager;
-//import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-//import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-//import org.springframework.security.core.Authentication;
-//import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.sql.Time;
-import java.sql.Timestamp;
-
-
-
-import java.util.Optional;
 
 /**
  * @author Pavithra Gunasekaran
@@ -67,6 +32,7 @@ public class UserService {
      * checks the login credentials of a user
      *
      * @param email    email id of the user
+     * @param password password of the user
      */
 
 
@@ -106,7 +72,7 @@ public class UserService {
     @Transactional
     public User loginUser(String email, String password) {
         if (email == null) {
-            throw new NullPointerException("email cannot be null");
+            throw new IllegalArgumentException("email cannot be null");
         }
         if (email.isEmpty() || email.isBlank()) {
             throw new IllegalArgumentException("email cannot be empty");
@@ -134,7 +100,6 @@ public class UserService {
     public User registerUser(String name, String email, String password) {
         //TODO implementation
         User user =  new User(1);
-
         return user;
     }
 }
