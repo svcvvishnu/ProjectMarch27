@@ -111,7 +111,7 @@ public class MerchantServiceTests {
 
     @Test
     public void testLoginMerchant()  {
-        when(mockedMerchantRepository.findMerchantByEmail(any(String.class))).thenReturn(merchant);
+        when(mockedMerchantRepository.findMerchantByEmailAndPassword(any(String.class),any(String.class))).thenReturn(merchant);
         Merchant actualMerchant = merchantService.loginMerchant("johndoe@xyz.com", "password123");
         Assertions.assertEquals(merchant, actualMerchant);
     }
@@ -120,7 +120,7 @@ public class MerchantServiceTests {
     public void testInputParametersForLoginMerchant(){
 
 
-        NullPointerException emailNullException=Assertions.assertThrows(NullPointerException.class, () -> merchantService.loginMerchant(null,"test_password"));
+        IllegalArgumentException emailNullException=Assertions.assertThrows(IllegalArgumentException.class, () -> merchantService.loginMerchant(null,"test_password"));
         Assertions.assertEquals("email cannot be null",emailNullException.getMessage());
         IllegalArgumentException emailEmptyException=Assertions.assertThrows(IllegalArgumentException.class, () -> merchantService.loginMerchant("","test_password"));
         Assertions.assertEquals("email cannot be empty",emailEmptyException.getMessage());
@@ -129,7 +129,7 @@ public class MerchantServiceTests {
 
         IllegalArgumentException passwordEmptyException=Assertions.assertThrows(IllegalArgumentException.class, () -> merchantService.loginMerchant("test_email@xyz.com",""));
         Assertions.assertEquals("password cannot be empty",passwordEmptyException.getMessage());
-        NullPointerException passwordNullException=Assertions.assertThrows(NullPointerException.class, () -> merchantService.loginMerchant("test_email@xyz.com",null));
+        IllegalArgumentException passwordNullException=Assertions.assertThrows(IllegalArgumentException.class, () -> merchantService.loginMerchant("test_email@xyz.com",null));
         Assertions.assertEquals("password cannot be null",passwordNullException.getMessage());
 
 
