@@ -14,7 +14,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -40,7 +42,7 @@ public class StoreScreen implements Screen {
         this.scanner = scanner;
         this.storeService = storeService;
         this.locationService = locationService;
-        validScreens = List.of("login", "dummy");
+        validScreens = List.of(Constants.MERCHANT_MENU, Constants.LOGOUT);
 
     }
 
@@ -51,7 +53,7 @@ public class StoreScreen implements Screen {
         boolean success = false;
         try {
             String input = "";
-            LOGGER.info("enter one of the following \nadd \ndelete");
+            LOGGER.info("enter one of the following - add or delete or update");
             input = scan(scanner);
             if (input.equals(Constants.ADD)) {
                 LOGGER.info("Enter <store_name> <business_type> <start_time> <end_time> <contact> ");
@@ -65,8 +67,8 @@ public class StoreScreen implements Screen {
                 String zipcode = scan(scanner);
                 String province = scan(scanner);
                 String country = scan(scanner);
-                Location location = locationService.addLocation(storeName, zipcode, province, country);
-                Store store = storeService.addStore(locationName,businessType, startTime, endTime, contact,merchant,location);
+                Location location = locationService.addLocation(locationName, zipcode, province, country);
+                Store store = storeService.addStore(storeName,businessType, startTime, endTime, contact,merchant,location);
                 if (store!=null){
                     success = true;
                 }
@@ -74,10 +76,32 @@ public class StoreScreen implements Screen {
             } else if (input.equals(Constants.DELETE)) {
                 List<Store> storeList = storeService.getAllStoresBelongingToAMerchant(merchant);
                 storeList.stream().forEach(s -> LOGGER.info( "Store id:  {}, name: {}", s.getStoreId(), s.getStoreName()));
+                LOGGER.info("Enter the id to be deleted");
                 String idToBeDeleted = scan(scanner);
                 success = storeService.remove(Integer.parseInt(idToBeDeleted));
                 
 
+            }
+            else if (input.equals(Constants.UPDATE)){
+                List<Store> storeList = storeService.getAllStoresBelongingToAMerchant(merchant);
+                storeList.stream().forEach(s -> LOGGER.info( "Store id:  {}, name: {}", s.getStoreId(), s.getStoreName()));
+                LOGGER.info("Enter the id to be deleted");
+                int idToBeUpdated = Integer.parseInt(scan(scanner));
+                Store storeToBeUpdated = storeService.getStoreById(idToBeUpdated);
+                LOGGER.info("Pass the attributes to be updated. Enter none to skip the attribute.");
+                String inputKey;
+                Map<String,String> mapAttributes = new HashMap<>();
+                mapAttributes.put(Constants.KEY_CONTACT,"");
+                mapAttributes.put(Constants.KEY_END_TIME,"");
+                mapAttributes.put(Constants.KEY_NAME,"");
+                mapAttributes.put(Constants.KEY_START_TIME,"");
+                mapAttributes.put(Constants.KEY_TYPE_OF_BUSINESS,"");
+                for (Map.Entry<String, String> entry : mapAttributes.entrySet()){
+                    LOGGER.info("Enter the value to be updated for {}", entry.getKey());
+                    entry.setValue(scan(scanner));
+                }
+                Store updatedStore = storeService.updateStore(storeToBeUpdated,mapAttributes);
+                success = updatedStore!=null;
             }
         } catch (MenuInterruptedException e) {
             getNavigations(screenFactory, validScreens, LOGGER, scanner);

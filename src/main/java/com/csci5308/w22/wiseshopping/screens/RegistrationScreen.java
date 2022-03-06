@@ -40,7 +40,7 @@ public class RegistrationScreen implements Screen {
         this.scanner = scanner;
         this.merchantService = merchantService;
         this.userService = userService;
-        validScreens = List.of("login", "dummy");
+        validScreens = List.of(Constants.LOGIN);
 
     }
 
@@ -48,7 +48,7 @@ public class RegistrationScreen implements Screen {
     @Override
     public boolean render(ScreenFactory screenFactory) {
         boolean success = false;
-        LOGGER.info("***REGISTRATION Screen****");
+        LOGGER.info("***REGISTRATION****");
         LOGGER.info("use : for additional navigation");
         try {
             String input = "";

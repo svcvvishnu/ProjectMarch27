@@ -39,13 +39,13 @@ public class LoginScreen implements Screen{
         this.scanner = scanner;
         this.merchantService = merchantService;
         this.userService = userService;
-        validScreens = List.of("register" ,"dummy");
+        validScreens = List.of(Constants.REGISTER);
 
     }
 
     @Override
     public boolean render(ScreenFactory screenFactory) {
-        LOGGER.info("***LOGIN Screen****");
+        LOGGER.info("***LOGIN SCREEN****");
         LOGGER.info("use : for additional navigation");
         boolean success = false;
         try{
@@ -58,14 +58,18 @@ public class LoginScreen implements Screen{
             String username =scan(scanner);
             String password = scan(scanner);
             Merchant merchant = merchantService.loginMerchant(username, password);
-            success = merchant!=null;
+            Screen screen = screenFactory.getScreen(Constants.MERCHANT_MENU);
+            screen.setMerchant(merchant);
+            success = screen.render(screenFactory);
         }
         if (Constants.USER.equalsIgnoreCase(input)){
             LOGGER.info("Enter <email> <password>");
             String email =scan(scanner);
             String password = scan(scanner);
             User user = userService.loginUser(email, password);
-            success = user!=null;
+            Screen screen = screenFactory.getScreen(Constants.USER_MENU);
+            screen.setUser(user);
+            success = screen.render(screenFactory);
         }}
         catch (MenuInterruptedException e){
             getNavigations(screenFactory,validScreens,LOGGER,scanner);
