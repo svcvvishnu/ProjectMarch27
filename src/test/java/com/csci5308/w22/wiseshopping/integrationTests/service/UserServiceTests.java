@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Pavithra Gunasekaran
  */
@@ -35,8 +38,28 @@ public class UserServiceTests {
             Assertions.assertEquals(user.getEmail(),actualUser.getEmail());
 
         }
+//Integration tests for update user
 
+    @Test
+    public void testUpdateUser(){
+        User actualUser = userService.loginUser("johndoe@xyz.com","Password123!");
 
+        Map<String, String> userDetails = new HashMap<>();
+        userDetails.put(UserService.FIRST_NAME, "John ABC");
+        userDetails.put(UserService.LAST_NAME, "Doe1");
+        userDetails.put(UserService.CONTACT, "9096754412");
+        User updatedUser = userService.updateUserDetails(actualUser.getEmail(), userDetails);
+
+        //check if response is not null
+        Assertions.assertNotNull(updatedUser);
+
+        //Check if firstname,lastname and contact are updated
+        Assertions.assertEquals("John ABC", updatedUser.getUserFirstName());
+        Assertions.assertEquals("Doe1", updatedUser.getUserLastName());
+        Assertions.assertEquals("johndoe@xyz.com", updatedUser.getEmail());
+        Assertions.assertEquals("9096754412", updatedUser.getContact());
 
     }
+
+}
 

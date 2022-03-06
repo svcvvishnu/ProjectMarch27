@@ -1,8 +1,9 @@
 package com.csci5308.w22.wiseshopping.service;
 
-import com.csci5308.w22.wiseshopping.models.Merchant;
-import com.csci5308.w22.wiseshopping.models.User;
+import com.csci5308.w22.wiseshopping.models.*;
 import com.csci5308.w22.wiseshopping.repository.MerchantRepository;
+import com.csci5308.w22.wiseshopping.repository.ProductCategoryRepository;
+import com.csci5308.w22.wiseshopping.repository.ProductInventoryRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,12 @@ import static org.mockito.Mockito.any;
 public class MerchantServiceTests {
     @Mock
     private MerchantRepository mockedMerchantRepository;
+
+    @Mock
+    private ProductCategoryRepository mockedCategoryRepository;
+
+    @Mock
+    private ProductInventoryRepository mockedInventoryRepository;
 
     @InjectMocks
     private MerchantService merchantService;
@@ -128,8 +135,95 @@ public class MerchantServiceTests {
 
 
     }
+    @Test
+    public void testUpdateProductPrice(){
+        Product product = new Product();
+        Store store = new Store();
+        ProductInventory inventory = new ProductInventory( store, product, 123, 456);
+        when(mockedInventoryRepository.findByProductAndStore(product,store)).thenReturn(inventory);
+
+        ProductInventory updated = merchantService.updateProductPrice(product, store, 1000);
+
+        Assertions.assertNotNull(updated);
+        Assertions.assertEquals(1000, updated.getPrice());
+    }
+
+    @Test
+    public void testUpdateProductStock(){
+        Product product = new Product();
+        Store store = new Store();
+        ProductInventory inventory = new ProductInventory( store, product, 123, 456);
+        when(mockedInventoryRepository.findByProductAndStore(product,store)).thenReturn(inventory);
+
+        ProductInventory updated = merchantService.updateProductStock(product, store, 8888);
+
+        Assertions.assertNotNull(updated);
+        Assertions.assertEquals(8888, updated.getStock());
+    }
+
+    @Test
+    public void testUpdateProductPriceInvalidProductStore(){
+        Product product = new Product();
+        Store store = new Store();
+        when(mockedInventoryRepository.findByProductAndStore(product,store)).thenReturn(null);
+
+        IllegalArgumentException ex = Assertions.assertThrows( IllegalArgumentException.class,
+                () -> merchantService.updateProductPrice(product, store, 1000), "Exception not thrown");
+        Assertions.assertTrue(ex.getMessage().contains("Could not find inventory with given Product in store"));
+    }
 
 
+    @Test
+    public void testUpdateProductStockInvalidProductStore(){
+        Product product = new Product();
+        Store store = new Store();
+        when(mockedInventoryRepository.findByProductAndStore(product,store)).thenReturn(null);
 
+        IllegalArgumentException ex = Assertions.assertThrows( IllegalArgumentException.class,
+                () -> merchantService.updateProductStock(product, store, 1000), "Exception not thrown");
+        Assertions.assertTrue(ex.getMessage().contains("Could not find inventory with given Product in store"));
+    }
+
+    @Test
+    public void testUpdateProductCategoryName(){
+        Product product = new Product();
+        ProductCategory category = new ProductCategory( product, "Category A", "Category A Desc");
+        when(mockedCategoryRepository.findByProductCategoryId(any(Integer.class))).thenReturn(category);
+
+        ProductCategory updated = merchantService.updateProductCategoryName(1, "Category Name Updated");
+
+        Assertions.assertNotNull(updated);
+        Assertions.assertEquals("Category Name Updated", updated.getCategoryName());
+    }
+
+    @Test
+    public void testUpdateProductCategoryDesc(){
+        Product product = new Product();
+        ProductCategory category = new ProductCategory( product, "Category A", "Category A Desc");
+        when(mockedCategoryRepository.findByProductCategoryId(any(Integer.class))).thenReturn(category);
+
+        ProductCategory updated = merchantService.updateProductCategoryDescription(1, "Category Desc Updated");
+
+        Assertions.assertNotNull(updated);
+        Assertions.assertEquals("Category Desc Updated", updated.getCategoryDesc());
+    }
+
+    @Test
+    public void testUpdateProductCategoryNameInvalidProduct(){
+        when(mockedCategoryRepository.findByProductCategoryId(any(Integer.class))).thenReturn(null);
+
+        IllegalArgumentException ex = Assertions.assertThrows( IllegalArgumentException.class,
+                () -> merchantService.updateProductCategoryName(1, "Category Name Updated"), "Exception not thrown");
+        Assertions.assertTrue(ex.getMessage().contains("Could not find category with given Id:"));
+    }
+
+    @Test
+    public void testUpdateProductCategoryDescInvalidProduct(){
+        when(mockedCategoryRepository.findByProductCategoryId(any(Integer.class))).thenReturn(null);
+
+        IllegalArgumentException ex = Assertions.assertThrows( IllegalArgumentException.class,
+                () -> merchantService.updateProductCategoryDescription(1, "Category Desc Updated"), "Exception not thrown");
+        Assertions.assertTrue(ex.getMessage().contains("Could not find category with given Id:"));
+    }
 
 }

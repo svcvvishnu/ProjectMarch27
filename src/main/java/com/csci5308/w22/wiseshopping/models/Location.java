@@ -82,5 +82,4 @@ public class Location {
         this.country = country;
     }
 
-
 }

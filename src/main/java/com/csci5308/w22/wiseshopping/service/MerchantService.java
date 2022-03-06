@@ -1,9 +1,10 @@
 package com.csci5308.w22.wiseshopping.service;
 
 import com.csci5308.w22.wiseshopping.exceptions.UserAlreadyRegisteredException;
-import com.csci5308.w22.wiseshopping.models.Merchant;
-import com.csci5308.w22.wiseshopping.models.User;
+import com.csci5308.w22.wiseshopping.models.*;
 import com.csci5308.w22.wiseshopping.repository.MerchantRepository;
+import com.csci5308.w22.wiseshopping.repository.ProductCategoryRepository;
+import com.csci5308.w22.wiseshopping.repository.ProductInventoryRepository;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,8 +25,8 @@ public class MerchantService {
 
     @Autowired
     MerchantRepository merchantRepository;
-
-
+    ProductInventoryRepository productInventoryRepository;
+    ProductCategoryRepository productCategoryRepository;
     /**
      * inserts a merchant into table
      * @param name name of merchant
@@ -102,13 +103,65 @@ public class MerchantService {
         LOGGER.info("You have logged in successfully");
         return merchant;
 
-
-
     }
-
 
     public Merchant getMerchantByEmail(String email){
         return merchantRepository.findMerchantByEmail(email);
     }
 
+    @Transactional
+    public ProductInventory updateProductPrice(Product product, Store store, int price) {
+
+        ProductInventory productInventory = productInventoryRepository.findByProductAndStore(product, store);
+
+        if (productInventory == null) {
+            throw new IllegalArgumentException("Could not find inventory with given Product in store");
+        }
+
+        productInventory.setPrice(price);
+        productInventoryRepository.save(productInventory);
+        return productInventory;
+    }
+
+    @Transactional
+    public ProductInventory updateProductStock(Product product, Store store, int stock) {
+        ProductInventory productInventory = productInventoryRepository.findByProductAndStore(product, store);
+
+        if (productInventory == null) {
+            throw new IllegalArgumentException("Could not find inventory with given Product in store:");
+        }
+
+        productInventory.setStock(stock);
+        productInventoryRepository.save(productInventory);
+        return productInventory;
+    }
+
+    @Transactional
+    public ProductCategory updateProductCategoryName(int productCategoryId, String name) {
+        ProductCategory category = productCategoryRepository.findByProductCategoryId(productCategoryId);
+
+        if (category == null) {
+            throw new IllegalArgumentException("Could not find category with given Id: " + productCategoryId);
+        }
+
+        category.setCategoryName(name);
+        productCategoryRepository.save(category);
+        return category;
+    }
+
+    @Transactional
+    public ProductCategory updateProductCategoryDescription(int productCategoryId, String description) {
+        ProductCategory category = productCategoryRepository.findByProductCategoryId(productCategoryId);
+
+        if (category == null) {
+            throw new IllegalArgumentException("Could not find category with given Id: " + productCategoryId);
+        }
+
+        category.setCategoryDesc(description);
+        productCategoryRepository.save(category);
+        return category;
+    }
+
 }
+
+

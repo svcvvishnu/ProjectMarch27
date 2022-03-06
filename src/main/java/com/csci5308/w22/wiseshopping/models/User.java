@@ -1,7 +1,9 @@
 package com.csci5308.w22.wiseshopping.models;
 
 import lombok.EqualsAndHashCode;
+
 import net.bytebuddy.dynamic.loading.InjectionClassLoader;
+
 import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.persistence.*;
@@ -42,6 +44,7 @@ public class User {
     }
 
     public User(String userID, String userFirstName, String userLastName, String email , String password, String contact, Timestamp register_at) {
+
         this.userFirstName = userFirstName;
         this.userLastName = userLastName;
         this.email = email;
@@ -59,6 +62,26 @@ public class User {
     public User(){
 
     }
+
+
+    public User(String userFirstName, String userLastName, String email, String password, String contact, Timestamp register_at) {
+        this.userFirstName = userFirstName;
+        this.userLastName = userLastName;
+        this.email = email;
+        this.password = encode(password);
+        this.contact = contact;
+        this.register_at = register_at;
+    }
+
+    public User(String userFirstName, String userLastName, String email, String contact) {
+        this.userFirstName = userFirstName;
+        this.userLastName = userLastName;
+        this.email = email;
+        this.contact = contact;
+
+    }
+
+
 
     /**
      * this encodes the password using sha 256 algorithm
