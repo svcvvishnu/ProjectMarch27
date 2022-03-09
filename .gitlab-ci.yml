@@ -10,6 +10,7 @@ stages:
   - test
   - build
   - develop
+  - deploy
   - production
 
 code_quality:
@@ -80,6 +81,20 @@ develop:
     - scp -r -o StrictHostKeyChecking=no config.properties "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/config.properties"
   only:
     - dev
+
+# heroku Ci/cd pipeline setup
+deploy:
+  stage: deploy
+  tags:
+    - dalfcs_gitlab_docker_ci
+  only:
+    - dev
+  image: ruby:2.6
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - dpl --provider=heroku --app=$HEROKUAPPNAME --api-key=$HEROKUAPIKEY
 
 production:
   stage: production

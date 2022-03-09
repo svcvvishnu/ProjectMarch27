@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -39,8 +41,9 @@ public class LogOutScreen implements Screen{
         this.scanner = scanner;
         this.merchantService = merchantService;
         this.userService = userService;
-        validScreens = List.of(Constants.REGISTER, Constants.LOGIN);
+//        validScreens = List.of(Constants.REGISTER, Constants.LOGIN);
 
+        validScreens= new ArrayList<>(Arrays.asList(Constants.REGISTER, Constants.LOGIN));
     }
 
     @Override

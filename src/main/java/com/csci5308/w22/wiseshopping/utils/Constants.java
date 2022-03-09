@@ -25,4 +25,5 @@ public class Constants {
     public static final String KEY_CONTACT = "contact";
     public static final String KEY_LOCATION = "location";
     public static final String UPDATE = "update";
+
 }

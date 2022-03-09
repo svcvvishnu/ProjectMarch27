@@ -26,17 +26,17 @@ public class LocationService {
     @Transactional
     public Location addLocation(String name, String zipcode, String province, String country){
 
-        if (name ==  null || name.isEmpty() || name.isBlank() ){
+        if (name ==  null || name.equals(" ") || name.length()==0 ){
             throw new IllegalArgumentException("locationName cannot be null or empty or blank");
         }
 
-        if (zipcode == null || zipcode.isBlank() || zipcode.isEmpty()){
+        if (zipcode == null || zipcode.length()==0 || zipcode.equals(" ")){
             throw new IllegalArgumentException("zipcode cannot be null or empty or blank");
         }
-        if (province ==  null || province.isEmpty() || province.isBlank() ){
+        if (province ==  null || province.equals(" ") || province.length()==0 ){
             throw new IllegalArgumentException("province cannot be null or empty or blank");
         }
-        if (country ==  null || country.isEmpty() || country.isBlank() ){
+        if (country ==  null || country.equals(" ") || country.length()==0 ){
             throw new IllegalArgumentException("country cannot be null or empty or blank");
         }
 
