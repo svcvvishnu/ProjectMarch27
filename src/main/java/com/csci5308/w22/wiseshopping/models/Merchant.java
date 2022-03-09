@@ -1,7 +1,10 @@
 package com.csci5308.w22.wiseshopping.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
+import lombok.NonNull;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
 
@@ -20,6 +23,7 @@ public class Merchant {
     @Column(name =  "merchant_name")
     private String merchantName;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(name =   "password")
     private String password;
 
@@ -92,4 +96,5 @@ public class Merchant {
         this.email = email;
     }
 
+    //TODO:  use rest advice for error codes
 }
