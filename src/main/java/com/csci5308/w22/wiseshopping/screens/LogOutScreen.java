@@ -21,8 +21,10 @@ import java.util.Scanner;
  * @author Elizabeth James
  */
 @Component
-public class MerchantMenuScreen implements Screen {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationScreen.class);
+public class LogOutScreen implements Screen{
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoginScreen.class);
+
+    private List<String> validScreens;
 
     private Scanner scanner;
 
@@ -30,50 +32,26 @@ public class MerchantMenuScreen implements Screen {
 
     private UserService userService;
 
-    private ArrayList<String> validScreens;
-
-//    private List<String> validScreens;
-
     private Merchant merchant;
 
     private User user;
 
-
     @Autowired
-    public MerchantMenuScreen(Scanner scanner, MerchantService merchantService, UserService userService) {
+    public LogOutScreen(Scanner scanner, MerchantService merchantService, UserService userService) {
         this.scanner = scanner;
         this.merchantService = merchantService;
         this.userService = userService;
+//        validScreens = List.of(Constants.REGISTER, Constants.LOGIN);
 
-//        validScreens= (ArrayList<String>) Arrays.asList("login", "dummy");
-        validScreens= new ArrayList<>(Arrays.asList(Constants.LOGOUT));
-
-
+        validScreens= new ArrayList<>(Arrays.asList(Constants.REGISTER, Constants.LOGIN));
     }
 
     @Override
     public boolean render(ScreenFactory screenFactory) {
-        LOGGER.info("****MERCHANT MENU****");
-        LOGGER.info("");
         boolean success = false;
-        try {
-            String input = "";
-            LOGGER.info("Choose one of the following");
-
-            LOGGER.info("1. add/update store details");
-            LOGGER.info("2. add/update product details");
-            input = scan(scanner);
-            if(input.equals(Constants.OPTION_ONE)){
-                Screen screen = screenFactory.getScreen( Constants.STORE_MENU);
-                screen.setMerchant(merchant);
-                success = screen.render(screenFactory);
-            }
-            else if(input.equals(Constants.OPTION_TWO)){
-                //TODO
-            }
-        } catch (MenuInterruptedException e) {
-            getNavigations(screenFactory, validScreens, LOGGER, scanner);
-        }
+        LOGGER.info("***LOGGED OUT****");
+        Screen screen = screenFactory.getScreen( Constants.LOGIN);
+        success = screen.render(screenFactory);
         return success;
     }
 
@@ -85,6 +63,7 @@ public class MerchantMenuScreen implements Screen {
     @Override
     public void setUser(User user) {
         this.user = user;
-
     }
+
+
 }
