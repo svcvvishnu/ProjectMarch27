@@ -14,6 +14,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -23,25 +25,26 @@ import java.util.Scanner;
 @Component
 public class StoreScreen implements Screen {
     private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationScreen.class);
-
     private Scanner scanner;
 
     private StoreService storeService;
     private LocationService locationService;
 
-    private List<String> validScreens;
+    private ArrayList<String> validScreens;
+
+
+//    private List<String> validScreens;
 
     private Merchant merchant;
     private User user;
-
 
     @Autowired
     public StoreScreen(Scanner scanner, StoreService storeService, LocationService locationService) {
         this.scanner = scanner;
         this.storeService = storeService;
         this.locationService = locationService;
-        validScreens = List.of("login", "dummy");
-
+//        validScreens= (ArrayList<String>) Arrays.asList("login", "dummy");
+        validScreens= new ArrayList<>(Arrays.asList("login", "dummy"));
     }
 
     @Override
@@ -76,7 +79,6 @@ public class StoreScreen implements Screen {
                 storeList.stream().forEach(s -> LOGGER.info( "Store id:  {}, name: {}", s.getStoreId(), s.getStoreName()));
                 String idToBeDeleted = scan(scanner);
                 success = storeService.remove(Integer.parseInt(idToBeDeleted));
-                
 
             }
         } catch (MenuInterruptedException e) {

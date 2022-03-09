@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -22,7 +24,10 @@ import java.util.Scanner;
 public class LoginScreen implements Screen{
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginScreen.class);
 
-    private List<String> validScreens;
+//    private List<String> validScreens;
+
+    private ArrayList<String> validScreens;
+
 
     private Scanner scanner;
 
@@ -39,8 +44,9 @@ public class LoginScreen implements Screen{
         this.scanner = scanner;
         this.merchantService = merchantService;
         this.userService = userService;
-        validScreens = List.of("register" ,"dummy");
+        validScreens= new ArrayList<>(Arrays.asList("login", "dummy"));
 
+//        ArrayList<Foo> list = new ArrayList<>(Arrays.asList(sos1.getValue());
     }
 
     @Override

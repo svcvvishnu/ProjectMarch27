@@ -18,12 +18,10 @@ public class ScreenFactory {
     private RegistrationScreen registrationScreen;
     @Autowired
     private StoreScreen storeScreen;
-
     @Autowired
     private MerchantMenuScreen merchantMenu;
-
-
-
+    @Autowired
+    private MerchantMenuScreen userupdateMenu;
 
     public Screen getScreen(String screen){
         switch (screen){

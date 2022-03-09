@@ -36,22 +36,22 @@ public class StoreService {
     @Transactional
     public Store addStore(String name, String businessType, String startTime, String endTime, String contact, Merchant merchant, Location location){
 
-        if (name ==  null || name.isEmpty() || name.isBlank() ){
+        if (name == null || name.length() == 0 || name.equals(" ")){
             throw new IllegalArgumentException("storeName cannot be null or empty or blank");
         }
-        if (businessType ==  null || businessType.isEmpty() || businessType.isBlank() ){
+        if (businessType ==  null  || businessType.length()==0 || businessType.equals(" ")){
             throw new IllegalArgumentException("businessType cannot be null or empty or blank");
         }
 
-        if (startTime == null || startTime.isBlank() || startTime.isEmpty()){
+        if (startTime == null || startTime.length()==0 || startTime.equals(" ")){
             throw new IllegalArgumentException("startTime cannot be null or empty or blank");
         }
 
-        if (endTime == null || endTime.isBlank() || endTime.isEmpty()){
+        if (endTime == null || endTime.length()==0 || endTime.equals(" ")){
             throw new IllegalArgumentException("endTime cannot be null or empty or blank");
         }
 
-        if (contact ==  null || contact.isEmpty() || contact.isBlank() ){
+        if (contact ==  null || contact.equals(" ") || contact.length()==0 ){
             throw new IllegalArgumentException("contactNumber cannot be null or empty or blank");
         }
 
