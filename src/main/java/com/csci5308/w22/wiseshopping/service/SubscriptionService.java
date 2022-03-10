@@ -1,19 +1,14 @@
 package com.csci5308.w22.wiseshopping.service;
 
-import com.csci5308.w22.wiseshopping.models.Product;
-import com.csci5308.w22.wiseshopping.models.ProductInventory;
-import com.csci5308.w22.wiseshopping.models.Subscription;
-import com.csci5308.w22.wiseshopping.models.User;
+import com.csci5308.w22.wiseshopping.utils.MailNotifier;
+import com.csci5308.w22.wiseshopping.models.*;
 import com.csci5308.w22.wiseshopping.repository.SubscriptionRepository;
-import com.csci5308.w22.wiseshopping.repository.ProductInventoryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 
@@ -30,7 +25,7 @@ public class SubscriptionService {
     private SubscriptionRepository subscriptionRepository;
 
     @Autowired
-    private ProductInventoryRepository productInventoryRepository;
+    private MailNotifier mailNotifier;
 
     public Subscription addSubscription(User user, Product product, float priceAlert){
         //input validation
@@ -56,7 +51,8 @@ public class SubscriptionService {
         return subscription;
     }
 
-    public void alertSubscribers(Product product, float price) {
+    public boolean alertSubscribers(Product product, Store store, float price) {
+        boolean success = false;
         if(product == null){
             throw new IllegalArgumentException("Product cannot be null");
         }
@@ -66,14 +62,15 @@ public class SubscriptionService {
 
         List<Subscription> subscriptionList = subscriptionRepository.findByProductId(product.getProductId());
 
-        List<User> userIdsToBeAlerted = new ArrayList<>();
+        List<User> usersToBeAlerted = new ArrayList<>();
         for (Subscription subscription : subscriptionList){
             if (subscription.getPriceAlert() >= price){
-                userIdsToBeAlerted.add(subscription.getUser());
+                usersToBeAlerted.add(subscription.getUser());
             }
         }
 
-       // TODO send email
+        success = mailNotifier.sendPriceAlerts(usersToBeAlerted, product.getProductName(), store.getStoreName(), price);
+        return success;
     }
 
 }
