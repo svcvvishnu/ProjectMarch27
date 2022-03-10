@@ -1,13 +1,16 @@
 package com.csci5308.w22.wiseshopping.models;
 
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Time;
 
 /**
  * @author Nilesh
 */
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @EqualsAndHashCode
 @Entity
 @Table
@@ -32,7 +35,6 @@ public class ProductInventory {
     @Column(name = "stock")
     private int stock;
 
-    public ProductInventory(){}
 
     public ProductInventory(Store store, Product product, int price, int stock) {
         this.store = store;
@@ -41,35 +43,4 @@ public class ProductInventory {
         this.stock = stock;
     }
 
-    public Store getStore() {
-        return store;
-    }
-
-    public void setStore(Store store) {
-        this.store = store;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
 }

@@ -26,4 +26,6 @@ public class Constants {
     public static final String KEY_LOCATION = "location";
     public static final String UPDATE = "update";
 
+    public static final String SHARED = "shared";
+    public static final String NOTSHARED = "notshared";
 }

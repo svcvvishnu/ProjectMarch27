@@ -1,16 +1,18 @@
 package com.csci5308.w22.wiseshopping.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.EqualsAndHashCode;
-import lombok.NonNull;
+import lombok.*;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
 
 /**
  * @author Elizabeth James
  */
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @EqualsAndHashCode
 @Entity
 @Table(name = "merchant_details")
@@ -41,17 +43,6 @@ public class Merchant {
         this.email = email;
     }
 
-
-    public Merchant(){
-
-    }
-
-    public Merchant(int merchantId, String merchantName, String password, String email) {
-        this.merchantId = merchantId;
-        this.merchantName = merchantName;
-        this.password = password;
-        this.email = email;
-    }
 
     /**
      * this encodes the password using sha 256 algorithm
