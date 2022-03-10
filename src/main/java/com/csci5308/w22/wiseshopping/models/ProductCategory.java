@@ -1,12 +1,16 @@
 package com.csci5308.w22.wiseshopping.models;
 
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.*;
 
 /**
  * @author Nilesh
 */
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @EqualsAndHashCode
 @Entity
 @Table
@@ -26,35 +30,10 @@ public class ProductCategory {
     @Column(name = "product_category_description")
     private String categoryDesc;
 
-    public ProductCategory(){}
-
     public ProductCategory(Product product, String name, String desc) {
         this.product = product;
         this.categoryName = name;
         this.categoryDesc = desc;
     }
 
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
-
-    public String getCategoryDesc() {
-        return categoryDesc;
-    }
-
-    public void setCategoryDesc(String categoryDesc) {
-        this.categoryDesc = categoryDesc;
-    }
 }

@@ -108,7 +108,6 @@ CONSTRAINT `tag_prodinv_fk` FOREIGN KEY (`inventory_id`) REFERENCES `product_inv
 
 CREATE TABLE `cart` (
 `cart_id` int NOT NULL AUTO_INCREMENT,
-`cart_name` varchar(255) DEFAULT NULL,
 `user_id` int NOT NULL,
 `status` varchar(255) DEFAULT NULL,
 PRIMARY KEY (`cart_id`),
