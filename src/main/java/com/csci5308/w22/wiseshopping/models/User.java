@@ -3,6 +3,7 @@ package com.csci5308.w22.wiseshopping.models;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 
+import lombok.ToString;
 import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -13,6 +14,7 @@ import java.sql.Timestamp;
 /**
  * @author Pavithra Gunasekaran
  */
+@ToString
 @EqualsAndHashCode
 @Entity
 @Table(name = "user_details")
