@@ -1,6 +1,5 @@
 package com.csci5308.w22.wiseshopping.repository;
 
-import com.csci5308.w22.wiseshopping.models.Cart;
 import com.csci5308.w22.wiseshopping.models.Product;
 import com.csci5308.w22.wiseshopping.models.Subscription;
 import com.csci5308.w22.wiseshopping.models.User;
