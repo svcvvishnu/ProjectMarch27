@@ -1,5 +1,6 @@
 package com.csci5308.w22.wiseshopping.models;
 
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
@@ -7,6 +8,7 @@ import javax.persistence.*;
 /**
  * @author Nilesh
 */
+@AllArgsConstructor
 @EqualsAndHashCode
 @Entity
 @Table
