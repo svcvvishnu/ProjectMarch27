@@ -2,6 +2,7 @@ package com.csci5308.w22.wiseshopping.controllers;
 
 import com.csci5308.w22.wiseshopping.models.*;
 import com.csci5308.w22.wiseshopping.service.MerchantService;
+import com.csci5308.w22.wiseshopping.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -16,11 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("product/")
 public class ProductController {
     @Autowired
-    private MerchantService merchantService;
+    private ProductService productService;
 
     @PostMapping("/updateProductPrice")
     public String registerMerchant(@Validated Product product, @Validated Store store, int price) {
-        merchantService.updateProductPrice(product, store,price);
+        productService.updateProductPrice(product, store,price);
         return "index";
     }
 
