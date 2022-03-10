@@ -47,7 +47,7 @@ public class UserService {
         }
 
         for (Map.Entry<String, String> entry : userDetails.entrySet()) {
-            if (entry.getValue() == null || entry.getValue().isEmpty() || entry.getValue().isBlank()) {
+            if (entry.getValue() == null || entry.getValue().equals(" ") || entry.getValue().length()==0) {
                 throw new IllegalArgumentException(entry.getKey() + " cannot be null or empty or blank");
             }
             switch (entry.getKey()) {
@@ -74,11 +74,11 @@ public class UserService {
         if (email == null) {
             throw new IllegalArgumentException("email cannot be null");
         }
-        if (email.isEmpty() || email.isBlank()) {
+        if (email.equals(" ") || email.length()==0) {
             throw new IllegalArgumentException("email cannot be empty");
         }
 
-        if (email == null || email.isBlank() || email.isEmpty()) {
+        if (email == null || email.length()==0 || email.equals(" ")) {
             throw new IllegalArgumentException("email cannot be null or empty or blank");
 
         }
@@ -89,7 +89,7 @@ public class UserService {
         if (password == null) {
             throw new NullPointerException("password cannot be null");
         }
-        if (password.isBlank() || password.isEmpty()) {
+        if (password.length()==0 || password.equals(" ")) {
             throw new IllegalArgumentException("password cannot be empty");
         }
         User user = userRepository.findByEmailAndPassword(email, password);

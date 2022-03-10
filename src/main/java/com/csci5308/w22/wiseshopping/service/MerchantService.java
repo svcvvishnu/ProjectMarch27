@@ -38,14 +38,14 @@ public class MerchantService {
      */
     @Transactional
     public Merchant registerMerchant(String name, String email, String password) {
-        if (name == null || name.isEmpty() || name.isBlank()) {
+        if (name == null || name.equals(" ") || name.length()==0) {
             throw new IllegalArgumentException("name cannot be null or empty or blank");
         }
-        if (password == null || password.isEmpty() || password.isBlank()) {
+        if (password == null || password.equals(" ") || password.length()==0) {
             throw new IllegalArgumentException("password cannot be null or empty or blank");
         }
 
-        if (email == null || email.isBlank() || email.isEmpty()) {
+        if (email == null || email.length()==0 || email.equals(" ")) {
             throw new IllegalArgumentException("email cannot be null or empty or blank");
         }
         if (!EmailValidator.getInstance().isValid(email)) {
@@ -70,7 +70,7 @@ public class MerchantService {
      */
     @Transactional
     public boolean removeMerchant(String email) {
-        if (email == null || email.isBlank() || email.isEmpty()) {
+        if (email == null || email.length()==0 || email.equals(" ")) {
             throw new IllegalArgumentException("email cannot be null or empty or blank");
         }
         int id = merchantRepository.deleteByEmail(email);
@@ -85,7 +85,7 @@ public class MerchantService {
         if (email == null) {
             throw new IllegalArgumentException("email cannot be null");
         }
-        if (email.isEmpty() || email.isBlank()) {
+        if (email.equals(" ") || email.length()==0) {
             throw new IllegalArgumentException("email cannot be empty");
         }
 
@@ -96,7 +96,10 @@ public class MerchantService {
         if (password == null) {
             throw new IllegalArgumentException("password cannot be null");
         }
-        if (password.isBlank() || password.isEmpty()) {
+
+        if(password.length()==0 || password.equals(" "))
+        {
+
             throw new IllegalArgumentException("password cannot be empty");
         }
 

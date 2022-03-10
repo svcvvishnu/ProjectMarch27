@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -25,11 +27,14 @@ public class RegistrationScreen implements Screen {
 
     private Scanner scanner;
 
+    private ArrayList<String> validScreens;
+
+
     private MerchantService merchantService;
 
     private UserService userService;
 
-    private List<String> validScreens;
+//    private List<String> validScreens;
 
     private Merchant merchant;
     private User user;
@@ -40,7 +45,10 @@ public class RegistrationScreen implements Screen {
         this.scanner = scanner;
         this.merchantService = merchantService;
         this.userService = userService;
-        validScreens = List.of(Constants.LOGIN);
+
+//        validScreens= (ArrayList<String>) Arrays.asList("login", "dummy");
+
+        validScreens= new ArrayList<>(Arrays.asList(Constants.LOGIN));
 
     }
 
