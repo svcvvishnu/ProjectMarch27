@@ -24,7 +24,7 @@ public class UserController {
     @PostMapping("/addMerchant")
     public String registerMerchant(@Validated User user) {
         //TODO : why does user has firstname and last name? why not one single column
-        userService.registerUser(user.getUserFirstName(), user.getEmail(), user.getPassword());
+       // userService.registerUser(user.getUserFirstName(), user.getEmail(), user.getPassword());
         return "index";
     }
 

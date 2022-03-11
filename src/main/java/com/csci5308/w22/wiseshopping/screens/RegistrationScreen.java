@@ -78,7 +78,7 @@ public class RegistrationScreen implements Screen {
                 String name = scan(scanner);
                 String email = scan(scanner);
                 String password = scan(scanner);
-                User user = userService.registerUser(name, email, password);
+                User user = userService.registerUser(name, email, password,"","");
                 success = user!=null;
             }
 

@@ -1,61 +1,62 @@
 package com.csci5308.w22.wiseshopping.service;
-
-
 import com.csci5308.w22.wiseshopping.models.User;
 import com.csci5308.w22.wiseshopping.repository.UserRepository;
-
-import com.csci5308.w22.wiseshopping.models.Location;
-import com.csci5308.w22.wiseshopping.models.Merchant;
-import com.csci5308.w22.wiseshopping.models.Store;
-import com.csci5308.w22.wiseshopping.models.User;
-import com.csci5308.w22.wiseshopping.repository.StoreRepository;
-import com.csci5308.w22.wiseshopping.repository.UserRepository;
-import com.csci5308.w22.wiseshopping.utils.Util;
-import org.junit.jupiter.api.AfterEach;
-
+import com.csci5308.w22.wiseshopping.utils.Constants;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.util.HashMap;
 import java.util.Map;
-
-
-import org.mockito.internal.matchers.Null;
-
-import org.mockito.junit.jupiter.MockitoExtension;
-
-
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
-
 /**
- * @author Pavithra Gunasekaran
+ * @author Harsh Hariramani
  */
 @ExtendWith(MockitoExtension.class)
-class UserServiceTests {
-
+public class UserServiceTests {
     @Mock
-    UserRepository mockedUserRepository;
-
+    private UserRepository mockedUserRepository;
     @InjectMocks
     private UserService userService;
-
     private User user;
-
-
     @BeforeEach
-
-    public void setUp() {
-        user = new User("johndoe@xyz.com", "Password123!");
+    public void setUpUser(){
+        user = new User("John","Doe", "johndoe@xyz.com", "password123","123467890");
+    }
+    @Test
+    public void testRegisterUser() {
+        when(mockedUserRepository.save(any(User.class))).thenReturn(user);
+        User actualUser = userService.registerUser("John","Doe", "johndoe@xyz.com", "password123","123467890");
+        Assertions.assertEquals(user, actualUser);
     }
 
-
+    @Test
+    public void testInputParametersForRegisterUser() {
+        IllegalArgumentException exceptionForName1 = Assertions.assertThrows(IllegalArgumentException.class, () -> userService.registerUser(null, "dummy", "dummy","dummy","dummy"));
+        Assertions.assertEquals("firstName cannot be null or empty or blank", exceptionForName1.getMessage());
+        IllegalArgumentException exceptionForName2 = Assertions.assertThrows(IllegalArgumentException.class, () -> userService.registerUser("", "dummy", "dummy","dummy","dummy"));
+        Assertions.assertEquals("firstName cannot be null or empty or blank", exceptionForName2.getMessage());
+        IllegalArgumentException exceptionForName3 = Assertions.assertThrows(IllegalArgumentException.class, () -> userService.registerUser(" ", "dummy", "dummy","dummy","dummy"));
+        Assertions.assertEquals("firstName cannot be null or empty or blank", exceptionForName3.getMessage());
+        IllegalArgumentException exceptionForEmail1 = Assertions.assertThrows(IllegalArgumentException.class, () -> userService.registerUser("dummy", "dummy",null, "dummy","dummy"));
+        Assertions.assertEquals("email cannot be null or empty or blank", exceptionForEmail1.getMessage());
+        IllegalArgumentException exceptionForEmail2 = Assertions.assertThrows(IllegalArgumentException.class, () -> userService.registerUser("dummy", "dummy","", "dummy","dummy"));
+        Assertions.assertEquals("email cannot be null or empty or blank", exceptionForEmail2.getMessage());
+        IllegalArgumentException exceptionForEmail3 = Assertions.assertThrows(IllegalArgumentException.class, () -> userService.registerUser("dummy", "dummy"," ", "dummy","dummy"));
+        Assertions.assertEquals("email cannot be null or empty or blank", exceptionForEmail3.getMessage());
+        IllegalArgumentException exceptionForPassword1 = Assertions.assertThrows(IllegalArgumentException.class, () -> userService.registerUser("dummy", "dummy", "dummy", null,"dummy"));
+        Assertions.assertEquals("password cannot be null or empty or blank", exceptionForPassword1.getMessage());
+        IllegalArgumentException exceptionForPassword2 = Assertions.assertThrows(IllegalArgumentException.class, () -> userService.registerUser("dummy", "dummy", "dummy", "", "dummy"));
+        Assertions.assertEquals("password cannot be null or empty or blank", exceptionForPassword2.getMessage());
+        IllegalArgumentException exceptionForPassword3 = Assertions.assertThrows(IllegalArgumentException.class, () -> userService.registerUser("dummy", "dummy", "dummy", " ","dummy"));
+        Assertions.assertEquals("password cannot be null or empty or blank", exceptionForPassword3.getMessage());
+        IllegalArgumentException exceptionForEmail4 = Assertions.assertThrows(IllegalArgumentException.class, () -> userService.registerUser("dummy", "dummy", "dummy","dummy", "dummy"));
+        Assertions.assertEquals("given email is not valid", exceptionForEmail4.getMessage());
+    }
 
     @Test
     public void testUpdateUserDetails() {
@@ -63,9 +64,9 @@ class UserServiceTests {
 
         //Getting the updated user
         Map<String, String> userDetails = new HashMap<>();
-        userDetails.put(UserService.FIRST_NAME, "John");
-        userDetails.put(UserService.LAST_NAME, "Doe");
-        userDetails.put(UserService.CONTACT, "9096754432");
+        userDetails.put(Constants.FIRST_NAME, "John");
+        userDetails.put(Constants.LAST_NAME, "Doe");
+        userDetails.put(Constants.CONTACT, "9096754432");
         User updatedUser = userService.updateUserDetails("johndoe@xyz.com", userDetails);
 
         //check if response is not null
@@ -79,35 +80,32 @@ class UserServiceTests {
 
     }
 
-
     @Test
     public void testUpdateUserDetailsInvalidFirstName() {
         when(mockedUserRepository.findByEmail(any(String.class))).thenReturn(user);
         Map<String, String> userDetails = new HashMap<>();
-        userDetails.put(UserService.FIRST_NAME, "");
+        userDetails.put(Constants.FIRST_NAME, "");
         IllegalArgumentException ex = Assertions.assertThrows( IllegalArgumentException.class,
                 () -> userService.updateUserDetails("johndoe@xyz.com", userDetails), "Exception not thrown");
-        Assertions.assertTrue(ex.getMessage().contains(UserService.FIRST_NAME + " cannot be null or empty or blank"));
+        Assertions.assertTrue(ex.getMessage().contains(Constants.FIRST_NAME + " cannot be null or empty or blank"));
     }
-
     @Test
     public void testUpdateUserDetailsInvalidLastName() {
         when(mockedUserRepository.findByEmail(any(String.class))).thenReturn(user);
         Map<String, String> userDetails = new HashMap<>();
-        userDetails.put(UserService.LAST_NAME, "");
+        userDetails.put(Constants.LAST_NAME, "");
         IllegalArgumentException ex = Assertions.assertThrows( IllegalArgumentException.class,
                 () -> userService.updateUserDetails("johndoe@xyz.com", userDetails), "Exception not thrown");
-        Assertions.assertTrue(ex.getMessage().contains(UserService.LAST_NAME + " cannot be null or empty or blank"));
+        Assertions.assertTrue(ex.getMessage().contains(Constants.LAST_NAME + " cannot be null or empty or blank"));
     }
-
     @Test
     public void testUpdateUserDetailsInvalidContact() {
         when(mockedUserRepository.findByEmail(any(String.class))).thenReturn(user);
         Map<String, String> userDetails = new HashMap<>();
-        userDetails.put(UserService.CONTACT, "");
+        userDetails.put(Constants.CONTACT, "");
         IllegalArgumentException ex = Assertions.assertThrows( IllegalArgumentException.class,
                 () -> userService.updateUserDetails("johndoe@xyz.com", userDetails), "Exception not thrown");
-        Assertions.assertTrue(ex.getMessage().contains(UserService.CONTACT + " cannot be null or empty or blank"));
+        Assertions.assertTrue(ex.getMessage().contains(Constants.CONTACT + " cannot be null or empty or blank"));
     }
 
     @Test
@@ -126,11 +124,11 @@ class UserServiceTests {
         IllegalArgumentException emailEmptyException=Assertions.assertThrows(IllegalArgumentException.class, () -> userService.loginUser("","test_password"));
         Assertions.assertEquals("email cannot be empty",emailEmptyException.getMessage());
         IllegalArgumentException emailMissingDomainNameException=Assertions.assertThrows(IllegalArgumentException.class, () -> userService.loginUser("test_email","test_password"));
-        Assertions.assertEquals("given email id is not valid",emailMissingDomainNameException.getMessage());
+        Assertions.assertEquals("Given email is not valid",emailMissingDomainNameException.getMessage());
 
         IllegalArgumentException passwordEmptyException=Assertions.assertThrows(IllegalArgumentException.class, () -> userService.loginUser("test_email@xyz.com",""));
         Assertions.assertEquals("password cannot be empty",passwordEmptyException.getMessage());
-        NullPointerException passwordNullException=Assertions.assertThrows(NullPointerException.class, () -> userService.loginUser("test_email@xyz.com",null));
+        IllegalArgumentException passwordNullException=Assertions.assertThrows(IllegalArgumentException.class, () -> userService.loginUser("test_email@xyz.com",null));
         Assertions.assertEquals("password cannot be null",passwordNullException.getMessage());
 
 

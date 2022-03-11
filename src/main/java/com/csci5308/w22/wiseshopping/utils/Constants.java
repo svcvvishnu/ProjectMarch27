@@ -28,4 +28,8 @@ public class Constants {
 
     public static final String SHARED = "shared";
     public static final String NOTSHARED = "notshared";
+
+    public static final String FIRST_NAME = "firstName";
+    public static final String LAST_NAME = "lastName";
+    public static final String CONTACT = "contact";
 }
