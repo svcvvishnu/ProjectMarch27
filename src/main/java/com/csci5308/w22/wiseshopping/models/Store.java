@@ -1,6 +1,6 @@
 package com.csci5308.w22.wiseshopping.models;
 
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Time;
@@ -8,7 +8,11 @@ import java.sql.Time;
 /**
  * @author Elizabeth James
 */
-
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @EqualsAndHashCode
 @Entity
 @Table(name = "store")
@@ -40,8 +44,6 @@ public class Store {
     @JoinColumn(name="merchant_id", referencedColumnName = "merchant_id")
     private Merchant merchant;
 
-    public Store(){}
-
     public Store(String storeName, Time startTime, Time endTime, String type, String contact, Location location, Merchant merchant) {
         this.storeName = storeName;
         this.startTime = startTime;
@@ -52,73 +54,5 @@ public class Store {
         this.merchant = merchant;
     }
 
-    public int getStoreId() {
-        return storeId;
-    }
 
-    public void setStoreId(int storeId) {
-        this.storeId = storeId;
-    }
-
-    public String getStoreName() {
-        return storeName;
-    }
-
-    public void setStoreName(String storeName) {
-        this.storeName = storeName;
-    }
-
-    public void setStartTime(Time startTime) {
-        this.startTime = startTime;
-    }
-
-    public void setEndTime(Time endTime) {
-        this.endTime = endTime;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getContact() {
-        return contact;
-    }
-
-    public void setContact(String contact) {
-        this.contact = contact;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    public Merchant getMerchant() {
-        return merchant;
-    }
-
-    public void setMerchant(Merchant merchant) {
-        this.merchant = merchant;
-    }
-
-    @Override
-    public String toString() {
-        return "Store{" +
-                "storeId=" + storeId +
-                ", storeName='" + storeName + '\'' +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                ", type='" + type + '\'' +
-                ", contact='" + contact + '\'' +
-                ", location=" + location +
-                ", merchant=" + merchant +
-                '}';
-    }
 }

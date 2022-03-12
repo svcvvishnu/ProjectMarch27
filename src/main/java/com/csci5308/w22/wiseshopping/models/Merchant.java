@@ -1,6 +1,7 @@
 package com.csci5308.w22.wiseshopping.models;
 
-import lombok.EqualsAndHashCode;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.persistence.*;
@@ -8,6 +9,8 @@ import javax.persistence.*;
 /**
  * @author Elizabeth James
  */
+@Getter
+@Setter
 @EqualsAndHashCode
 @Entity
 @Table(name = "merchant_details")
@@ -20,6 +23,7 @@ public class Merchant {
     @Column(name =  "merchant_name")
     private String merchantName;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(name =   "password")
     private String password;
 
@@ -48,6 +52,7 @@ public class Merchant {
         this.password = password;
         this.email = email;
     }
+
 
     /**
      * this encodes the password using sha 256 algorithm
@@ -92,4 +97,5 @@ public class Merchant {
         this.email = email;
     }
 
+    //TODO:  use rest advice for error codes
 }

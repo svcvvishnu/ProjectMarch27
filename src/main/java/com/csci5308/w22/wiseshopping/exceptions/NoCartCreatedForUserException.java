@@ -1,11 +1,12 @@
 package com.csci5308.w22.wiseshopping.exceptions;
 
 /**
- * @author Elizabeth James
+ * @author Adarsh Kannan
  */
-public class NoSuchUser extends RuntimeException{
-    String message;
-    public NoSuchUser(String message) {
+public class NoCartCreatedForUserException extends RuntimeException {
+    private String message;
+
+    public NoCartCreatedForUserException(String message) {
         super(message);
         this.message = message;
     }

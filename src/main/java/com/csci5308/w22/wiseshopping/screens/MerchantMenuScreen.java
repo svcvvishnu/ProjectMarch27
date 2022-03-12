@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -28,7 +30,9 @@ public class MerchantMenuScreen implements Screen {
 
     private UserService userService;
 
-    private List<String> validScreens;
+    private ArrayList<String> validScreens;
+
+//    private List<String> validScreens;
 
     private Merchant merchant;
 
@@ -40,7 +44,10 @@ public class MerchantMenuScreen implements Screen {
         this.scanner = scanner;
         this.merchantService = merchantService;
         this.userService = userService;
-        validScreens = List.of("login", "dummy");
+
+//        validScreens= (ArrayList<String>) Arrays.asList("login", "dummy");
+        validScreens= new ArrayList<>(Arrays.asList(Constants.LOGOUT));
+
 
     }
 
@@ -53,8 +60,8 @@ public class MerchantMenuScreen implements Screen {
             String input = "";
             LOGGER.info("Choose one of the following");
 
-            LOGGER.info("1. edit store details");
-            LOGGER.info("2. edit product details");
+            LOGGER.info("1. add/update store details");
+            LOGGER.info("2. add/update product details");
             input = scan(scanner);
             if(input.equals(Constants.OPTION_ONE)){
                 Screen screen = screenFactory.getScreen( Constants.STORE_MENU);

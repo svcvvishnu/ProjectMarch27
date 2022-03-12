@@ -1,67 +1,103 @@
 package com.csci5308.w22.wiseshopping.service;
-
-import com.csci5308.w22.wiseshopping.models.Merchant;
+import com.csci5308.w22.wiseshopping.exceptions.UserAlreadyRegisteredException;
 import com.csci5308.w22.wiseshopping.models.User;
-import com.csci5308.w22.wiseshopping.repository.MerchantRepository;
 import com.csci5308.w22.wiseshopping.repository.UserRepository;
-import com.trilead.ssh2.auth.AuthenticationManager;
+import com.csci5308.w22.wiseshopping.utils.Constants;
 import org.apache.commons.validator.routines.EmailValidator;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.swing.text.html.Option;
-import java.util.List;
-import java.util.Optional;
-
+import java.util.Map;
 /**
  * @author Pavithra Gunasekaran
  */
 @Service
 public class UserService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MerchantService.class);
     @Autowired
     UserRepository userRepository;
+    @Transactional
+    public User registerUser(String firstName, String lastName, String email, String password, String contact) {
+        if (firstName == null || firstName.equals(" ") || firstName.length()==0) {
+            throw new IllegalArgumentException("firstName cannot be null or empty or blank");
+        }
+        if (lastName == null || lastName.equals(" ") || lastName.length()==0) {
+            throw new IllegalArgumentException("lastName cannot be null or empty or blank");
+        }
+        if (contact == null || contact.equals(" ") || contact.length()==0) {
+            throw new IllegalArgumentException("contact number cannot be null or empty or blank");
+        }
+        if (password == null || password.equals(" ") || password.length()==0) {
+            throw new IllegalArgumentException("password cannot be null or empty or blank");
+        }
+        if (email == null || email.length()==0 || email.equals(" ")) {
+            throw new IllegalArgumentException("email cannot be null or empty or blank");
+        }
+        if (!EmailValidator.getInstance().isValid(email)) {
+            throw new IllegalArgumentException("given email is not valid");
+        }
+        User user = userRepository.findByEmail(email);
+        if (user != null) {
+            throw new UserAlreadyRegisteredException(email + " is already registered");
+        }
+        user = new User(firstName, lastName, email, password, contact);
+        userRepository.save(user);
+        LOGGER.info("User has been successfully registered");
+        return user;
+    }
+    public User updateUserDetails(String email, Map<String, String> userDetails) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new IllegalArgumentException("Could not find any user with email id:" + email);
+        }
+        for (Map.Entry<String, String> entry : userDetails.entrySet()) {
+            if (entry.getValue() == null || entry.getValue().equals(" ") || entry.getValue().length()==0) {
+                throw new IllegalArgumentException(entry.getKey() + " cannot be null or empty or blank");
+            }
+            switch (entry.getKey()) {
+                case Constants.FIRST_NAME:
+                    user.setUserFirstName(entry.getValue());
+                    break;
+                case Constants.LAST_NAME:
+                    user.setUserLastName(entry.getValue());
+                    break;
+                case Constants.CONTACT:
+                    user.setContact(entry.getValue());
+                    break;
+                default:
+//log the invalid input value
+            }
+        }
+        userRepository.save(user);
+        return user;
+    }
 
-    /**
-     * checks the login credentials of a user
-     *
-     * @param email    email id of the user
-     * @param password password of the user
-     */
     @Transactional
     public User loginUser(String email, String password) {
         if (email == null) {
-            throw new NullPointerException("email cannot be null");
+            throw new IllegalArgumentException("email cannot be null");
         }
-        if (email.isEmpty() || email.isBlank()) {
+        if (email.equals(" ") || email.length() == 0) {
             throw new IllegalArgumentException("email cannot be empty");
         }
 
-        if (email == null || email.isBlank() || email.isEmpty()) {
+        if (email == null || email.length() == 0 || email.equals(" ")) {
             throw new IllegalArgumentException("email cannot be null or empty or blank");
 
         }
         if (!EmailValidator.getInstance().isValid(email)) {
-            throw new IllegalArgumentException("given email id is not valid");
+            throw new IllegalArgumentException("Given email is not valid");
         }
 
         if (password == null) {
-            throw new NullPointerException("password cannot be null");
+            throw new IllegalArgumentException("password cannot be null");
         }
-        if (password.isBlank() || password.isEmpty()) {
+        if (password.length() == 0 || password.equals(" ")) {
             throw new IllegalArgumentException("password cannot be empty");
         }
         User user = userRepository.findByEmailAndPassword(email, password);
         return user;
-
-    }
-
-    public User registerUser(String name, String email, String password) {
-        //TODO implementation
-        User user =  new User(1);
-        return user;
     }
 }
-
-

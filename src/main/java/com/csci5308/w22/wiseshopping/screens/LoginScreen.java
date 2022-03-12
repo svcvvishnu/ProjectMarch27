@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -22,7 +24,10 @@ import java.util.Scanner;
 public class LoginScreen implements Screen{
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginScreen.class);
 
-    private List<String> validScreens;
+//    private List<String> validScreens;
+
+    private ArrayList<String> validScreens;
+
 
     private Scanner scanner;
 
@@ -39,13 +44,15 @@ public class LoginScreen implements Screen{
         this.scanner = scanner;
         this.merchantService = merchantService;
         this.userService = userService;
-        validScreens = List.of("register" ,"dummy");
+
+        validScreens= new ArrayList<>(Arrays.asList(Constants.REGISTER));
+
 
     }
 
     @Override
     public boolean render(ScreenFactory screenFactory) {
-        LOGGER.info("***LOGIN Screen****");
+        LOGGER.info("***LOGIN SCREEN****");
         LOGGER.info("use : for additional navigation");
         boolean success = false;
         try{
@@ -58,14 +65,18 @@ public class LoginScreen implements Screen{
             String username =scan(scanner);
             String password = scan(scanner);
             Merchant merchant = merchantService.loginMerchant(username, password);
-            success = merchant!=null;
+            Screen screen = screenFactory.getScreen(Constants.MERCHANT_MENU);
+            screen.setMerchant(merchant);
+            success = screen.render(screenFactory);
         }
         if (Constants.USER.equalsIgnoreCase(input)){
-            LOGGER.info("Enter <username> <password>");
-            String username =scan(scanner);
+            LOGGER.info("Enter <email> <password>");
+            String email =scan(scanner);
             String password = scan(scanner);
-            User user = userService.loginUser(username, password);
-            success = user!=null;
+            User user = userService.loginUser(email, password);
+            Screen screen = screenFactory.getScreen(Constants.USER_MENU);
+            screen.setUser(user);
+            success = screen.render(screenFactory);
         }}
         catch (MenuInterruptedException e){
             getNavigations(screenFactory,validScreens,LOGGER,scanner);

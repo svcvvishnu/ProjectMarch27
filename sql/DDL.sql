@@ -68,14 +68,6 @@ CONSTRAINT `prod_cat_fk` FOREIGN KEY (`product_id`) REFERENCES `product` (`produ
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 
-CREATE TABLE `product_inventory` (
-  `inventory_id` int ,
-   `store_id` int ,
-   `product_id` int ,
-    `price` int ,
-    `stock` int 
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
 DROP TABLE IF EXISTS `product_inventory`;
 CREATE TABLE `product_inventory` (
 `inventory_id` int NOT NULL AUTO_INCREMENT,
@@ -95,14 +87,13 @@ CREATE TABLE `subscription` (
 `subscrptn_id` int NOT NULL AUTO_INCREMENT,
 `user_id` int NOT NULL,
 `product_id` int NOT NULL,
-`price_alert` varchar(255) DEFAULT NULL,
+`price_alert` float,
 PRIMARY KEY (`subscrptn_id`),
 KEY `user_subscrptn_fk` (`user_id`),
 KEY `subs_prod_fk` (`product_id`),
 CONSTRAINT `user_subscrptn_fk` FOREIGN KEY (`user_id`) REFERENCES `user_details` (`user_id`),
 CONSTRAINT `subs_prod_fk` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-
 
 CREATE TABLE `tags` (
 `tag_id` int NOT NULL AUTO_INCREMENT,
@@ -117,7 +108,6 @@ CONSTRAINT `tag_prodinv_fk` FOREIGN KEY (`inventory_id`) REFERENCES `product_inv
 
 CREATE TABLE `cart` (
 `cart_id` int NOT NULL AUTO_INCREMENT,
-`cart_name` varchar(255) DEFAULT NULL,
 `user_id` int NOT NULL,
 `status` varchar(255) DEFAULT NULL,
 PRIMARY KEY (`cart_id`),
@@ -126,15 +116,22 @@ CONSTRAINT `cart_user_fk` FOREIGN KEY (`user_id`) REFERENCES `user_details` (`us
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 
+
+
 CREATE TABLE `product_in_cart` (
-`product_incart_id` int NOT NULL AUTO_INCREMENT,
+`product_in_cart_id` int NOT NULL AUTO_INCREMENT,
 `cart_id` int NOT NULL,
-`inventory_id` int NOT NULL,
-PRIMARY KEY (`product_incart_id`),
+`product_id` int NOT NULL,
+`store_id` int NOT NULL,
+`quantity` int NOT NULL,
+`price` int NOT NULL,
+PRIMARY KEY (`product_in_cart_id`),
 KEY `prodincart_cart_fk` (`cart_id`),
-KEY `prodincart_prodinv_fk` (`inventory_id`),
+KEY `prodincart_prod_fk` (`product_id`),
+KEY `prodincart_store_fk` (`store_id`),
 CONSTRAINT `prodincart_cart_fk` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`cart_id`),
-CONSTRAINT `prodincart_prodinv_fk` FOREIGN KEY (`inventory_id`) REFERENCES `product_inventory`(`inventory_id`)
+CONSTRAINT `prodincart_product_fk` FOREIGN KEY (`product_id`) REFERENCES `product`(`product_id`),
+CONSTRAINT `prodincart_store_fk` FOREIGN KEY (`store_id`) REFERENCES `store`(`store_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 

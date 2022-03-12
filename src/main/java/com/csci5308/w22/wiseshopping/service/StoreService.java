@@ -4,13 +4,17 @@ import com.csci5308.w22.wiseshopping.models.Location;
 import com.csci5308.w22.wiseshopping.models.Merchant;
 import com.csci5308.w22.wiseshopping.models.Store;
 import com.csci5308.w22.wiseshopping.repository.StoreRepository;
+import com.csci5308.w22.wiseshopping.utils.Constants;
 import com.csci5308.w22.wiseshopping.utils.Util;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Time;
 import java.util.List;
+import java.util.Map;
 
 /**
  * this method acts like a service for store
@@ -18,8 +22,14 @@ import java.util.List;
  */
 @Service
 public class StoreService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(StoreService.class);
+
     @Autowired
     private StoreRepository storeRepository;
+
+    @Autowired
+    private LocationService locationService;
 
 
     /**
@@ -36,22 +46,22 @@ public class StoreService {
     @Transactional
     public Store addStore(String name, String businessType, String startTime, String endTime, String contact, Merchant merchant, Location location){
 
-        if (name ==  null || name.isEmpty() || name.isBlank() ){
+        if (name == null || name.length() == 0 || name.equals(" ")){
             throw new IllegalArgumentException("storeName cannot be null or empty or blank");
         }
-        if (businessType ==  null || businessType.isEmpty() || businessType.isBlank() ){
+        if (businessType ==  null  || businessType.length()==0 || businessType.equals(" ")){
             throw new IllegalArgumentException("businessType cannot be null or empty or blank");
         }
 
-        if (startTime == null || startTime.isBlank() || startTime.isEmpty()){
+        if (startTime == null || startTime.length()==0 || startTime.equals(" ")){
             throw new IllegalArgumentException("startTime cannot be null or empty or blank");
         }
 
-        if (endTime == null || endTime.isBlank() || endTime.isEmpty()){
+        if (endTime == null || endTime.length()==0 || endTime.equals(" ")){
             throw new IllegalArgumentException("endTime cannot be null or empty or blank");
         }
 
-        if (contact ==  null || contact.isEmpty() || contact.isBlank() ){
+        if (contact ==  null || contact.equals(" ") || contact.length()==0 ){
             throw new IllegalArgumentException("contactNumber cannot be null or empty or blank");
         }
 
@@ -67,8 +77,52 @@ public class StoreService {
         Time endingTime = Util.parseTime(endTime);
         Store store = new Store(name,startingTime,endingTime,businessType,contact,location,merchant);
         storeRepository.save(store);
+        LOGGER.info("Store {} is added",store.getStoreName());
 
         return store;
+    }
+
+    public Store updateStore(Store store, Map<String, String> attributes){
+        // validate inputs
+        if (store == null || attributes == null){
+            throw new IllegalArgumentException("Store or attributes cannot be null");
+        }
+        boolean recorded = false;
+
+
+        for (Map.Entry<String, String> entry : attributes.entrySet()) {
+
+            if ("none".equals(entry.getValue())) {
+
+                switch (entry.getKey()) {
+                    case Constants.KEY_NAME:
+                        store.setStoreName(attributes.get(Constants.KEY_NAME));
+                        break;
+                    case Constants.KEY_START_TIME:
+                        Time startTime = Util.parseTime(attributes.get(Constants.KEY_START_TIME));
+                        store.setStartTime(startTime);
+                        break;
+                    case Constants.KEY_END_TIME:
+                        Time endTime = Util.parseTime(attributes.get(Constants.KEY_END_TIME));
+                        store.setStartTime(endTime);
+                        break;
+                    case Constants.KEY_TYPE_OF_BUSINESS:
+                        store.setType(attributes.get(Constants.KEY_TYPE_OF_BUSINESS));
+                        break;
+                    case Constants.KEY_CONTACT:
+                        store.setContact(attributes.get(Constants.KEY_CONTACT));
+                        break;
+                    case Constants.KEY_LOCATION:
+                        //TODO
+                        Location location = locationService.getLocationByID(attributes.get(Constants.KEY_LOCATION));
+                        store.setLocation(location);
+                        break;
+                }
+            }
+        }
+        Store updatedStore = storeRepository.save(store);
+        LOGGER.info("Store {} is updated",store.getStoreName());
+        return updatedStore;
     }
 
     /**
@@ -94,8 +148,13 @@ public class StoreService {
     public boolean remove(int id){
         int deletedId = storeRepository.deleteByStoreId(id);
         if (deletedId > 0){
+            LOGGER.info("Store id {} is deleted",id);
             return true;
         }
         return false;
+    }
+
+    public Store getStoreById(int id) {
+        return storeRepository.findById(id).orElse(null);
     }
 }
