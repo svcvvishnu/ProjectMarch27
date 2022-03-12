@@ -7,6 +7,7 @@ import javax.persistence.*;
 /**
  * @author Nilesh
 */
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -25,9 +26,19 @@ public class ProductInventory {
     @JoinColumn(name="store_id", referencedColumnName = "store_id")
     private Store store;
 
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="product_id", referencedColumnName = "product_id")
     private Product product;
+
+
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinTable(
+//            name="product",
+//            joinColumns = @JoinColumn(name="product_id", referencedColumnName = "product_id"))
+//    private int productid;
+
 
     @Column(name = "price")
     private int price;
@@ -42,5 +53,14 @@ public class ProductInventory {
         this.price = price;
         this.stock = stock;
     }
+
+//    public ProductInventory(Store store, int productid, int price, int stock) {
+//       this.store = store;
+//        this.productid = productid;
+//       this.price = price;
+//       this.stock = stock;
+//    }
+
+
 
 }
