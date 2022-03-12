@@ -7,6 +7,7 @@ import javax.persistence.*;
 /**
  * @author Elizabeth James
  */
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

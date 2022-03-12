@@ -2,10 +2,13 @@ package com.csci5308.w22.wiseshopping.service;
 
 import com.csci5308.w22.wiseshopping.repository.ProductCategoryRepository;
 import com.csci5308.w22.wiseshopping.repository.ProductInventoryRepository;
+import com.csci5308.w22.wiseshopping.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.csci5308.w22.wiseshopping.models.*;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @author Elizabeth James
@@ -21,6 +24,9 @@ public class ProductService {
 
     @Autowired
     private SubscriptionService subscriptionService;
+
+    @Autowired
+    ProductRepository productRepository;
 
     public ProductInventory addProductInventory( Product product, Store store, float price, float stock ){
         return null;
@@ -84,6 +90,20 @@ public class ProductService {
         category.setCategoryDesc(description);
         productCategoryRepository.save(category);
         return category;
+    }
+
+    @Transactional
+    public List<Product> getProductStockAvailability(String product_name,String location){
+        List<Product> productIDList= productRepository.findByProductName(product_name);
+        if(product_name.equals("")){
+            throw  new IllegalArgumentException("product name cannot be null");
+        }
+        System.out.println(productIDList.get(0).getProductId());
+        List<ProductInventory> productInventoryList=productInventoryRepository.findByProductId(productIDList.get(0).getProductId(),location);
+
+//        System.out.println("Product Name : "+product_name+", "+"Store Name : "+productInventoryList.get(0).getStore().getStoreName()
+//                +", Stock : "+productInventoryList.get(0).getStock());
+    return  productIDList;
     }
 }
 
