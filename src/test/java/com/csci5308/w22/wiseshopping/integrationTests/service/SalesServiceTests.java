@@ -45,4 +45,10 @@ public class SalesServiceTests {
         Assertions.assertTrue(sales.size()>0);
 
     }
+
+    @Test
+    public void testProductDemandTrend(){
+
+        Assertions.assertTrue(salesService.generateChartForAllProducts());
+    }
 }
