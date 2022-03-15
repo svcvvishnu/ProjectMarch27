@@ -20,16 +20,8 @@ import java.io.IOException;
 public class Graph {
     public JFreeChart createChart(XYDataset dataset, String chartName) {
 
-        JFreeChart chart = ChartFactory.createXYLineChart(
-                "Product demand trend",
-                "Month",
-                "items sold",
-                dataset,
-                PlotOrientation.VERTICAL,
-                true,
-                true,
-                false
-        );
+        JFreeChart chart = ChartFactory.createXYLineChart("Product demand trend","Month","items sold",
+                dataset,PlotOrientation.VERTICAL,true,true,false);
 
         XYPlot plot = chart.getXYPlot();
 
@@ -53,7 +45,7 @@ public class Graph {
                 )
         );
         try {
-            ChartUtils.saveChartAsPNG(new File(chartName + ".png"), chart, 450, 400);
+            ChartUtils.saveChartAsPNG(new File("./productDemandCharts/"+ chartName + ".png"), chart, 450, 400);
         } catch (IOException e) {
             e.printStackTrace();
         }
