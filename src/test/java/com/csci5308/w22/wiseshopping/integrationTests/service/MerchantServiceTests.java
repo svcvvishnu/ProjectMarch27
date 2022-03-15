@@ -40,6 +40,7 @@ public class MerchantServiceTests {
         Assertions.assertEquals(merchant,actualMerchant);
 
     }
+
     @Test
     @Order(2)
     public void testLoginMerchant(){

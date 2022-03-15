@@ -1,5 +1,8 @@
 package com.csci5308.w22.wiseshopping.service;
 
+
+import com.csci5308.w22.wiseshopping.models.Merchant;
+import com.csci5308.w22.wiseshopping.models.User;
 import com.csci5308.w22.wiseshopping.models.*;
 import com.csci5308.w22.wiseshopping.repository.MerchantRepository;
 import com.csci5308.w22.wiseshopping.repository.ProductCategoryRepository;
@@ -106,6 +109,7 @@ public class MerchantServiceTests {
 
     @Test
     public void testLoginMerchant()  {
+
         when(mockedMerchantRepository.findMerchantByEmailAndPassword(any(String.class),any(String.class))).thenReturn(merchant);
         Merchant actualMerchant = merchantService.loginMerchant("johndoe@xyz.com", "password123");
         Assertions.assertEquals(merchant, actualMerchant);
@@ -113,6 +117,7 @@ public class MerchantServiceTests {
 
     @Test
     public void testInputParametersForLoginMerchant(){
+
 
 
         IllegalArgumentException emailNullException=Assertions.assertThrows(IllegalArgumentException.class, () -> merchantService.loginMerchant(null,"test_password"));
@@ -124,12 +129,12 @@ public class MerchantServiceTests {
 
         IllegalArgumentException passwordEmptyException=Assertions.assertThrows(IllegalArgumentException.class, () -> merchantService.loginMerchant("test_email@xyz.com",""));
         Assertions.assertEquals("password cannot be empty",passwordEmptyException.getMessage());
+
         IllegalArgumentException passwordNullException=Assertions.assertThrows(IllegalArgumentException.class, () -> merchantService.loginMerchant("test_email@xyz.com",null));
         Assertions.assertEquals("password cannot be null",passwordNullException.getMessage());
 
 
 
     }
-
 
 }
