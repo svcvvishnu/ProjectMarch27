@@ -7,6 +7,7 @@ import com.csci5308.w22.wiseshopping.models.*;
 import com.csci5308.w22.wiseshopping.repository.MerchantRepository;
 import com.csci5308.w22.wiseshopping.repository.ProductCategoryRepository;
 import com.csci5308.w22.wiseshopping.repository.ProductInventoryRepository;
+import com.csci5308.w22.wiseshopping.repository.TagsRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,8 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-
+import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.any;
 
@@ -26,6 +26,8 @@ import static org.mockito.Mockito.any;
 public class MerchantServiceTests {
     @Mock
     private MerchantRepository mockedMerchantRepository;
+
+
 
 
     @InjectMocks
@@ -132,9 +134,8 @@ public class MerchantServiceTests {
 
         IllegalArgumentException passwordNullException=Assertions.assertThrows(IllegalArgumentException.class, () -> merchantService.loginMerchant("test_email@xyz.com",null));
         Assertions.assertEquals("password cannot be null",passwordNullException.getMessage());
-
-
-
     }
+
+
 
 }

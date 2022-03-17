@@ -1,7 +1,10 @@
 package com.csci5308.w22.wiseshopping.integrationTests.service;
-
-import com.csci5308.w22.wiseshopping.models.Merchant;
+import com.csci5308.w22.wiseshopping.models.*;
+import com.csci5308.w22.wiseshopping.models.Tags;
+import com.csci5308.w22.wiseshopping.repository.*;
 import com.csci5308.w22.wiseshopping.service.MerchantService;
+import com.csci5308.w22.wiseshopping.service.LocationService;
+import com.csci5308.w22.wiseshopping.service.StoreService;
 import net.bytebuddy.build.Plugin;
 import org.aspectj.lang.annotation.After;
 import org.junit.jupiter.api.*;
@@ -9,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.event.annotation.AfterTestMethod;
-
+import java.util.List;
 /**
  * @author Elizabeth James
  */
