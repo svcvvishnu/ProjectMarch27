@@ -3,6 +3,7 @@ package com.csci5308.w22.wiseshopping.service;
 import com.csci5308.w22.wiseshopping.repository.ProductCategoryRepository;
 import com.csci5308.w22.wiseshopping.repository.ProductInventoryRepository;
 import com.csci5308.w22.wiseshopping.repository.ProductRepository;
+import com.csci5308.w22.wiseshopping.repository.TagsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.csci5308.w22.wiseshopping.models.*;
@@ -27,6 +28,9 @@ public class ProductService {
 
     @Autowired
     ProductRepository productRepository;
+
+    @Autowired
+    TagsRepository tagsRepository;
 
     public ProductInventory addProductInventory( Product product, Store store, float price, float stock ){
         return null;
@@ -104,6 +108,14 @@ public class ProductService {
 //        System.out.println("Product Name : "+product_name+", "+"Store Name : "+productInventoryList.get(0).getStore().getStoreName()
 //                +", Stock : "+productInventoryList.get(0).getStock());
     return  productIDList;
+    }
+
+
+    //UpdateTags
+    @Transactional
+    public Tags updateProductTags(Product product, String name) {
+        Tags tag = new Tags(product, name);
+        return tagsRepository.save(tag);
     }
 }
 

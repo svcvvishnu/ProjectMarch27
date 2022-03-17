@@ -84,6 +84,8 @@ public class StoreServiceTests {
         Assertions.assertTrue(storeService.remove(storeList.stream().findFirst().get().getStoreId()));
     }
 
+
+
     @AfterEach
     public void cleanUp(){
         locationService.remove(location);

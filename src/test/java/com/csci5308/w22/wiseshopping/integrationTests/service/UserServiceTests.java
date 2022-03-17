@@ -36,7 +36,8 @@ public class UserServiceTests {
         Assertions.assertEquals(user.getEmail(),actualUser.getEmail());
 
     }
-    //Integration tests for update user
+
+//Integration tests for update user
     @Test
     public void testUpdateUser(){
         User actualUser = userService.loginUser("johndoe@xyz.com","Password123!");
