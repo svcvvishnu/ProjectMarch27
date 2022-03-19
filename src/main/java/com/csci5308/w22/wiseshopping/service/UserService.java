@@ -18,6 +18,7 @@ public class UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(MerchantService.class);
     @Autowired
     UserRepository userRepository;
+
     @Transactional
     public User registerUser(String firstName, String lastName, String email, String password, String contact) {
         if (firstName == null || firstName.equals(" ") || firstName.length()==0) {
