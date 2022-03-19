@@ -20,10 +20,10 @@ public class UserInterfaceController
     private UserService userService;
 
     @RequestMapping ("/NewUserRegistration")
-    public String showForm(@ModelAttribute("registerNewUser") @Validated User user) {
+    public String showForm() {
 //        model.addAttribute("registerUser",
 //                userService.registerUser(registerUser().FirstName, registerUser().LastName, registerUser().InputEmail, registerUser().InputPassword,registerUser().Contact));
-        User newUser = userService.registerUser(user.getUserFirstName(),user.getUserLastName(),user.getEmail(),user.getPassword(),user.getContact());
+ //       User newUser = userService.registerUser(user.getUserFirstName(),user.getUserLastName(),user.getEmail(),user.getPassword(),user.getContact());
         return "registerUser";
     }
 
