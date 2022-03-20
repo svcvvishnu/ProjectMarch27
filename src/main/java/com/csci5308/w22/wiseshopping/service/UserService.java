@@ -18,6 +18,7 @@ public class UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(MerchantService.class);
     @Autowired
     UserRepository userRepository;
+
     @Transactional
     public User registerUser(String firstName, String lastName, String email, String password, String contact) {
         if (firstName == null || firstName.equals(" ") || firstName.length()==0) {
@@ -58,10 +59,10 @@ public class UserService {
             }
             switch (entry.getKey()) {
                 case Constants.FIRST_NAME:
-                    user.setUserFirstName(entry.getValue());
+                    user.setFirstName(entry.getValue());
                     break;
                 case Constants.LAST_NAME:
-                    user.setUserLastName(entry.getValue());
+                    user.setLastName(entry.getValue());
                     break;
                 case Constants.CONTACT:
                     user.setContact(entry.getValue());

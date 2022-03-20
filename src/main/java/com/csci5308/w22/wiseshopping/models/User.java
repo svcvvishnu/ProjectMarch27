@@ -19,11 +19,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "user_id")
-    private int userId;
+    private int id;
     @Column(name = "first_name")
-    private String userFirstName;
+    private String firstName;
     @Column(name = "last_name")
-    private String userLastName;
+    private String lastName;
     @Column(name = "email")
     private String email;
     @Column(name = "password")
@@ -33,13 +33,13 @@ public class User {
     @Column(name = "register_at" ,columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp register_at;
     public User(int userId) {
-        this.userId = userId;
+        this.id = userId;
     }
     public User(String firstName, String lastName, String email, String password, String contact) {
         this.email = email;
         this.password = encode(password);
-        this.userFirstName = firstName;
-        this.userLastName = lastName;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.contact = contact;
     }
     /**
@@ -51,23 +51,33 @@ public class User {
         return DigestUtils.sha256Hex(password);
     }
     public int getUserId() {
-        return userId;
+        return id;
     }
-    public void setUserId(int userId) {
-        this.userId = userId;
+
+    public int getId() {
+        return id;
     }
-    public String getUserFirstName() {
-        return userFirstName;
+
+    public void setId(int id) {
+        this.id = id;
     }
-    public void setUserFirstName(String userFirstName) {
-        this.userFirstName = userFirstName;
+
+    public String getFirstName() {
+        return firstName;
     }
-    public String getUserLastName() {
-        return userLastName;
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
-    public void setUserLastName(String userLastName) {
-        this.userLastName = userLastName;
+
+    public String getLastName() {
+        return lastName;
     }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public String getEmail() {
         return email;
     }
