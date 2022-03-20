@@ -1,13 +1,22 @@
 package com.csci5308.w22.wiseshopping.controllers;
 
+import com.csci5308.w22.wiseshopping.models.Location;
+import com.csci5308.w22.wiseshopping.models.Merchant;
 import com.csci5308.w22.wiseshopping.models.Store;
 
+import com.csci5308.w22.wiseshopping.repository.LocationRepository;
+import com.csci5308.w22.wiseshopping.service.MerchantService;
 import com.csci5308.w22.wiseshopping.service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * @author Elizabeth James
@@ -17,14 +26,32 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("store")
 public class StoreController {
 
-
     @Autowired
     private StoreService storeService;
+    @Autowired
+    private MerchantService merchantService;
 
-    @PostMapping("/addstore")
-    public Store addStore(@Validated Store store, @Validated String startingTime, @Validated String endingTime){
-        return storeService.addStore(store.getStoreName(), store.getType(), startingTime, endingTime ,store.getContact(), store.getMerchant(), store.getLocation());
+    @Autowired private LocationRepository locationRepository;
+
+    @GetMapping ("/addStore")
+    public String getAddStoreForm(Model model) {
+        model.addAttribute("store", new Store());
+
+        Iterable<Location> locations =  locationRepository.findAll();
+        model.addAttribute("locations", locations);
+        return "store/addStore";
     }
+
+    @PostMapping("/addStore")
+    public String addStore (@ModelAttribute("store") Store store, HttpServletRequest request, HttpServletResponse response){
+        Location location = locationRepository.findById(72).orElse(null);
+        storeService.addStore(store.getName(), store.getType(), store.getStartTime(), store.getEndTime() ,store.getContact(), merchantService.getMerchantFromSession(request), location);
+        return "index";
+    }
+//    @PostMapping("/addstore")
+//    public Store addStore(@Validated Store store, @Validated String startingTime, @Validated String endingTime){
+//        return storeService.addStore(store.getName(), store.getType(), startingTime, endingTime ,store.getContact(), store.getMerchant(), store.getLocation());
+//    }
 
     @PostMapping("/removestore")
     public void removeStore(@Validated Store store){
