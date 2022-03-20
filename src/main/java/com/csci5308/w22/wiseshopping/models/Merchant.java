@@ -18,10 +18,10 @@ public class Merchant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "merchant_id")
-    private int merchantId;
+    private int id;
 
     @Column(name =  "merchant_name")
-    private String merchantName;
+    private String name;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(name =   "password")
@@ -31,7 +31,7 @@ public class Merchant {
     private String email;
 
     public Merchant(String merchantName, String email , String password) {
-        this.merchantName = merchantName;
+        this.name = merchantName;
         this.password = encode(password);
         this.email = email;
     }
@@ -47,8 +47,8 @@ public class Merchant {
     }
 
     public Merchant(int merchantId, String merchantName, String password, String email) {
-        this.merchantId = merchantId;
-        this.merchantName = merchantName;
+        this.id = merchantId;
+        this.name = merchantName;
         this.password = password;
         this.email = email;
     }
@@ -63,23 +63,21 @@ public class Merchant {
         return DigestUtils.sha256Hex(password);
     }
 
-
-    public int getMerchantId() {
-        return merchantId;
+    public int getId() {
+        return id;
     }
 
-    public void setMerchantId(int merchantId) {
-        this.merchantId = merchantId;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getMerchantName() {
-        return merchantName;
+    public String getName() {
+        return name;
     }
 
-    public void setMerchantName(String merchantName) {
-        this.merchantName = merchantName;
+    public void setName(String name) {
+        this.name = name;
     }
-
 
     public String getPassword() {
         return password;
