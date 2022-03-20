@@ -44,7 +44,7 @@ public class StoreService {
      * @return true, if success; else false
      */
     @Transactional
-    public Store addStore(String name, String businessType, String startTime, String endTime, String contact, Merchant merchant, Location location){
+    public Store addStore(String name, String businessType, Time startTime, Time endTime, String contact, Merchant merchant, Location location){
 
         if (name == null || name.length() == 0 || name.equals(" ")){
             throw new IllegalArgumentException("storeName cannot be null or empty or blank");
@@ -53,11 +53,11 @@ public class StoreService {
             throw new IllegalArgumentException("businessType cannot be null or empty or blank");
         }
 
-        if (startTime == null || startTime.length()==0 || startTime.equals(" ")){
+        if (startTime == null){
             throw new IllegalArgumentException("startTime cannot be null or empty or blank");
         }
 
-        if (endTime == null || endTime.length()==0 || endTime.equals(" ")){
+        if (endTime == null ){
             throw new IllegalArgumentException("endTime cannot be null or empty or blank");
         }
 
@@ -73,11 +73,9 @@ public class StoreService {
             throw new IllegalArgumentException("location cannot be null");
         }
 
-        Time startingTime = Util.parseTime(startTime);
-        Time endingTime = Util.parseTime(endTime);
-        Store store = new Store(name,startingTime,endingTime,businessType,contact,location,merchant);
+        Store store = new Store(name,startTime,endTime,businessType,contact,location,merchant);
         storeRepository.save(store);
-        LOGGER.info("Store {} is added",store.getStoreName());
+        LOGGER.info("Store {} is added",store.getName());
 
         return store;
     }
@@ -96,15 +94,15 @@ public class StoreService {
 
                 switch (entry.getKey()) {
                     case Constants.KEY_NAME:
-                        store.setStoreName(attributes.get(Constants.KEY_NAME));
+                        store.setName(attributes.get(Constants.KEY_NAME));
                         break;
                     case Constants.KEY_START_TIME:
-                        Time startTime = Util.parseTime(attributes.get(Constants.KEY_START_TIME));
-                        store.setStartTime(startTime);
+//                        Time startTime = Util.parseTime(attributes.get(Constants.KEY_START_TIME));
+                        store.setStartTime(attributes.get(Constants.KEY_START_TIME));
                         break;
                     case Constants.KEY_END_TIME:
-                        Time endTime = Util.parseTime(attributes.get(Constants.KEY_END_TIME));
-                        store.setStartTime(endTime);
+//                        Time endTime = Util.parseTime(attributes.get(Constants.KEY_END_TIME));
+                        store.setEndTime(attributes.get(Constants.KEY_END_TIME));
                         break;
                     case Constants.KEY_TYPE_OF_BUSINESS:
                         store.setType(attributes.get(Constants.KEY_TYPE_OF_BUSINESS));
@@ -121,7 +119,7 @@ public class StoreService {
             }
         }
         Store updatedStore = storeRepository.save(store);
-        LOGGER.info("Store {} is updated",store.getStoreName());
+        LOGGER.info("Store {} is updated",store.getName());
         return updatedStore;
     }
 
@@ -146,17 +144,13 @@ public class StoreService {
 
     @Transactional
     public boolean remove(int id){
-        int deletedId = storeRepository.deleteByStoreId(id);
-        if (deletedId > 0){
-            LOGGER.info("Store id {} is deleted",id);
-            return true;
-        }
-        return false;
+        storeRepository.deleteById(id);
+        return true;
     }
 
 
 
     public Store getStoreById(int id) {
-        return storeRepository.findById(id).orElse(null);
+        return storeRepository.findById(id);
     }
 }

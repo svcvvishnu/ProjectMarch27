@@ -9,6 +9,7 @@ import com.csci5308.w22.wiseshopping.models.User;
 import com.csci5308.w22.wiseshopping.service.LocationService;
 import com.csci5308.w22.wiseshopping.service.StoreService;
 import com.csci5308.w22.wiseshopping.utils.Constants;
+import com.csci5308.w22.wiseshopping.utils.Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,14 +72,14 @@ public class StoreScreen implements Screen {
                 String province = scan(scanner);
                 String country = scan(scanner);
                 Location location = locationService.addLocation(locationName, zipcode, province, country);
-                Store store = storeService.addStore(storeName,businessType, startTime, endTime, contact,merchant,location);
+                Store store = storeService.addStore(storeName,businessType, Util.parseTime(startTime), Util.parseTime(endTime), contact,merchant,location);
                 if (store!=null){
                     success = true;
                 }
 
             } else if (input.equals(Constants.DELETE)) {
                 List<Store> storeList = storeService.getAllStoresBelongingToAMerchant(merchant);
-                storeList.stream().forEach(s -> LOGGER.info( "Store id:  {}, name: {}", s.getStoreId(), s.getStoreName()));
+                storeList.stream().forEach(s -> LOGGER.info( "Store id:  {}, name: {}", s.getId(), s.getName()));
                 LOGGER.info("Enter the id to be deleted");
                 String idToBeDeleted = scan(scanner);
                 success = storeService.remove(Integer.parseInt(idToBeDeleted));
@@ -86,7 +87,7 @@ public class StoreScreen implements Screen {
             }
             else if (input.equals(Constants.UPDATE)){
                 List<Store> storeList = storeService.getAllStoresBelongingToAMerchant(merchant);
-                storeList.stream().forEach(s -> LOGGER.info( "Store id:  {}, name: {}", s.getStoreId(), s.getStoreName()));
+                storeList.stream().forEach(s -> LOGGER.info( "Store id:  {}, name: {}", s.getId(), s.getName()));
                 LOGGER.info("Enter the id to be deleted");
                 int idToBeUpdated = Integer.parseInt(scan(scanner));
                 Store storeToBeUpdated = storeService.getStoreById(idToBeUpdated);
