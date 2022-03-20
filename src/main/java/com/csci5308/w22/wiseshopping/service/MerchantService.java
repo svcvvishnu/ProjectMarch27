@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -64,6 +66,16 @@ public class MerchantService {
         return merchant;
     }
 
+    public Merchant getMerchantFromSession(HttpServletRequest request){
+        Cookie[] cookies = request.getCookies();
+
+        for (Cookie cookie : cookies){
+            if (cookie.getName().equals("merchantId")){
+                return  merchantRepository.findById(Integer.parseInt(cookie.getValue())).orElse(null);
+            }
+        }
+        return null;
+    }
     /**
      * deletes a store from table
      *
