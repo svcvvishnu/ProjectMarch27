@@ -35,7 +35,7 @@ public class MerchantController {
     public String registerMerchant (@ModelAttribute("merchant") Merchant merchant, HttpServletRequest request, HttpServletResponse response){
         merchant = merchantService.registerMerchant(merchant.getName(), merchant.getEmail(),merchant.getPassword());
         sessionService.setSession(merchant.getId(), request, response );
-        return "store/addStore";
+        return "redirect:/store/addStore";
     }
 
     @PostMapping("/login")
