@@ -2,6 +2,8 @@ package com.csci5308.w22.wiseshopping.service;
 
 import com.csci5308.w22.wiseshopping.exceptions.NoSuchUserException;
 import com.csci5308.w22.wiseshopping.exceptions.UserAlreadyRegisteredException;
+import com.csci5308.w22.wiseshopping.models.Merchant;
+import com.csci5308.w22.wiseshopping.models.User;
 import com.csci5308.w22.wiseshopping.models.*;
 import com.csci5308.w22.wiseshopping.repository.MerchantRepository;
 import com.csci5308.w22.wiseshopping.repository.ProductCategoryRepository;

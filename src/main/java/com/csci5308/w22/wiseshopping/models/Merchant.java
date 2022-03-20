@@ -9,8 +9,6 @@ import javax.persistence.*;
 /**
  * @author Elizabeth James
  */
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode
@@ -40,6 +38,18 @@ public class Merchant {
 
     public Merchant(String email , String password) {
         this.password = encode(password);
+        this.email = email;
+    }
+
+
+    public Merchant(){
+
+    }
+
+    public Merchant(int merchantId, String merchantName, String password, String email) {
+        this.merchantId = merchantId;
+        this.merchantName = merchantName;
+        this.password = password;
         this.email = email;
     }
 

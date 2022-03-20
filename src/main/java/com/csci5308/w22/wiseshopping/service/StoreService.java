@@ -154,6 +154,8 @@ public class StoreService {
         return false;
     }
 
+
+
     public Store getStoreById(int id) {
         return storeRepository.findById(id).orElse(null);
     }
