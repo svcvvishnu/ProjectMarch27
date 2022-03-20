@@ -15,7 +15,6 @@ import java.util.List;
 public interface StoreRepository extends CrudRepository<Store, Integer> {
     @Query(value = "SELECT * FROM store WHERE merchant_id = ?1", nativeQuery = true)
     List<Store> findByMerchantID(int merchantID);
-    Integer deleteById(int id);
     Store findById(int storeId);
 
 }

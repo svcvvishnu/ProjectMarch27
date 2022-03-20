@@ -144,12 +144,8 @@ public class StoreService {
 
     @Transactional
     public boolean remove(int id){
-        int deletedId = storeRepository.deleteById(id);
-        if (deletedId > 0){
-            LOGGER.info("Store id {} is deleted",id);
-            return true;
-        }
-        return false;
+        storeRepository.deleteById(id);
+        return true;
     }
 
 
