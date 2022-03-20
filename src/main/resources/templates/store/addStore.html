@@ -95,9 +95,9 @@
                         <input type="tel" class="form-control" id="contact"  placeholder="Enter contact number of the store" th:field="*{contact}">
                     </div>
 
-                    <select class="form-control" id="locationDropDown">
+                    <select class="form-control" id="locationDropDown" th:field="*{location}">
                         <option value="0">select option</option>
-                        <option th:each="l : ${locations}" th:value="${l}" th:text="${l.name} + ', ' + ${l.zipcode}+ ', ' + ${l.province}+ ', ' + ${l.country}"></option>
+                        <option th:each="l : ${locations}" th:value="${l.id}" th:text="${l.name} + ', ' + ${l.zipcode}+ ', ' + ${l.province}+ ', ' + ${l.country}"></option>
                     </select>
 
                     <br>
