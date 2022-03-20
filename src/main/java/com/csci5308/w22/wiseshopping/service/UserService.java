@@ -59,10 +59,10 @@ public class UserService {
             }
             switch (entry.getKey()) {
                 case Constants.FIRST_NAME:
-                    user.setUserFirstName(entry.getValue());
+                    user.setFirstName(entry.getValue());
                     break;
                 case Constants.LAST_NAME:
-                    user.setUserLastName(entry.getValue());
+                    user.setLastName(entry.getValue());
                     break;
                 case Constants.CONTACT:
                     user.setContact(entry.getValue());

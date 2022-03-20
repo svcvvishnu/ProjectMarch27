@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -32,6 +33,19 @@ public class UserController {
     //TODO: set http as only cookies
     public String login(@Validated User user){
         userService.loginUser(user.getEmail(), user.getPassword());
+        return "index";
+    }
+
+    @GetMapping ("/registerUser")
+    public String getRegistrationForm(@ModelAttribute("user") User user) {
+        System.out.println(user);
+        return "user/registerUser";
+    }
+
+    @PostMapping("/registerUser")
+    public String registerUser (@ModelAttribute("user") User user){
+        System.out.println(user);
+        userService.registerUser(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword(), user.getContact());
         return "index";
     }
 }
