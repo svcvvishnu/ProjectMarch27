@@ -22,13 +22,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/addMerchant")
-    public String registerMerchant(@Validated User user) {
-        //TODO : why does user has firstname and last name? why not one single column
-       // userService.registerUser(user.getUserFirstName(), user.getEmail(), user.getPassword());
-        return "index";
-    }
-
     @PostMapping("/login")
     //TODO: set http as only cookies
     public String login(@Validated User user){
@@ -38,13 +31,11 @@ public class UserController {
 
     @GetMapping ("/registerUser")
     public String getRegistrationForm(@ModelAttribute("user") User user) {
-        System.out.println(user);
         return "user/registerUser";
     }
 
     @PostMapping("/registerUser")
     public String registerUser (@ModelAttribute("user") User user){
-        System.out.println(user);
         userService.registerUser(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword(), user.getContact());
         return "index";
     }

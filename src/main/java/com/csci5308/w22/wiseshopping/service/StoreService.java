@@ -141,7 +141,7 @@ public class StoreService {
 
     @Transactional
     public List<Store> getAllStoresBelongingToAMerchant(Merchant merchant){
-        return storeRepository.findByMerchantID(merchant.getMerchantId());
+        return storeRepository.findByMerchantID(merchant.getId());
     }
 
     @Transactional

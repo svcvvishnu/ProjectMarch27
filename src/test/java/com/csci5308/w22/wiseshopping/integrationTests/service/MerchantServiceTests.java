@@ -39,7 +39,7 @@ public class MerchantServiceTests {
     @Order(1)
     public void testRegisterMerchant(){
         Merchant actualMerchant = merchantService.registerMerchant("John Doe","johndoe@xyz.com","password123");
-        merchant.setMerchantId(actualMerchant.getMerchantId());
+        merchant.setId(actualMerchant.getId());
         Assertions.assertEquals(merchant,actualMerchant);
 
     }

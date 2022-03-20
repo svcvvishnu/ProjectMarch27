@@ -19,16 +19,16 @@ public class MerchantController {
     private MerchantService merchantService;
 
 
-    @GetMapping("/register")
-    public String register(Merchant merchant){
-        return "registerMerchant";
+    @GetMapping ("/registerMerchant")
+    public String getRegistrationForm(@ModelAttribute("merchant") Merchant merchant) {
+        return "merchant/registerMerchant";
     }
 
-    @PostMapping("/addMerchant")
-    public String registerMerchant(@Validated Merchant merchant) {
-        merchantService.registerMerchant(merchant.getMerchantName(), merchant.getEmail(), merchant.getPassword());
+    @PostMapping("/registerMerchant")
+    public String registerMerchant (@ModelAttribute("merchant") Merchant merchant){
+        merchantService.registerMerchant(merchant.getName(), merchant.getEmail(),merchant.getPassword());
         return "index";
-      }
+    }
 
     @PostMapping("/login")
     //TODO: set http as only cookies
