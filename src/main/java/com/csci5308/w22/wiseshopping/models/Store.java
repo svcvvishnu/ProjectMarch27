@@ -1,5 +1,6 @@
 package com.csci5308.w22.wiseshopping.models;
 
+import com.csci5308.w22.wiseshopping.utils.Util;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,10 +21,10 @@ public class Store {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "store_id")
-    private int storeId;
+    private int id;
 
     @Column(name = "store_name")
-    private String storeName;
+    private String name;
 
     @Column(name = "start_time")
     private Time startTime;
@@ -45,7 +46,7 @@ public class Store {
     private Merchant merchant;
 
     public Store(String storeName, Time startTime, Time endTime, String type, String contact, Location location, Merchant merchant) {
-        this.storeName = storeName;
+        this.name = storeName;
         this.startTime = startTime;
         this.endTime = endTime;
         this.type = type;
@@ -54,5 +55,10 @@ public class Store {
         this.merchant = merchant;
     }
 
-
+    public void setStartTime(String startTime) {
+        this.startTime = Util.parseTime(startTime);
+    }
+    public void setEndTime(String endTime) {
+        this.endTime = Util.parseTime(endTime);
+    }
 }

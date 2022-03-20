@@ -36,8 +36,8 @@ public class SubscriptionServiceTests {
         product.setProductName("Potatoes");
 
         Store store = new Store();
-        store.setStoreId(1);
-        store.setStoreName("walmart");
+        store.setId(1);
+        store.setName("walmart");
         Mockito.when(subscriptionService.alertSubscribers(product,store,(float) NEW_PRICE)).thenReturn(true);
         Assertions.assertTrue(subscriptionService.alertSubscribers(product, store, (float) NEW_PRICE));
     }
