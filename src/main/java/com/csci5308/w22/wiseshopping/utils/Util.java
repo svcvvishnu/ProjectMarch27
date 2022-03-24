@@ -39,4 +39,7 @@ public class Util {
     }
 
 
+    public static boolean isValidString(String name) {
+        return name!=null && !name.isEmpty() && !name.isBlank();
+    }
 }

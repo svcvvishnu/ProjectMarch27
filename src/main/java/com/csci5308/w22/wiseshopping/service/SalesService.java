@@ -3,6 +3,7 @@ package com.csci5308.w22.wiseshopping.service;
 import com.csci5308.w22.wiseshopping.models.Graph;
 import com.csci5308.w22.wiseshopping.models.Sales;
 import com.csci5308.w22.wiseshopping.repository.SalesRepository;
+import com.csci5308.w22.wiseshopping.utils.Util;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import org.jfree.chart.JFreeChart;
@@ -37,14 +38,8 @@ public class SalesService {
 
     @Transactional
     public HashMap<Integer, Double> getProductLowestPriceAnalytics(String product) throws SQLException {
-        if (product == null) {
-            throw new IllegalArgumentException("product cannot be null");
-        }
-        if (product.equals("")|| product.length() == 0) {
-            throw new IllegalArgumentException("product cannot be empty");
-        }
-        if (product.equals(" ") ) {
-            throw new IllegalArgumentException("product cannot be blank");
+        if (!Util.isValidString(product)) {
+            throw new IllegalArgumentException("product cannot be null or empty or blank");
         }
         if(salesRepository.findByProduct(product).size()==0){
             throw new IllegalArgumentException("the selected product does not exists");

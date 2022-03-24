@@ -27,10 +27,10 @@ public class ProductService {
     private SubscriptionService subscriptionService;
 
     @Autowired
-    ProductRepository productRepository;
+    private ProductRepository productRepository;
 
     @Autowired
-    TagsRepository tagsRepository;
+    private TagsRepository tagsRepository;
 
     public ProductInventory addProductInventory( Product product, Store store, float price, float stock ){
         return null;

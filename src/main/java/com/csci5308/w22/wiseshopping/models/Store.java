@@ -55,10 +55,10 @@ public class Store {
         this.merchant = merchant;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = Util.parseTime(startTime);
+    public void setStartTime(Time startTime) {
+        this.startTime = startTime;
     }
-    public void setEndTime(String endTime) {
-        this.endTime = Util.parseTime(endTime);
+    public void setEndTime(Time endTime) {
+        this.endTime = endTime;
     }
 }

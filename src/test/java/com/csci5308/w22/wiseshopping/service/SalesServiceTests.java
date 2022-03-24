@@ -41,11 +41,11 @@ public class SalesServiceTests {
     @Test
     public void testGetProductLowestPriceAnalytics() {
         IllegalArgumentException productNullException=Assertions.assertThrows(IllegalArgumentException.class, () -> salesService.getProductLowestPriceAnalytics(null));
-        Assertions.assertEquals("product cannot be null",productNullException.getMessage());
+        Assertions.assertEquals("product cannot be null or empty or blank",productNullException.getMessage());
         IllegalArgumentException productEmptyException=Assertions.assertThrows(IllegalArgumentException.class, () -> salesService.getProductLowestPriceAnalytics(""));
-        Assertions.assertEquals("product cannot be empty",productEmptyException.getMessage());
+        Assertions.assertEquals("product cannot be null or empty or blank",productEmptyException.getMessage());
         IllegalArgumentException productBlankException=Assertions.assertThrows(IllegalArgumentException.class, () -> salesService.getProductLowestPriceAnalytics(" "));
-        Assertions.assertEquals("product cannot be blank",productBlankException.getMessage());
+        Assertions.assertEquals("product cannot be null or empty or blank",productBlankException.getMessage());
         IllegalArgumentException productMissingException=Assertions.assertThrows(IllegalArgumentException.class, () -> salesService.getProductLowestPriceAnalytics("Samsung Mobile"));
         Assertions.assertEquals("the selected product does not exists",productMissingException.getMessage());
 

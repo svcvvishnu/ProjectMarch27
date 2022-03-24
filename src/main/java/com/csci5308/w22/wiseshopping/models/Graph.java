@@ -18,16 +18,21 @@ import java.io.IOException;
  * @author Elizabeth James
  */
 public class Graph {
+    private static final String TITLE = "Product demand trend";
+    private static  final String XAXISLABEL = "Month";
+    private static final String YAXISLABEL = "items sold";
+    private static final float STROKESIZE = 2.0f;
+    private static final int CHARTSIZE = 18;
     public JFreeChart createChart(XYDataset dataset, String chartName) {
 
-        JFreeChart chart = ChartFactory.createXYLineChart("Product demand trend","Month","items sold",
+        JFreeChart chart = ChartFactory.createXYLineChart(TITLE,XAXISLABEL,YAXISLABEL,
                 dataset,PlotOrientation.VERTICAL,true,true,false);
 
         XYPlot plot = chart.getXYPlot();
 
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
         renderer.setSeriesPaint(0, Color.RED);
-        renderer.setSeriesStroke(0, new BasicStroke(2.0f));
+        renderer.setSeriesStroke(0, new BasicStroke(STROKESIZE));
 
         plot.setRenderer(renderer);
         plot.setBackgroundPaint(Color.white);
@@ -41,11 +46,13 @@ public class Graph {
         chart.getLegend().setFrame(BlockBorder.NONE);
 
         chart.setTitle(new TextTitle("Product demand trend",
-                        new Font("Serif", java.awt.Font.BOLD, 18)
+                        new Font("Serif", java.awt.Font.BOLD, CHARTSIZE)
                 )
         );
         try {
-            ChartUtils.saveChartAsPNG(new File("./productDemandCharts/"+ chartName + ".png"), chart, 450, 400);
+            int width = 450;
+            int height = 400;
+            ChartUtils.saveChartAsPNG(new File("./productDemandCharts/"+ chartName + ".png"), chart, width,height);
         } catch (IOException e) {
             e.printStackTrace();
         }

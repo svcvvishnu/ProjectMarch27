@@ -72,7 +72,7 @@ public class StoreScreen implements Screen {
                 String province = scan(scanner);
                 String country = scan(scanner);
                 Location location = locationService.addLocation(locationName, zipcode, province, country);
-                Store store = storeService.addStore(storeName,businessType, Util.parseTime(startTime), Util.parseTime(endTime), contact,merchant,location);
+                Store store = storeService.addStore(storeName,businessType, startTime, endTime, contact,merchant,location);
                 if (store!=null){
                     success = true;
                 }

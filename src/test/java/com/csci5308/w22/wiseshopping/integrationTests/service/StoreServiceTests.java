@@ -47,9 +47,9 @@ public class StoreServiceTests {
     @Test
     public void testAddStore() {
 
-        Store expectedStore  = new Store("Timbuktu", Util.parseTime("11"), Util.parseTime("12"), "private", "John Doe", location,merchant);
+        Store expectedStore  = new Store("Timbuktu", Util.parseTime("11"),  Util.parseTime("12"), "private", "John Doe", location,merchant);
 
-        Store actualStore = storeService.addStore("Timbuktu", "private", Util.parseTime("11"),Util.parseTime("12"), "John Doe", merchant,location);
+        Store actualStore = storeService.addStore("Timbuktu", "private", "11","12", "John Doe", merchant,location);
         expectedStore.setId(actualStore.getId());
         Assertions.assertEquals(expectedStore, actualStore);
         storeService.remove(expectedStore);
@@ -59,9 +59,9 @@ public class StoreServiceTests {
     @Test
     public void testUpdateStore() {
 
-        Store expectedStore  = new Store("Timbuktu", Util.parseTime("11"), Util.parseTime("12"), "private", "John Doe", location,merchant);
+        Store expectedStore  = new Store("Timbuktu", Util.parseTime("11"),  Util.parseTime("12"), "private", "John Doe", location,merchant);
 
-        Store actualStore = storeService.addStore("Timbuktu", "private", Util.parseTime("11"),Util.parseTime("12"), "John Doe", merchant,location);
+        Store actualStore = storeService.addStore("Timbuktu", "private", "11","12", "John Doe", merchant,location);
         Map<String, String> map = new HashMap<>();
         map.put(Constants.KEY_TYPE_OF_BUSINESS, "none");
         map.put(Constants.KEY_CONTACT, "1");
@@ -77,7 +77,7 @@ public class StoreServiceTests {
 
     @Test
     public void testRemoveStores(){
-        storeService.addStore("Timbuktu", "private", Util.parseTime("11"),Util.parseTime("12"), "John Doe", merchant,location);
+        storeService.addStore("Timbuktu", "private", "11","12", "John Doe", merchant,location);
 
         Merchant merchant2 = merchantService.getMerchantByEmail("dummy@dummy.com");
         List<Store> storeList = storeService.getAllStoresBelongingToAMerchant(merchant2);

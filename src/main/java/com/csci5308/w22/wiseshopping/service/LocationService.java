@@ -2,6 +2,7 @@ package com.csci5308.w22.wiseshopping.service;
 
 import com.csci5308.w22.wiseshopping.models.Location;
 import com.csci5308.w22.wiseshopping.repository.LocationRepository;
+import com.csci5308.w22.wiseshopping.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,17 +27,17 @@ public class LocationService {
     @Transactional
     public Location addLocation(String name, String zipcode, String province, String country){
 
-        if (name ==  null || name.equals(" ") || name.length()==0 ){
+        if (!Util.isValidString(name)){
             throw new IllegalArgumentException("locationName cannot be null or empty or blank");
         }
 
-        if (zipcode == null || zipcode.length()==0 || zipcode.equals(" ")){
+        if (!Util.isValidString(zipcode)){
             throw new IllegalArgumentException("zipcode cannot be null or empty or blank");
         }
-        if (province ==  null || province.equals(" ") || province.length()==0 ){
+        if (!Util.isValidString(province)){
             throw new IllegalArgumentException("province cannot be null or empty or blank");
         }
-        if (country ==  null || country.equals(" ") || country.length()==0 ){
+        if (!Util.isValidString(country)){
             throw new IllegalArgumentException("country cannot be null or empty or blank");
         }
 

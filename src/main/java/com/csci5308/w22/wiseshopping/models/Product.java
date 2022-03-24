@@ -7,6 +7,7 @@ import javax.persistence.*;
 /**
  * @author Nilesh
 */
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

@@ -8,6 +8,7 @@ import com.csci5308.w22.wiseshopping.models.*;
 import com.csci5308.w22.wiseshopping.repository.MerchantRepository;
 import com.csci5308.w22.wiseshopping.repository.ProductCategoryRepository;
 import com.csci5308.w22.wiseshopping.repository.ProductInventoryRepository;
+import com.csci5308.w22.wiseshopping.utils.Util;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.slf4j.Logger;
@@ -42,15 +43,15 @@ public class MerchantService {
      */
     @Transactional
     public Merchant registerMerchant(String name, String email, String password) {
-        if (name == null || name.equals(" ") || name.length()==0) {
+        if (!Util.isValidString(name)) {
             throw new IllegalArgumentException("name cannot be null or empty or blank");
         }
-        if (password == null || password.equals(" ") || password.length()==0) {
-            throw new IllegalArgumentException("password cannot be null or empty or blank");
+        if (!Util.isValidString(email)) {
+            throw new IllegalArgumentException("email cannot be null or empty or blank");
         }
 
-        if (email == null || email.length()==0 || email.equals(" ")) {
-            throw new IllegalArgumentException("email cannot be null or empty or blank");
+        if (!Util.isValidString(password)) {
+            throw new IllegalArgumentException("password cannot be null or empty or blank");
         }
         if (!EmailValidator.getInstance().isValid(email)) {
             throw new IllegalArgumentException("given email is not valid");
@@ -84,7 +85,7 @@ public class MerchantService {
      */
     @Transactional
     public boolean removeMerchant(String email) {
-        if (email == null || email.length()==0 || email.equals(" ")) {
+        if (!Util.isValidString(email)) {
             throw new IllegalArgumentException("email cannot be null or empty or blank");
         }
         int id = merchantRepository.deleteByEmail(email);
@@ -96,25 +97,16 @@ public class MerchantService {
 
     @Transactional
     public Merchant loginMerchant(String email, String password) {
-        if (email == null) {
-            throw new IllegalArgumentException("email cannot be null");
-        }
-        if (email.equals(" ") || email.length()==0) {
-            throw new IllegalArgumentException("email cannot be empty");
+        if (!Util.isValidString(email)) {
+            throw new IllegalArgumentException("email cannot be null or empty or blank");
         }
 
         if (!EmailValidator.getInstance().isValid(email)) {
             throw new IllegalArgumentException("given email id is not valid");
         }
 
-        if (password == null) {
-            throw new IllegalArgumentException("password cannot be null");
-        }
-
-        if(password.length()==0 || password.equals(" "))
-        {
-
-            throw new IllegalArgumentException("password cannot be empty");
+        if (!Util.isValidString(password)) {
+            throw new IllegalArgumentException("password cannot be null or empty or blank");
         }
 
         String hashedPassword = DigestUtils.sha256Hex(password);

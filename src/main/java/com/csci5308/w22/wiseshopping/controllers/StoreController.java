@@ -44,7 +44,7 @@ public class StoreController {
 
     @PostMapping("/addStore")
     public String addStore (@ModelAttribute("store") Store store, HttpServletRequest request, HttpServletResponse response){
-        storeService.addStore(store.getName(), store.getType(), store.getStartTime(), store.getEndTime() ,store.getContact(), merchantService.getMerchantFromSession(request), store.getLocation());
+        storeService.addStore(store.getName(), store.getType(), store.getStartTime().toString(), store.getEndTime().toString() ,store.getContact(), merchantService.getMerchantFromSession(request), store.getLocation());
         return "index";
     }
 //    @PostMapping("/addstore")

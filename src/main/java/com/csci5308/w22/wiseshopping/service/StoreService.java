@@ -44,24 +44,24 @@ public class StoreService {
      * @return true, if success; else false
      */
     @Transactional
-    public Store addStore(String name, String businessType, Time startTime, Time endTime, String contact, Merchant merchant, Location location){
+    public Store addStore(String name, String businessType, String startTime, String endTime, String contact, Merchant merchant, Location location){
 
-        if (name == null || name.length() == 0 || name.equals(" ")){
+        if (!Util.isValidString(name)){
             throw new IllegalArgumentException("storeName cannot be null or empty or blank");
         }
-        if (businessType ==  null  || businessType.length()==0 || businessType.equals(" ")){
+        if (!Util.isValidString(businessType)){
             throw new IllegalArgumentException("businessType cannot be null or empty or blank");
         }
 
-        if (startTime == null){
+        if (!Util.isValidString(startTime)){
             throw new IllegalArgumentException("startTime cannot be null or empty or blank");
         }
 
-        if (endTime == null ){
+        if (!Util.isValidString(endTime)){
             throw new IllegalArgumentException("endTime cannot be null or empty or blank");
         }
 
-        if (contact ==  null || contact.equals(" ") || contact.length()==0 ){
+        if (!Util.isValidString(contact)){
             throw new IllegalArgumentException("contactNumber cannot be null or empty or blank");
         }
 
@@ -72,8 +72,9 @@ public class StoreService {
         if (location == null){
             throw new IllegalArgumentException("location cannot be null");
         }
-
-        Store store = new Store(name,startTime,endTime,businessType,contact,location,merchant);
+        Time startingTime = Util.parseTime(startTime);
+        Time endingTime = Util.parseTime(endTime);
+        Store store = new Store(name,startingTime,endingTime,businessType,contact,location,merchant);
         storeRepository.save(store);
         LOGGER.info("Store {} is added",store.getName());
 
@@ -97,12 +98,12 @@ public class StoreService {
                         store.setName(attributes.get(Constants.KEY_NAME));
                         break;
                     case Constants.KEY_START_TIME:
-//                        Time startTime = Util.parseTime(attributes.get(Constants.KEY_START_TIME));
-                        store.setStartTime(attributes.get(Constants.KEY_START_TIME));
+                        Time startTime = Util.parseTime(attributes.get(Constants.KEY_START_TIME));
+                        store.setStartTime(startTime);
                         break;
                     case Constants.KEY_END_TIME:
-//                        Time endTime = Util.parseTime(attributes.get(Constants.KEY_END_TIME));
-                        store.setEndTime(attributes.get(Constants.KEY_END_TIME));
+                        Time endTime = Util.parseTime(attributes.get(Constants.KEY_END_TIME));
+                        store.setStartTime(endTime);
                         break;
                     case Constants.KEY_TYPE_OF_BUSINESS:
                         store.setType(attributes.get(Constants.KEY_TYPE_OF_BUSINESS));
