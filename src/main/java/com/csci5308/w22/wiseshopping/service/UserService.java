@@ -101,4 +101,22 @@ public class UserService {
         User user = userRepository.findByEmailAndPassword(email, password);
         return user;
     }
+
+    /**
+     * deletes a user from table
+     *
+     * @param email email of the merchant
+     * @return true, if success; else false
+     */
+    @Transactional
+    public boolean removeUser(String email) {
+        if (email == null || email.length()==0 || email.equals(" ")) {
+            throw new IllegalArgumentException("email cannot be null or empty or blank");
+        }
+        int id = userRepository.deleteByEmail(email);
+        if (id > 0) {
+            return true;
+        }
+        return false;
+    }
 }
