@@ -74,9 +74,15 @@ public class StoreService {
         }
         Time startingTime = Util.parseTime(startTime);
         Time endingTime = Util.parseTime(endTime);
-        Store store = new Store(name,startingTime,endingTime,businessType,contact,location,merchant);
-        storeRepository.save(store);
-        LOGGER.info("Store {} is added",store.getName());
+        Store store = storeRepository.findByNameAndStartTimeAndEndTimeAndTypeAndContactAndLocationAndMerchant(name, startingTime, endingTime, businessType, contact, location, merchant);
+        if (store == null) {
+            store = new Store(name, startingTime, endingTime, businessType, contact, location, merchant);;
+            storeRepository.save(store);
+            LOGGER.info("Store {} is added",store.getName());
+        }
+        else {
+            LOGGER.warn("Store with the same values exist in DB already...");
+        }
 
         return store;
     }
@@ -91,9 +97,7 @@ public class StoreService {
 
         for (Map.Entry<String, String> entry : attributes.entrySet()) {
 
-            if ("none".equals(entry.getValue())) {
-
-                switch (entry.getKey()) {
+            switch (entry.getKey()) {
                     case Constants.KEY_NAME:
                         store.setName(attributes.get(Constants.KEY_NAME));
                         break;
@@ -116,8 +120,9 @@ public class StoreService {
                         Location location = locationService.getLocationByID(attributes.get(Constants.KEY_LOCATION));
                         store.setLocation(location);
                         break;
+                    default:
+                        LOGGER.warn("No such key as {}", entry.getKey());
                 }
-            }
         }
         Store updatedStore = storeRepository.save(store);
         LOGGER.info("Store {} is updated",store.getName());

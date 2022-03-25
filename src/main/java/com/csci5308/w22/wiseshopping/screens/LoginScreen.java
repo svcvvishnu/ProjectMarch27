@@ -31,15 +31,17 @@ public class LoginScreen implements Screen{
 
     private Scanner scanner;
 
+    @Autowired
     private MerchantService merchantService;
 
+    @Autowired
     private UserService userService;
 
     private Merchant merchant;
 
     private User user;
 
-    @Autowired
+
     public LoginScreen(Scanner scanner, MerchantService merchantService, UserService userService) {
         this.scanner = scanner;
         this.merchantService = merchantService;

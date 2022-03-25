@@ -34,8 +34,6 @@ public class RegistrationScreen implements Screen {
 
     private UserService userService;
 
-//    private List<String> validScreens;
-
     private Merchant merchant;
     private User user;
 
@@ -45,10 +43,7 @@ public class RegistrationScreen implements Screen {
         this.scanner = scanner;
         this.merchantService = merchantService;
         this.userService = userService;
-
-//        validScreens= (ArrayList<String>) Arrays.asList("login", "dummy");
-
-        validScreens= new ArrayList<>(Arrays.asList(Constants.LOGIN));
+                validScreens= new ArrayList<>(Arrays.asList(Constants.LOGIN));
 
     }
 

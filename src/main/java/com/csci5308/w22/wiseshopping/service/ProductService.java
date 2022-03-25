@@ -117,6 +117,10 @@ public class ProductService {
         Tags tag = new Tags(product, name);
         return tagsRepository.save(tag);
     }
+
+    public List<ProductInventory> getAvailableProducts() {
+        return productInventoryRepository.findAvailableProducts();
+    }
 }
 
 

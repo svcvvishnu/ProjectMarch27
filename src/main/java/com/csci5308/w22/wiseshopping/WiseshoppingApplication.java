@@ -15,11 +15,11 @@ public class WiseshoppingApplication {
         SpringApplication.run(WiseshoppingApplication.class, args);
     }
 
-    //    @Profile("!dev")
-//    @Bean
-//    public Runner getRunner(){
-//        return new Runner();
-//    }
+    @Profile("!dev")
+    @Bean
+    public Runner getRunner(){
+        return new Runner();
+    }
     @Bean
     public Scanner getScanner(){
         return new Scanner(System.in);

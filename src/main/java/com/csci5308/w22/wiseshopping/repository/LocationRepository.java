@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface LocationRepository extends CrudRepository<Location, Integer> {
+    Location findByNameAndZipcodeAndProvinceAndCountry(String name, String zipcode, String province, String country);
 }

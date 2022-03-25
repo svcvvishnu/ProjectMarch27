@@ -22,6 +22,9 @@ public class ScreenFactory {
     @Autowired
     private LogOutScreen logOutScreen;
 
+    @Autowired
+    private ProductsScreen viewProductsScreen;
+
 
     @Autowired
     private MerchantMenuScreen merchantMenu;
@@ -35,6 +38,7 @@ public class ScreenFactory {
             case Constants.STORE_MENU: return storeScreen;
             case Constants.MERCHANT: return merchantMenu;
             case Constants.LOGOUT: return logOutScreen;
+            case Constants.V_PRODUCTS : return viewProductsScreen;
             default: throw new InvalidScreenException("No such screen");
         }
     }
