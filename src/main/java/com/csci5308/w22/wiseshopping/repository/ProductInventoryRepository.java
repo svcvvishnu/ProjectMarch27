@@ -21,4 +21,7 @@ public interface ProductInventoryRepository extends CrudRepository<ProductInvent
      ProductInventory findByProductAndStore(Product product, Store store);
      @Query(value ="SELECT * FROM product_inventory as inv JOIN store as stores JOIN location as locations on inv.store_id=stores.store_id AND stores.location_id=locations.location_id  where inv.product_id = ?1 AND locations.location_name= ?2", nativeQuery = true)
      List<ProductInventory> findByProductId(int product, String location);
+
+     @Query(value="SELECT * FROM product_inventory as inv JOIN product as prod JOIN store as st ON inv.product_id=prod.product_id AND inv.store_id=st.store_id", nativeQuery = true)
+     List<ProductInventory> findByProducts();
 }

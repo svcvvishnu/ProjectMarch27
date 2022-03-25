@@ -55,6 +55,10 @@ public class Store {
         this.merchant = merchant;
     }
 
+    public Store(int id) {
+        this.id=id;
+    }
+
     public void setStartTime(String startTime) {
         this.startTime = Util.parseTime(startTime);
     }
