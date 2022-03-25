@@ -32,5 +32,7 @@ public class Constants {
     public static final String FIRST_NAME = "firstName";
     public static final String LAST_NAME = "lastName";
     public static final String CONTACT = "contact";
-    public static final String V_PRODUCTS = "v_products";
+    public static final String PRODUCTS = "products";
+    public static final String SUBSCRIPTIONS = "subscriptions";
+    public static final String PROFILE = "profile";
 }

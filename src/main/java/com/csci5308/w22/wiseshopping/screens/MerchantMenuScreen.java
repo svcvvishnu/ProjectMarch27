@@ -34,7 +34,7 @@ public class MerchantMenuScreen implements Screen {
     private LocationService locationService;
     @Autowired
     private StoreService storeService;
-    private ArrayList<String> validScreens;
+    private List<String> validScreens;
 
 //    private List<String> validScreens;
 
@@ -99,19 +99,10 @@ public class MerchantMenuScreen implements Screen {
                     LOGGER.info("Enter the id to be updated");
                     int idToBeUpdated = Integer.parseInt(scan(scanner));
                     Store storeToBeUpdated = storeService.getStoreById(idToBeUpdated);
-                    LOGGER.info("Pass the attributes to be updated. Enter none to skip the attribute.");
-                    String inputKey;
+                    LOGGER.info("Pass the attributes to be updated. Enter in <key>:<value> format");
+                    LOGGER.info("Acceptable keys are : name, type, startTime, endTime, contact");
                     Map<String,String> mapAttributes = new HashMap<>();
-//                    mapAttributes.put(Constants.KEY_CONTACT,"");
-//                    mapAttributes.put(Constants.KEY_END_TIME,"");
-//                    mapAttributes.put(Constants.KEY_NAME,"");
-//                    mapAttributes.put(Constants.KEY_START_TIME,"");
-//                    mapAttributes.put(Constants.KEY_TYPE_OF_BUSINESS,"");
-//                    for (Map.Entry<String, String> entry : mapAttributes.entrySet()){
-//                        LOGGER.info("Enter the value to be updated for {}", entry.getKey());
-//                        entry.setValue(scan(scanner));
-//                    }
-//
+
                     String keyValuePair = scan(scanner);
                     do {
                         try {
