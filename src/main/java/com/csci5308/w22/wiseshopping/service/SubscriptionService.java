@@ -73,5 +73,27 @@ public class SubscriptionService {
         return success;
     }
 
+    public List<Subscription> getAllSubscriptionsOfUser(User user) {
+        return subscriptionRepository.findByUser(user);
+    }
+
+    public boolean removeSubscription(int id) {
+        subscriptionRepository.deleteById(id);
+        return true;
+    }
+
+    public boolean updateSubscription(int subId, float priceAlert) {
+        Subscription subscription = subscriptionRepository.findById(subId).orElse(null);
+        if (subscription!=null){
+            subscription.setPriceAlert(priceAlert);
+            subscriptionRepository.save(subscription);
+            return true;
+        }
+        else {
+            LOGGER.error("No such subscription id");
+            return false;
+        }
+
+    }
 }
 

@@ -121,6 +121,10 @@ public class ProductService {
     public List<ProductInventory> getAvailableProducts() {
         return productInventoryRepository.findAvailableProducts();
     }
+
+    public Product getProductById(int productId) {
+        return productRepository.findByProductId(productId);
+    }
 }
 
 
