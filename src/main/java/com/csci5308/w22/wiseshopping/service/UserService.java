@@ -69,7 +69,7 @@ public class UserService {
                     user.setContact(entry.getValue());
                     break;
                 default:
-//log the invalid input value
+                    LOGGER.warn("No such key as {}", entry.getKey());
             }
         }
         userRepository.save(user);
