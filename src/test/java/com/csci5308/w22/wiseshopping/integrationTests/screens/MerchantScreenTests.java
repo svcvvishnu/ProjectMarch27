@@ -30,7 +30,7 @@ import java.util.Scanner;
 @ActiveProfiles(profiles = "dev")
 @ExtendWith(MockitoExtension.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class TestMerchantScreens {
+public class MerchantScreenTests {
 
     @Mock
     private Scanner scanner;
@@ -62,11 +62,7 @@ public class TestMerchantScreens {
         merchant = merchantService.getMerchantByEmail("zigzag@zigzag.com");
     }
 
-//    @Test
-//    public void testLogin() {
-//        Mockito.when(scanner.next()).thenReturn("merchant").thenReturn("zigzag@zigzag.com").thenReturn("zigzag");
-//        loginScreen.render(screenFactory);
-//    }
+
 
     @Order(1)
     @Test

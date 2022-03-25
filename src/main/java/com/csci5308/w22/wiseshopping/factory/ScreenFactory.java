@@ -28,6 +28,9 @@ public class ScreenFactory {
     @Autowired
     private SubscriptionScreen subscriptionScreen;
 
+    @Autowired
+    private UserMenuScreen userMenuScreen;
+
 
     @Autowired
     private MerchantMenuScreen merchantMenu;
@@ -39,6 +42,7 @@ public class ScreenFactory {
             case Constants.LOGIN: return loginScreen;
             case Constants.REGISTER: return registrationScreen;
             case Constants.STORE_MENU: return storeScreen;
+            case Constants.USER_MENU: return userMenuScreen;
             case Constants.MERCHANT: return merchantMenu;
             case Constants.LOGOUT: return logOutScreen;
             case Constants.PRODUCTS: return viewProductsScreen;

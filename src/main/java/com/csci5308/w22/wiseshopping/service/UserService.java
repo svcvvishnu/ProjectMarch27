@@ -1,4 +1,5 @@
 package com.csci5308.w22.wiseshopping.service;
+import com.csci5308.w22.wiseshopping.exceptions.NoSuchUserException;
 import com.csci5308.w22.wiseshopping.exceptions.UserAlreadyRegisteredException;
 import com.csci5308.w22.wiseshopping.models.User;
 import com.csci5308.w22.wiseshopping.repository.UserRepository;
@@ -90,6 +91,16 @@ public class UserService {
         }
 
         User user = userRepository.findByEmailAndPassword(email, password);
-        return user;
+        if (user!=null) {
+            return user;
+        }
+        else {
+            throw new NoSuchUserException("Invalid credentials. User does not exist");
+        }
+    }
+
+    public boolean removeUser(String email) {
+        userRepository.deleteByEmail(email);
+        return true;
     }
 }

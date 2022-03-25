@@ -69,11 +69,13 @@ public class RegistrationScreen implements Screen {
                 success = screen.render(screenFactory);
             }
             if (Constants.USER.equalsIgnoreCase(input)) {
-                LOGGER.info("Enter <name> <email> <password>");
-                String name = scan(scanner);
+                LOGGER.info("Enter <first name> <last name> <email> <password> <contact>");
+                String firstName = scan(scanner);
+                String secondName = scan(scanner);
                 String email = scan(scanner);
                 String password = scan(scanner);
-                User user = userService.registerUser(name, email, password,"","");
+                String contact = scan(scanner);
+                User user = userService.registerUser(firstName, secondName, email, password,contact);
                 success = user!=null;
             }
 
