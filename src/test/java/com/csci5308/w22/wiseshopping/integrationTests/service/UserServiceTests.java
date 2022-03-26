@@ -52,8 +52,8 @@ public class UserServiceTests {
         Assertions.assertNotNull(updatedUser);
 
         //Check if firstname,lastname and contact are updated
-        Assertions.assertEquals("John ABC", updatedUser.getUserFirstName());
-        Assertions.assertEquals("Doe1", updatedUser.getUserLastName());
+        Assertions.assertEquals("John ABC", updatedUser.getFirstName());
+        Assertions.assertEquals("Doe1", updatedUser.getLastName());
         Assertions.assertEquals("johndoe@xyz.com", updatedUser.getEmail());
         Assertions.assertEquals("9096754412", updatedUser.getContact());
 

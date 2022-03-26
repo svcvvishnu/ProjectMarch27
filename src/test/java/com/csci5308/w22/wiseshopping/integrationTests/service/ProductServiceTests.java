@@ -4,10 +4,12 @@ import com.csci5308.w22.wiseshopping.models.*;
 import com.csci5308.w22.wiseshopping.models.Tags;
 import com.csci5308.w22.wiseshopping.repository.*;
 import com.csci5308.w22.wiseshopping.service.*;
+import com.csci5308.w22.wiseshopping.utils.Util;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -73,9 +75,9 @@ public class ProductServiceTests {
     @Test
     public void testUpdateProductPrice(){
         Product p = productRepository.findByProductId(1);
-        Store store = storeRepository.findByStoreId(1);
+        Store store = storeRepository.findById(1);
         if (store == null) {
-            store = storeService.addStore("Timbuktu", "private", "11", "12", "John Doe", merchant,location);
+            store = storeService.addStore("Timbuktu", "private", Util.parseTime("11"),Util.parseTime("12"), "John Doe", merchant,location);
         }
         Assertions.assertEquals(10, productInventoryRepository.findByProductAndStore(p, store).getPrice());
         productService.updateProductPrice(p, store, 100);
@@ -87,9 +89,9 @@ public class ProductServiceTests {
     @Test
     public void testUpdateProductStock(){
         Product p = productRepository.findByProductId(1);
-        Store store = storeRepository.findByStoreId(1);
+        Store store = storeRepository.findById(1);
         if (store == null) {
-            store = storeService.addStore("Timbuktu", "private", "11", "12", "John Doe", merchant,location);
+            store = storeService.addStore("Timbuktu", "private", Util.parseTime("11"),Util.parseTime("12"), "John Doe", merchant,location);
         }
         Assertions.assertEquals(10, productInventoryRepository.findByProductAndStore(p, store).getStock());
         productService.updateProductPrice(p, store, 500);

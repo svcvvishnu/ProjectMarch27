@@ -43,6 +43,7 @@ public class LocationService {
         // TODO : check for uniqueness
         Location location = new Location(name,zipcode, province, country);
         locationRepository.save(location);
+        System.out.println("Added location "+name);
         return location;
     }
 

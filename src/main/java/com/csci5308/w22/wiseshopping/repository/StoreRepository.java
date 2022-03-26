@@ -15,8 +15,7 @@ import java.util.List;
 public interface StoreRepository extends CrudRepository<Store, Integer> {
     @Query(value = "SELECT * FROM store WHERE merchant_id = ?1", nativeQuery = true)
     List<Store> findByMerchantID(int merchantID);
-    Integer deleteByStoreId (int id);
-    Store findByStoreId(int storeId);
+    Store findById(int storeId);
 
     //Added Store and Location for Filter Feature
     @Query(value = "SELECT * FROM store WHERE location_id = ?1", nativeQuery = true)

@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static org.hibernate.tool.schema.SchemaToolingLogging.LOGGER;
+
 /**
  * @author Elizabeth James
  */
@@ -36,8 +38,17 @@ public class ProductService {
         return null;
     }
 
-    public Product addProduct ( String name, String description){
-        return null;
+    public Product addProduct (String name, String description){
+
+        if (name == null || name.length() == 0 || name.equals(" ")){
+            throw new IllegalArgumentException("product name cannot be null or empty or blank");
+        }
+        Product product = new Product(name,description);
+        productRepository.save(product);
+        System.out.println("Product "+product.getProductId()+" added");
+       // LOGGER.info("Product {} is added",product.getProductName());
+
+        return product;
     }
 
 
@@ -116,6 +127,15 @@ public class ProductService {
     public Tags updateProductTags(Product product, String name) {
         Tags tag = new Tags(product, name);
         return tagsRepository.save(tag);
+    }
+
+    @Transactional
+    public boolean remove(Product product) {
+        if (product == null){
+            throw new IllegalArgumentException("product cannot be null");
+        }
+        productRepository.delete(product);
+        return true;
     }
 }
 

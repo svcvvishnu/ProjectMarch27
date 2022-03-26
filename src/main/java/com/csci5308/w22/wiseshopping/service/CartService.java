@@ -2,12 +2,15 @@ package com.csci5308.w22.wiseshopping.service;
 
 import com.csci5308.w22.wiseshopping.exceptions.NoCartCreatedForUserException;
 import com.csci5308.w22.wiseshopping.models.Cart;
+import com.csci5308.w22.wiseshopping.models.Location;
 import com.csci5308.w22.wiseshopping.models.SharedCart;
 import com.csci5308.w22.wiseshopping.models.User;
 import com.csci5308.w22.wiseshopping.repository.CartRepository;
 import com.csci5308.w22.wiseshopping.repository.SharedCartRepository;
 import com.csci5308.w22.wiseshopping.repository.UserRepository;
 import com.csci5308.w22.wiseshopping.utils.Constants;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +20,8 @@ import java.util.List;
 /**
  * @author Adarsh Kannan
  */
+@AllArgsConstructor
+@NoArgsConstructor
 @Service
 public class CartService {
 
@@ -28,6 +33,7 @@ public class CartService {
 
     @Autowired
     private UserRepository userRepository;
+
 
     @Transactional
     public Cart shareCart( User currentUser, List<User> otherUsersToShare){
@@ -45,5 +51,24 @@ public class CartService {
             }
         }
         return cart;
+    }
+
+    @Transactional
+    public Cart addCart( User user, String status ){
+        //User userLogged=new User(1);
+        Cart cart = new Cart(user,status);
+        cartRepository.save(cart);
+        System.out.println("Cart added "+cart.getId());
+
+        return cart;
+    }
+
+    @Transactional
+    public boolean remove(Cart cart) {
+        if (cart == null){
+            throw new IllegalArgumentException("cart cannot be null");
+        }
+        cartRepository.delete(cart);
+        return true;
     }
 }

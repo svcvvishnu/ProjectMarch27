@@ -69,7 +69,7 @@ public class SubscriptionService {
             }
         }
 
-        success = mailNotifier.sendPriceAlerts(usersToBeAlerted, product.getProductName(), store.getStoreName(), price);
+        success = mailNotifier.sendPriceAlerts(usersToBeAlerted, product.getProductName(), store.getName(), price);
         return success;
     }
 
