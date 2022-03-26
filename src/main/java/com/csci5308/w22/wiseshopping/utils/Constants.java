@@ -19,9 +19,9 @@ public class Constants {
     public static final String LOGOUT = "logout";
     public static final String USER_MENU = "user";
     public static final String KEY_NAME = "name";
-    public static final String KEY_START_TIME = "start time";
-    public static final String KEY_END_TIME = "end time";
-    public static final String KEY_TYPE_OF_BUSINESS = "type of business";
+    public static final String KEY_START_TIME = "startTime";
+    public static final String KEY_END_TIME = "endTime";
+    public static final String KEY_TYPE_OF_BUSINESS = "type";
     public static final String KEY_CONTACT = "contact";
     public static final String KEY_LOCATION = "location";
     public static final String UPDATE = "update";
@@ -34,4 +34,7 @@ public class Constants {
     public static final String FIRST_NAME = "firstName";
     public static final String LAST_NAME = "lastName";
     public static final String CONTACT = "contact";
+    public static final String PRODUCTS = "products";
+    public static final String SUBSCRIPTIONS = "subscriptions";
+    public static final String PROFILE = "profile";
 }

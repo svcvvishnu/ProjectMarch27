@@ -120,16 +120,16 @@ public class UserServiceTests {
     public void testInputParametersForLoginUser(){
 
         IllegalArgumentException emailNullException=Assertions.assertThrows(IllegalArgumentException.class, () -> userService.loginUser(null,"test_password"));
-        Assertions.assertEquals("email cannot be null",emailNullException.getMessage());
+        Assertions.assertEquals("email cannot be null or empty or blank",emailNullException.getMessage());
         IllegalArgumentException emailEmptyException=Assertions.assertThrows(IllegalArgumentException.class, () -> userService.loginUser("","test_password"));
-        Assertions.assertEquals("email cannot be empty",emailEmptyException.getMessage());
+        Assertions.assertEquals("email cannot be null or empty or blank",emailEmptyException.getMessage());
         IllegalArgumentException emailMissingDomainNameException=Assertions.assertThrows(IllegalArgumentException.class, () -> userService.loginUser("test_email","test_password"));
         Assertions.assertEquals("Given email is not valid",emailMissingDomainNameException.getMessage());
 
         IllegalArgumentException passwordEmptyException=Assertions.assertThrows(IllegalArgumentException.class, () -> userService.loginUser("test_email@xyz.com",""));
-        Assertions.assertEquals("password cannot be empty",passwordEmptyException.getMessage());
+        Assertions.assertEquals("password cannot be null or empty or blank",passwordEmptyException.getMessage());
         IllegalArgumentException passwordNullException=Assertions.assertThrows(IllegalArgumentException.class, () -> userService.loginUser("test_email@xyz.com",null));
-        Assertions.assertEquals("password cannot be null",passwordNullException.getMessage());
+        Assertions.assertEquals("password cannot be null or empty or blank",passwordNullException.getMessage());
 
 
     }

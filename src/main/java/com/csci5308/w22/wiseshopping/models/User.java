@@ -1,4 +1,5 @@
 package com.csci5308.w22.wiseshopping.models;
+import com.csci5308.w22.wiseshopping.utils.Util;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -37,19 +38,12 @@ public class User {
     }
     public User(String firstName, String lastName, String email, String password, String contact) {
         this.email = email;
-        this.password = encode(password);
+        this.password = Util.encode(password);
         this.firstName = firstName;
         this.lastName = lastName;
         this.contact = contact;
     }
-    /**
-     * this encodes the password using sha 256 algorithm
-     * @param password password
-     * @return encoded password
-     */
-    private String encode(String password) {
-        return DigestUtils.sha256Hex(password);
-    }
+
     public int getUserId() {
         return id;
     }
@@ -88,7 +82,7 @@ public class User {
         return password;
     }
     public void setPassword(String password) {
-        this.password = encode(password);
+        this.password = Util.encode(password);
     }
     public String getContact() {
         return contact;

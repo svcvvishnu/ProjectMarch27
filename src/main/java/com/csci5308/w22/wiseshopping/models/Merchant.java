@@ -1,5 +1,6 @@
 package com.csci5308.w22.wiseshopping.models;
 
+import com.csci5308.w22.wiseshopping.utils.Util;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -32,12 +33,12 @@ public class Merchant {
 
     public Merchant(String merchantName, String email , String password) {
         this.name = merchantName;
-        this.password = encode(password);
+        this.password = Util.encode(password);
         this.email = email;
     }
 
     public Merchant(String email , String password) {
-        this.password = encode(password);
+        this.password = Util.encode(password);
         this.email = email;
     }
 
@@ -51,16 +52,6 @@ public class Merchant {
         this.name = merchantName;
         this.password = password;
         this.email = email;
-    }
-
-
-    /**
-     * this encodes the password using sha 256 algorithm
-     * @param password password
-     * @return encoded password
-     */
-    private String encode(String password) {
-        return DigestUtils.sha256Hex(password);
     }
 
     public int getId() {
@@ -84,7 +75,7 @@ public class Merchant {
     }
 
     public void setPassword(String password) {
-        this.password = encode(password);
+        this.password = Util.encode(password);
     }
 
     public String getEmail() {

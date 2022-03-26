@@ -1,6 +1,7 @@
 package com.csci5308.w22.wiseshopping.screens;
 
 import com.csci5308.w22.wiseshopping.exceptions.MenuInterruptedException;
+import com.csci5308.w22.wiseshopping.exceptions.NoSuchUserException;
 import com.csci5308.w22.wiseshopping.models.Merchant;
 import com.csci5308.w22.wiseshopping.models.User;
 import com.csci5308.w22.wiseshopping.service.MerchantService;
@@ -31,15 +32,17 @@ public class LoginScreen implements Screen{
 
     private Scanner scanner;
 
+    @Autowired
     private MerchantService merchantService;
 
+    @Autowired
     private UserService userService;
 
     private Merchant merchant;
 
     private User user;
 
-    @Autowired
+
     public LoginScreen(Scanner scanner, MerchantService merchantService, UserService userService) {
         this.scanner = scanner;
         this.merchantService = merchantService;
@@ -77,7 +80,11 @@ public class LoginScreen implements Screen{
             Screen screen = screenFactory.getScreen(Constants.USER_MENU);
             screen.setUser(user);
             success = screen.render(screenFactory);
-        }}
+        }
+        }
+        catch (NoSuchUserException e){
+            LOGGER.warn(e.getMessage());
+        }
         catch (MenuInterruptedException e){
             getNavigations(screenFactory,validScreens,LOGGER,scanner);
         }

@@ -77,7 +77,7 @@ public class ProductServiceTests {
         Product p = productRepository.findByProductId(1);
         Store store = storeRepository.findById(1);
         if (store == null) {
-            store = storeService.addStore("Timbuktu", "private", Util.parseTime("11"),Util.parseTime("12"), "John Doe", merchant,location);
+            store = storeService.addStore("Timbuktu", "private", "11","12", "John Doe", merchant,location);
         }
         Assertions.assertEquals(10, productInventoryRepository.findByProductAndStore(p, store).getPrice());
         productService.updateProductPrice(p, store, 100);
@@ -91,7 +91,7 @@ public class ProductServiceTests {
         Product p = productRepository.findByProductId(1);
         Store store = storeRepository.findById(1);
         if (store == null) {
-            store = storeService.addStore("Timbuktu", "private", Util.parseTime("11"),Util.parseTime("12"), "John Doe", merchant,location);
+            store = storeService.addStore("Timbuktu", "private", "11","12", "John Doe", merchant,location);
         }
         Assertions.assertEquals(10, productInventoryRepository.findByProductAndStore(p, store).getStock());
         productService.updateProductPrice(p, store, 500);

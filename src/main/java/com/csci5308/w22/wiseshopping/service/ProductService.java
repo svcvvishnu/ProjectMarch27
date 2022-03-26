@@ -29,10 +29,10 @@ public class ProductService {
     private SubscriptionService subscriptionService;
 
     @Autowired
-    ProductRepository productRepository;
+    private ProductRepository productRepository;
 
     @Autowired
-    TagsRepository tagsRepository;
+    private TagsRepository tagsRepository;
 
     public ProductInventory addProductInventory( Product product, Store store, float price, float stock ){
         return null;
@@ -129,6 +129,14 @@ public class ProductService {
         return tagsRepository.save(tag);
     }
 
+    public List<ProductInventory> getAvailableProducts() {
+        return productInventoryRepository.findAvailableProducts();
+    }
+
+    public Product getProductById(int productId) {
+        return productRepository.findByProductId(productId);
+    }
+
     @Transactional
     public boolean remove(Product product) {
         if (product == null){
@@ -137,6 +145,8 @@ public class ProductService {
         productRepository.delete(product);
         return true;
     }
+
 }
+
 
 

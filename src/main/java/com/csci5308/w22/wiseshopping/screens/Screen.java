@@ -6,6 +6,7 @@ import com.csci5308.w22.wiseshopping.models.User;
 import com.csci5308.w22.wiseshopping.utils.Constants;
 import com.csci5308.w22.wiseshopping.factory.ScreenFactory;
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Scanner;
@@ -15,6 +16,7 @@ import java.util.Scanner;
  */
 public interface Screen {
 
+    Scanner scanner = new Scanner(System.in);
     void setMerchant(Merchant merchant);
     void setUser(User user);
     boolean render(ScreenFactory screenFactory);

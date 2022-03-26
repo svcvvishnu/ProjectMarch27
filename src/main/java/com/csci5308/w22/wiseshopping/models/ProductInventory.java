@@ -22,13 +22,13 @@ public class ProductInventory {
     private int inventoryId;
 
     //Crosscheck if this is One to Many or Many to One
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="store_id", referencedColumnName = "store_id")
     private Store store;
 
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="product_id", referencedColumnName = "product_id")
     private Product product;
 

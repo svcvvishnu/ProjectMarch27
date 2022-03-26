@@ -19,5 +19,7 @@ public interface SubscriptionRepository extends CrudRepository<Subscription, Int
 
     @Query(value = "SELECT * FROM subscription where product_id = ?1",nativeQuery = true)
     List<Subscription> findByProductId (int productId);
+
+    List<Subscription> findByUser(User user);
 }
 

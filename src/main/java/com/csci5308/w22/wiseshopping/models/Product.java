@@ -8,6 +8,8 @@ import javax.persistence.*;
 /**
  * @author Nilesh
 */
+@ToString
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name="product")
@@ -47,12 +49,6 @@ public class Product {
         this.productDescription = productDescription;
     }
 
-    public Product(String productName, String productDesc) {
-        this.productName = productName;
-        this.productDescription = productDesc;
-    }
-
-
     public Product(String productName) {
         this.productName = productName;
     }
@@ -61,8 +57,7 @@ public class Product {
         this.productId=productId;
     }
 
-    public Product(int productId, String productName, String productDescription) {
-        this.productId = productId;
+    public Product(String productName, String productDescription) {
         this.productName = productName;
         this.productDescription = productDescription;
     }

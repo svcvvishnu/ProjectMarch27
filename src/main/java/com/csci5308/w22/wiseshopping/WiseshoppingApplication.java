@@ -15,22 +15,16 @@ public class WiseshoppingApplication {
         SpringApplication.run(WiseshoppingApplication.class, args);
     }
 
-
-//    @Bean
-//    public Runner getRunner(){
-//        return new Runner();
-//    }
-
-
+    @Profile("!dev")
+    @Bean
+    public Runner getRunner(){
+        return new Runner();
+    }
     @Bean
     public Scanner getScanner(){
         return new Scanner(System.in);
     }
 
-//    @Bean
-//    public ScreenFactory screenFactory(){
-//        return  new ScreenFactory();
-//    }
 
 
 }

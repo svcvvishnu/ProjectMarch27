@@ -1,6 +1,7 @@
 package com.csci5308.w22.wiseshopping.screens;
 
 import com.csci5308.w22.wiseshopping.exceptions.MenuInterruptedException;
+import com.csci5308.w22.wiseshopping.exceptions.UserAlreadyRegisteredException;
 import com.csci5308.w22.wiseshopping.models.Merchant;
 import com.csci5308.w22.wiseshopping.models.User;
 import com.csci5308.w22.wiseshopping.service.MerchantService;
@@ -34,8 +35,6 @@ public class RegistrationScreen implements Screen {
 
     private UserService userService;
 
-//    private List<String> validScreens;
-
     private Merchant merchant;
     private User user;
 
@@ -45,10 +44,7 @@ public class RegistrationScreen implements Screen {
         this.scanner = scanner;
         this.merchantService = merchantService;
         this.userService = userService;
-
-//        validScreens= (ArrayList<String>) Arrays.asList("login", "dummy");
-
-        validScreens= new ArrayList<>(Arrays.asList(Constants.LOGIN));
+                validScreens= new ArrayList<>(Arrays.asList(Constants.LOGIN));
 
     }
 
@@ -74,15 +70,22 @@ public class RegistrationScreen implements Screen {
                 success = screen.render(screenFactory);
             }
             if (Constants.USER.equalsIgnoreCase(input)) {
-                LOGGER.info("Enter <name> <email> <password>");
-                String name = scan(scanner);
+                LOGGER.info("Enter <first name> <last name> <email> <password> <contact>");
+                String firstName = scan(scanner);
+                String secondName = scan(scanner);
                 String email = scan(scanner);
                 String password = scan(scanner);
-                User user = userService.registerUser(name, email, password,"","");
-                success = user!=null;
+                String contact = scan(scanner);
+                user = userService.registerUser(firstName, secondName, email, password,contact);
+                Screen screen = screenFactory.getScreen(Constants.USER_MENU);
+                screen.setUser(user);
+                success = screen.render(screenFactory);
             }
 
-        } catch (MenuInterruptedException e) {
+        } catch (UserAlreadyRegisteredException e) {
+            LOGGER.warn(e.getMessage());
+        }
+        catch (MenuInterruptedException e) {
             getNavigations(screenFactory, validScreens, LOGGER, scanner);
         }
         return success;

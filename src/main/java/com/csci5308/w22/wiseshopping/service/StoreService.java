@@ -44,24 +44,24 @@ public class StoreService {
      * @return true, if success; else false
      */
     @Transactional
-    public Store addStore(String name, String businessType, Time startTime, Time endTime, String contact, Merchant merchant, Location location){
+    public Store addStore(String name, String businessType, String startTime, String endTime, String contact, Merchant merchant, Location location){
 
-        if (name == null || name.length() == 0 || name.equals(" ")){
+        if (!Util.isValidString(name)){
             throw new IllegalArgumentException("storeName cannot be null or empty or blank");
         }
-        if (businessType ==  null  || businessType.length()==0 || businessType.equals(" ")){
+        if (!Util.isValidString(businessType)){
             throw new IllegalArgumentException("businessType cannot be null or empty or blank");
         }
 
-        if (startTime == null){
+        if (!Util.isValidString(startTime)){
             throw new IllegalArgumentException("startTime cannot be null or empty or blank");
         }
 
-        if (endTime == null ){
+        if (!Util.isValidString(endTime)){
             throw new IllegalArgumentException("endTime cannot be null or empty or blank");
         }
 
-        if (contact ==  null || contact.equals(" ") || contact.length()==0 ){
+        if (!Util.isValidString(contact)){
             throw new IllegalArgumentException("contactNumber cannot be null or empty or blank");
         }
 
@@ -72,10 +72,17 @@ public class StoreService {
         if (location == null){
             throw new IllegalArgumentException("location cannot be null");
         }
-
-        Store store = new Store(name,startTime,endTime,businessType,contact,location,merchant);
-        storeRepository.save(store);
-        LOGGER.info("Store {} is added",store.getName());
+        Time startingTime = Util.parseTime(startTime);
+        Time endingTime = Util.parseTime(endTime);
+        Store store = storeRepository.findByNameAndStartTimeAndEndTimeAndTypeAndContactAndLocationAndMerchant(name, startingTime, endingTime, businessType, contact, location, merchant);
+        if (store == null) {
+            store = new Store(name, startingTime, endingTime, businessType, contact, location, merchant);;
+            storeRepository.save(store);
+            LOGGER.info("Store {} is added",store.getName());
+        }
+        else {
+            LOGGER.warn("Store with the same values exist in DB already...");
+        }
 
         return store;
     }
@@ -90,19 +97,17 @@ public class StoreService {
 
         for (Map.Entry<String, String> entry : attributes.entrySet()) {
 
-            if ("none".equals(entry.getValue())) {
-
-                switch (entry.getKey()) {
+            switch (entry.getKey()) {
                     case Constants.KEY_NAME:
                         store.setName(attributes.get(Constants.KEY_NAME));
                         break;
                     case Constants.KEY_START_TIME:
-//                        Time startTime = Util.parseTime(attributes.get(Constants.KEY_START_TIME));
-                        store.setStartTime(attributes.get(Constants.KEY_START_TIME));
+                        Time startTime = Util.parseTime(attributes.get(Constants.KEY_START_TIME));
+                        store.setStartTime(startTime);
                         break;
                     case Constants.KEY_END_TIME:
-//                        Time endTime = Util.parseTime(attributes.get(Constants.KEY_END_TIME));
-                        store.setEndTime(attributes.get(Constants.KEY_END_TIME));
+                        Time endTime = Util.parseTime(attributes.get(Constants.KEY_END_TIME));
+                        store.setStartTime(endTime);
                         break;
                     case Constants.KEY_TYPE_OF_BUSINESS:
                         store.setType(attributes.get(Constants.KEY_TYPE_OF_BUSINESS));
@@ -115,8 +120,9 @@ public class StoreService {
                         Location location = locationService.getLocationByID(attributes.get(Constants.KEY_LOCATION));
                         store.setLocation(location);
                         break;
+                    default:
+                        LOGGER.warn("No such key as {}", entry.getKey());
                 }
-            }
         }
         Store updatedStore = storeRepository.save(store);
         LOGGER.info("Store {} is updated",store.getName());
@@ -153,10 +159,10 @@ public class StoreService {
         if(location == null && merchant == null) {
             throw new IllegalArgumentException("Both location and merchant cannot be null");
         }
-        if (location == null) return storeRepository.findByMerchantID(merchant.getId());
-        if (merchant == null) return storeRepository.findByLocationID(location.getId());
+        if (location == null) return storeRepository.findByMerchant(merchant);
+        if (merchant == null) return storeRepository.findByLocation(location);
 
-        return storeRepository.findByLocationIdAndMerchantId(location.getId(), merchant.getId());
+        return storeRepository.findByLocationAndMerchant(location, merchant);
     }
 
     public Store getStoreById(int id) {

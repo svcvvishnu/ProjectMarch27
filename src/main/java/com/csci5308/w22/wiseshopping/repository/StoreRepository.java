@@ -1,11 +1,14 @@
 package com.csci5308.w22.wiseshopping.repository;
 
 
+import com.csci5308.w22.wiseshopping.models.Location;
+import com.csci5308.w22.wiseshopping.models.Merchant;
 import com.csci5308.w22.wiseshopping.models.Store;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Time;
 import java.util.List;
 
 /**
@@ -17,12 +20,12 @@ public interface StoreRepository extends CrudRepository<Store, Integer> {
     List<Store> findByMerchantID(int merchantID);
     Store findById(int storeId);
 
-    //Added Store and Location for Filter Feature
-    @Query(value = "SELECT * FROM store WHERE location_id = ?1", nativeQuery = true)
-    List<Store> findByLocationID(int locationId);
 
-    @Query(value = "SELECT * FROM store WHERE location_id = ?1 and merchant_id = ?2", nativeQuery = true)
-    List<Store> findByLocationIdAndMerchantId(int locationId, int merchantId);
+    Store findByNameAndStartTimeAndEndTimeAndTypeAndContactAndLocationAndMerchant(String name, Time startingTime, Time endingTime, String businessType, String contact, Location location, Merchant merchant);
 
+    List<Store> findByMerchant(Merchant merchant);
 
+    List<Store> findByLocation(Location location);
+
+    List<Store> findByLocationAndMerchant(Location location, Merchant merchant);
 }

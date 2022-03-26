@@ -8,7 +8,7 @@ import java.sql.Time;
 
 /**
  * @author Elizabeth James
-*/
+ */
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
@@ -55,14 +55,10 @@ public class Store {
         this.merchant = merchant;
     }
 
-    public Store(int id) {
-        this.id=id;
+    public void setStartTime(Time startTime) {
+        this.startTime = startTime;
     }
-
-    public void setStartTime(String startTime) {
-        this.startTime = Util.parseTime(startTime);
-    }
-    public void setEndTime(String endTime) {
-        this.endTime = Util.parseTime(endTime);
+    public void setEndTime(Time endTime) {
+        this.endTime = endTime;
     }
 }
