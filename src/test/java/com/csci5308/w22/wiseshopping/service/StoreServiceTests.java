@@ -128,5 +128,58 @@ public class StoreServiceTests {
 
     }
 
+    //Test for filtering stores
+    @Test
+    public void testGetStoresByLocationAndMerchant(){
+        List<Store> stores = new ArrayList<>();
+        stores.add(new Store());
+        stores.add(new Store());
+        stores.add(new Store());
+
+        Location loc = mock(Location.class);
+        Merchant merchant = mock(Merchant.class);
+
+        when(loc.getId()).thenReturn(1);
+        when(merchant.getMerchantId()).thenReturn(2);
+
+        when(mockedStoreRepository.findByLocationIdAndMerchantId(1,2)).thenReturn(stores);
+        List<Store> result = storeService.getStoresByLocationAndMerchant(loc, merchant);
+        Assertions.assertEquals(3,result.size());
+    }
+
+    @Test
+    public void testGetStoresByMerchant(){
+        List<Store> stores = new ArrayList<>();
+        stores.add(new Store());
+        stores.add(new Store());
+
+        Merchant merchant = mock(Merchant.class);
+
+        when(merchant.getMerchantId()).thenReturn(2);
+
+        when(mockedStoreRepository.findByMerchantID(2)).thenReturn(stores);
+        List<Store> result = storeService.getStoresByLocationAndMerchant(null,merchant);
+        Assertions.assertEquals(2,result.size());
+    }
+
+    @Test
+    public void testGetStoresByLocation(){
+        List<Store> stores = new ArrayList<>();
+        stores.add(new Store());
+
+        Location loc = mock(Location.class);
+
+        when(loc.getId()).thenReturn(1);
+
+        when(mockedStoreRepository.findByLocationID(1)).thenReturn(stores);
+        List<Store> result = storeService.getStoresByLocationAndMerchant(loc, null);
+        Assertions.assertEquals(1,result.size());
+    }
+
+    @Test
+    public void testGetStoresByNoLocationAndMerchant(){
+        IllegalArgumentException ex = Assertions.assertThrows(IllegalArgumentException.class, () -> storeService.getStoresByLocationAndMerchant(null, null));
+        Assertions.assertEquals("Both location and merchant cannot be null",ex.getMessage());
+    }
 
 }

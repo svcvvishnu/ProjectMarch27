@@ -18,4 +18,12 @@ public interface StoreRepository extends CrudRepository<Store, Integer> {
     Integer deleteByStoreId (int id);
     Store findByStoreId(int storeId);
 
+    //Added Store and Location for Filter Feature
+    @Query(value = "SELECT * FROM store WHERE location_id = ?1", nativeQuery = true)
+    List<Store> findByLocationID(int locationId);
+
+    @Query(value = "SELECT * FROM store WHERE location_id = ?1 and merchant_id = ?2", nativeQuery = true)
+    List<Store> findByLocationIdAndMerchantId(int locationId, int merchantId);
+
+
 }

@@ -40,7 +40,7 @@ public class StoreServiceTests {
 
     @BeforeEach
     public void setUp(){
-        merchant = merchantService.registerMerchant("dummy", "dummy@dummy.com", "dummy");
+        merchant = merchantService.registerMerchant("dummy", "dummy2@dummy.com", "dummy");
         location =  locationService.addLocation("dummy","dummy","dummy","dummy");
 
     }
@@ -79,18 +79,31 @@ public class StoreServiceTests {
     public void testRemoveStores(){
         storeService.addStore("Timbuktu", "private", "11", "12", "John Doe", merchant,location);
 
-        Merchant merchant2 = merchantService.getMerchantByEmail("dummy@dummy.com");
+        Merchant merchant2 = merchantService.getMerchantByEmail("dummy2@dummy.com");
         List<Store> storeList = storeService.getAllStoresBelongingToAMerchant(merchant2);
         Assertions.assertTrue(storeService.remove(storeList.stream().findFirst().get().getStoreId()));
     }
 
 
+    @Test
+    public void testGetStoresByLocationAndMerchant(){
+        Store newstore = storeService.addStore("Timbuktu", "private", "11", "12", "John Doe", merchant,location);
+        List<Store> storeList = storeService.getStoresByLocationAndMerchant(location, merchant);
+        Assertions.assertEquals(1, storeList.size());
+        Store s = storeList.get(0);
+        Assertions.assertEquals("Timbuktu", s.getStoreName());
+        Assertions.assertEquals("private", s.getType());
+        Assertions.assertEquals("John Doe", s.getContact());
+        Assertions.assertEquals(merchant, s.getMerchant());
+        Assertions.assertEquals(location, s.getLocation());
+        storeService.remove(newstore);
+
+    }
 
     @AfterEach
     public void cleanUp(){
         locationService.remove(location);
-        merchantService.removeMerchant("dummy@dummy.com");
-
+        merchantService.removeMerchant("dummy2@dummy.com");
     }
 
 }
