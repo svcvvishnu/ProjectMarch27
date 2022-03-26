@@ -25,10 +25,6 @@ public class WiseshoppingApplication {
         return new Scanner(System.in);
     }
 
-//    @Bean
-//    public ScreenFactory screenFactory(){
-//        return  new ScreenFactory();
-//    }
 
 
 }

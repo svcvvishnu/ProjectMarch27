@@ -1,6 +1,7 @@
 package com.csci5308.w22.wiseshopping.screens;
 
 import com.csci5308.w22.wiseshopping.exceptions.MenuInterruptedException;
+import com.csci5308.w22.wiseshopping.exceptions.UserAlreadyRegisteredException;
 import com.csci5308.w22.wiseshopping.models.Merchant;
 import com.csci5308.w22.wiseshopping.models.User;
 import com.csci5308.w22.wiseshopping.service.MerchantService;
@@ -75,11 +76,16 @@ public class RegistrationScreen implements Screen {
                 String email = scan(scanner);
                 String password = scan(scanner);
                 String contact = scan(scanner);
-                User user = userService.registerUser(firstName, secondName, email, password,contact);
-                success = user!=null;
+                user = userService.registerUser(firstName, secondName, email, password,contact);
+                Screen screen = screenFactory.getScreen(Constants.USER_MENU);
+                screen.setUser(user);
+                success = screen.render(screenFactory);
             }
 
-        } catch (MenuInterruptedException e) {
+        } catch (UserAlreadyRegisteredException e) {
+            LOGGER.warn(e.getMessage());
+        }
+        catch (MenuInterruptedException e) {
             getNavigations(screenFactory, validScreens, LOGGER, scanner);
         }
         return success;

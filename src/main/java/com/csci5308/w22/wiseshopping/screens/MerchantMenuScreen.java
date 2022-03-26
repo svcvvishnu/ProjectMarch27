@@ -118,7 +118,6 @@ public class MerchantMenuScreen implements Screen {
                         }
                     }while (!keyValuePair.equals("done"));
                     Store updatedStore = storeService.updateStore(storeToBeUpdated,mapAttributes);
-                    System.out.println(mapAttributes);
                     success = updatedStore!=null;
                 }
                 else if (input.equals("exit")){

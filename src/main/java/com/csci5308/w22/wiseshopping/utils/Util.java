@@ -2,6 +2,7 @@ package com.csci5308.w22.wiseshopping.utils;
 
 import com.csci5308.w22.wiseshopping.exceptions.MenuInterruptedException;
 import com.csci5308.w22.wiseshopping.screens.Screen;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import java.sql.Time;
 import java.util.Scanner;
@@ -41,5 +42,14 @@ public class Util {
 
     public static boolean isValidString(String name) {
         return name!=null && !name.isEmpty() && !name.isBlank();
+    }
+
+    /**
+     * this encodes the password using sha 256 algorithm
+     * @param password password
+     * @return encoded password
+     */
+    public static String encode(String password) {
+        return DigestUtils.sha256Hex(password);
     }
 }

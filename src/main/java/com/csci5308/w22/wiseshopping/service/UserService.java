@@ -90,7 +90,7 @@ public class UserService {
             throw new IllegalArgumentException("password cannot be null or empty or blank");
         }
 
-        User user = userRepository.findByEmailAndPassword(email, password);
+        User user = userRepository.findByEmailAndPassword(email, Util.encode(password));
         if (user!=null) {
             return user;
         }

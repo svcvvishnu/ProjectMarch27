@@ -59,7 +59,7 @@ public class MerchantScreenTests {
 
     @BeforeEach
     public void setUp() {
-        merchant = merchantService.getMerchantByEmail("zigzag@zigzag.com");
+        merchant = merchantService.getMerchantByEmail("zig@zag.com");
     }
 
 

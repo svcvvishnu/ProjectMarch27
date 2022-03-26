@@ -6,7 +6,9 @@ import com.csci5308.w22.wiseshopping.models.User;
 import com.csci5308.w22.wiseshopping.screens.LoginScreen;
 import com.csci5308.w22.wiseshopping.screens.MerchantMenuScreen;
 import com.csci5308.w22.wiseshopping.screens.RegistrationScreen;
+import com.csci5308.w22.wiseshopping.service.LocationService;
 import com.csci5308.w22.wiseshopping.service.MerchantService;
+import com.csci5308.w22.wiseshopping.service.StoreService;
 import com.csci5308.w22.wiseshopping.service.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.MethodOrderer;
@@ -30,7 +32,7 @@ import java.util.Scanner;
 @ActiveProfiles(profiles = "dev")
 @ExtendWith(MockitoExtension.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class LoginScreenTests {
+public class RegistrationScreenTests {
     @Mock
     private Scanner scanner;
 
@@ -40,10 +42,9 @@ public class LoginScreenTests {
 
     @InjectMocks
     @Autowired
-    private LoginScreen loginScreen;
+    private RegistrationScreen registrationScreen;
 
     @Autowired
-    @InjectMocks
     private ScreenFactory screenFactory;
 
     private UserService userService;
@@ -52,29 +53,34 @@ public class LoginScreenTests {
 
     private Merchant merchant;
 
-    @InjectMocks
-    private MerchantMenuScreen merchantMenuScreen;
-
     @Test
-    public void testUserLoginNegative(){
+    public void testUserRegistration(){
         Mockito.when(scanner.next()).thenReturn("user")
+                // first name
+                .thenReturn("zig")
+                //last name
+        .thenReturn("zag")
+                //email
+        .thenReturn("zig@zag1.com")
+                //password
+        .thenReturn("zigzag")
+                //contact
+        .thenReturn("123456");
+        // user already registered exception is thrown
+        Assertions.assertFalse(registrationScreen.render(screenFactory));
+
+    }
+    @Test
+    public void testMerchantRegistration(){
+        Mockito.when(scanner.next()).thenReturn("merchant")
+                // first name
+                .thenReturn("zig")
                 //email
                 .thenReturn("zig@zag.com")
                 //password
-                .thenReturn("zigzag1");
-        Assertions.assertFalse(loginScreen.render(screenFactory));
+                .thenReturn("zigzag");
+        // user already registered exception is thrown
+        Assertions.assertFalse(registrationScreen.render(screenFactory));
 
     }
-    @Test
-    public void testMerchantLoginNegative(){
-        Mockito.when(scanner.next()).thenReturn("merchant")
-                //email
-                .thenReturn("zigzag@zigzag.com")
-                //password
-                .thenReturn("zigzag1");
-        Assertions.assertFalse(loginScreen.render(screenFactory));
-
-    }
-
-    // positive login test case is included in the further screens as mocked scanner cannot be inject in the further inner classes
 }
