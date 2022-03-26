@@ -61,7 +61,7 @@ public class ProductInCartServiceTests {
 
         merchant = merchantService.registerMerchant("test", "test@test.com", "test");
         location =  locationService.addLocation("test","test","test","test");
-        store=storeService.addStore("test","test", Util.parseTime("8"),Util.parseTime("23"),"test",merchant,location);
+        store=storeService.addStore("test","test","8","23","test",merchant,location);
 
         productInCart = new ProductInCart(cart,product,store,2,12);
     }

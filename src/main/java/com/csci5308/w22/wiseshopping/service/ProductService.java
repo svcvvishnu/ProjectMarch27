@@ -136,6 +136,17 @@ public class ProductService {
     public Product getProductById(int productId) {
         return productRepository.findByProductId(productId);
     }
+
+    @Transactional
+    public boolean remove(Product product) {
+        if (product == null){
+            throw new IllegalArgumentException("product cannot be null");
+        }
+        productRepository.delete(product);
+        return true;
+    }
+
 }
+
 
 

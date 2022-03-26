@@ -59,7 +59,7 @@ public class StoreServiceTests {
     @Test
     public void testUpdateStore() {
 
-        Store expectedStore  = new Store("Timbuktu", Util.parseTime("11"),  Util.parseTime("12"), "private", "John Doe", location,merchant);
+        Store expectedStore  = new Store("Timbuktu",  Util.parseTime("11"),  Util.parseTime("12"), "private", "John Doe", location,merchant);
 
         Store actualStore = storeService.addStore("Timbuktu", "private", "11","12", "John Doe", merchant,location);
         Map<String, String> map = new HashMap<>();
@@ -87,7 +87,7 @@ public class StoreServiceTests {
 
     @Test
     public void testGetStoresByLocationAndMerchant(){
-        Store newstore = storeService.addStore("Timbuktu", "private", Util.parseTime("11"), Util.parseTime("12") ,"John Doe", merchant,location);
+        Store newstore = storeService.addStore("Timbuktu", "private", "11", "12" ,"John Doe", merchant,location);
         List<Store> storeList = storeService.getStoresByLocationAndMerchant(location, merchant);
         Assertions.assertEquals(1, storeList.size());
         Store s = storeList.get(0);

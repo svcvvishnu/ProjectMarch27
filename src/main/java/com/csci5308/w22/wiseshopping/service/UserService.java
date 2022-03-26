@@ -99,10 +99,7 @@ public class UserService {
         }
     }
 
-    public boolean removeUser(String email) {
-        userRepository.deleteByEmail(email);
-        return true;
-    }
+
 
     /**
      * deletes a user from table

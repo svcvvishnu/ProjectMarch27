@@ -22,4 +22,10 @@ public interface StoreRepository extends CrudRepository<Store, Integer> {
 
 
     Store findByNameAndStartTimeAndEndTimeAndTypeAndContactAndLocationAndMerchant(String name, Time startingTime, Time endingTime, String businessType, String contact, Location location, Merchant merchant);
+
+    List<Store> findByMerchant(Merchant merchant);
+
+    List<Store> findByLocation(Location location);
+
+    List<Store> findByLocationAndMerchant(Location location, Merchant merchant);
 }

@@ -159,10 +159,10 @@ public class StoreService {
         if(location == null && merchant == null) {
             throw new IllegalArgumentException("Both location and merchant cannot be null");
         }
-        if (location == null) return storeRepository.findByMerchantID(merchant.getId());
-        if (merchant == null) return storeRepository.findByLocationID(location.getId());
+        if (location == null) return storeRepository.findByMerchant(merchant);
+        if (merchant == null) return storeRepository.findByLocation(location);
 
-        return storeRepository.findByLocationIdAndMerchantId(location.getId(), merchant.getId());
+        return storeRepository.findByLocationAndMerchant(location, merchant);
     }
 
     public Store getStoreById(int id) {
