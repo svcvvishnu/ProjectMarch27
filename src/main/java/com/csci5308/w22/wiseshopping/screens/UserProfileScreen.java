@@ -57,7 +57,7 @@ public class UserProfileScreen implements Screen {
         LOGGER.info("****USER PROFILE SCREEN****");
         LOGGER.info("");
         LOGGER.info("Choose one of the following");
-        LOGGER.info("Use v_, u_, to view or update followed by profile");
+        LOGGER.info("Use v_, e_, to view or update followed by profile");
         LOGGER.info("eg: v_profile, u_profile");
 
         boolean success = false;
