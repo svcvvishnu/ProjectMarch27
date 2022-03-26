@@ -58,6 +58,9 @@ public class MerchantService {
         }
 
         Merchant merchant = merchantRepository.findMerchantByEmail(email);
+        if(merchant==null) {
+            System.out.println("merchant is not registered");
+        }
         if (merchant != null) {
             throw new UserAlreadyRegisteredException(email + " is already registered");
         }
