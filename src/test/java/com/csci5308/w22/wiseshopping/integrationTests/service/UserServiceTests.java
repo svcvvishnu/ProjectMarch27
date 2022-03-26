@@ -27,12 +27,12 @@ public class UserServiceTests {
 
     @BeforeEach
     public void setUp(){
-        user = new User("John","Doe", "johndoe@xyz.com", "Password123!","1234567890");
+        user = new User("John","Doe", "zig@zag1.com", "zigzag","1234567890");
     }
 
     @Test
     public void testLoginUser(){
-        User actualUser = userService.loginUser("johndoe@xyz.com","Password123!");
+        User actualUser = userService.loginUser("zig@zag1.com","zigzag");
         Assertions.assertEquals(user.getEmail(),actualUser.getEmail());
 
     }
@@ -40,7 +40,7 @@ public class UserServiceTests {
 //Integration tests for update user
     @Test
     public void testUpdateUser(){
-        User actualUser = userService.loginUser("johndoe@xyz.com","Password123!");
+        User actualUser = userService.loginUser("zig@zag1.com","zigzag");
 
         Map<String, String> userDetails = new HashMap<>();
         userDetails.put(Constants.FIRST_NAME, "John ABC");
@@ -54,7 +54,7 @@ public class UserServiceTests {
         //Check if firstname,lastname and contact are updated
         Assertions.assertEquals("John ABC", updatedUser.getFirstName());
         Assertions.assertEquals("Doe1", updatedUser.getLastName());
-        Assertions.assertEquals("johndoe@xyz.com", updatedUser.getEmail());
+        Assertions.assertEquals("zig@zag1.com", updatedUser.getEmail());
         Assertions.assertEquals("9096754412", updatedUser.getContact());
 
     }
