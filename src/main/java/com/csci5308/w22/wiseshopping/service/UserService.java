@@ -121,5 +121,17 @@ public class UserService {
         }
         return false;
     }
+    @Transactional
+    public User resetPassword(String email, String securityCode, String newPassword){
+        if (email == null || email.length()==0 || email.equals(" ")) {
+            throw new IllegalArgumentException("email cannot be null or empty or blank");
+        }
+        User user = userRepository.findByEmail(email);
+        if(securityCode.equals(user.getSecurity_code())){
+            user.setPassword(newPassword);
+            userRepository.save(user);
+        }
 
+        return user;
+    }
 }
