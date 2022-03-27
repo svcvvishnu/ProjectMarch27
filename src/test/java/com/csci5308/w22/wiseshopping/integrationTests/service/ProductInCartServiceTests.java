@@ -54,7 +54,7 @@ public class ProductInCartServiceTests {
 
     @BeforeAll
     public void setUp(){
-        user =userService.registerUser("testuser","testuser","testuser@test.com","test","test");
+        user =userService.registerUser("testuser","testuser","testuser@test.com","test","test","test");
         cart = cartService.addCart(user,"inprogress");
 
         product=productService.addProduct("test","test");

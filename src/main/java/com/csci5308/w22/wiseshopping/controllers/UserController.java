@@ -36,7 +36,7 @@ public class UserController {
 
     @PostMapping("/registerUser")
     public String registerUser (@ModelAttribute("user") User user){
-        userService.registerUser(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword(), user.getContact());
+        userService.registerUser(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword(), user.getContact(),user.getSecurity_code());
         return "index";
     }
 }

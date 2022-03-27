@@ -3,6 +3,7 @@ package com.csci5308.w22.wiseshopping.integrationTests.service;
 import com.csci5308.w22.wiseshopping.models.User;
 import com.csci5308.w22.wiseshopping.service.UserService;
 import com.csci5308.w22.wiseshopping.utils.Constants;
+import com.csci5308.w22.wiseshopping.utils.Util;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,7 @@ public class UserServiceTests {
 
     @BeforeEach
     public void setUp(){
-        user = new User("John","Doe", "zig@zag1.com", "zigzag","1234567890");
+        user = new User("John","Doe", "zig@zag1.com", "zigzag","1234567890","123");
     }
 
     @Test
@@ -57,6 +58,12 @@ public class UserServiceTests {
         Assertions.assertEquals("zig@zag1.com", updatedUser.getEmail());
         Assertions.assertEquals("9096754412", updatedUser.getContact());
 
+    }
+
+    @Test
+    public void testResetPassword(){
+        User user = userService.resetPassword("adarsh@test.com","adarsh","adarsh2");
+        Assertions.assertEquals(user.getPassword(), Util.encode("adarsh2"));
     }
 
 }
