@@ -66,7 +66,7 @@ public class UserMenuScreen implements Screen {
             String input = "";
 
             do {
-                LOGGER.info("Choose one of the following pages: products, subscriptions, profile");
+                LOGGER.info("Choose one of the following pages: products, subscriptions, profile, price_analytics");
                 input = scan(scanner);
                 if (input.equals(Constants.PRODUCTS)) {
                     Screen screen = screenFactory.getScreen(Constants.PRODUCTS);
@@ -81,7 +81,12 @@ public class UserMenuScreen implements Screen {
                     Screen screen = screenFactory.getScreen(Constants.SUBSCRIPTIONS);
                     screen.setUser(user);
                     success = screen.render(screenFactory);
-                } else if (input.equals("exit")) {
+                }
+                else if (input.equals(Constants.PRICE_ANALYTICS)) {
+                    Screen screen = screenFactory.getScreen(Constants.PRICE_ANALYTICS);
+                    screen.setUser(user);
+                    success = screen.render(screenFactory);
+                }else if (input.equals("exit")) {
                     LOGGER.info("Exiting user menu...");
                 } else {
                     LOGGER.warn("Invalid input received...");

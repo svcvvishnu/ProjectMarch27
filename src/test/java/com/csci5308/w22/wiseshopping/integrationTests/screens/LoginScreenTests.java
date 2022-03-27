@@ -57,7 +57,7 @@ public class LoginScreenTests {
 
     @Test
     public void testUserLoginNegative(){
-        Mockito.when(scanner.next()).thenReturn("user")
+        Mockito.when(scanner.nextLine()).thenReturn("user")
                 //email
                 .thenReturn("zig@zag.com")
                 //password
@@ -67,7 +67,7 @@ public class LoginScreenTests {
     }
     @Test
     public void testMerchantLoginNegative(){
-        Mockito.when(scanner.next()).thenReturn("merchant")
+        Mockito.when(scanner.nextLine()).thenReturn("merchant")
                 //email
                 .thenReturn("zigzag@zigzag.com")
                 //password

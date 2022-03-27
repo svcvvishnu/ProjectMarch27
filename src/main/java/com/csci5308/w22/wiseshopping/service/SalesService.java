@@ -1,6 +1,7 @@
 package com.csci5308.w22.wiseshopping.service;
 
 import com.csci5308.w22.wiseshopping.models.Graph;
+import com.csci5308.w22.wiseshopping.models.PriceAnalyticsGraph;
 import com.csci5308.w22.wiseshopping.models.Sales;
 import com.csci5308.w22.wiseshopping.repository.SalesRepository;
 import com.csci5308.w22.wiseshopping.utils.Util;
@@ -113,6 +114,45 @@ public class SalesService {
         localMinimum.put(prevMonth, localMin);
         return localMinimum;
     }
+
+    /**
+     * this method creates line chart for the selected product to get the price based on every month
+     * @return true, if created; else false
+     */
+    public boolean generateChartForPriceAnalytics(String productName) throws SQLException {
+        boolean success = false;
+        HashMap<Integer, Double> priceAnalytics = getProductLowestPriceAnalytics(productName);
+        success = generatePriceAnalyticsChart(priceAnalytics,productName);
+        return success;
+    }
+    /**
+     * this method generates chart for the lowest price of a product in every month
+     * @param priceAnalytics map of month -> predicted price
+     * @param productName name of product
+     * @return true, if created; else false
+     */
+    private boolean generatePriceAnalyticsChart(HashMap<Integer, Double> priceAnalytics, String productName) {
+        boolean success = false;
+        List<Integer> months = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
+        XYSeries series = new XYSeries("price");
+        for (Integer month : months) {
+            if (priceAnalytics.containsKey(month)) {
+                // add 1 here as jan is stored as 0
+                series.add(month+1, priceAnalytics.get(month));
+            }
+            else {
+                series.add(month+1, 0);
+            }
+
+        }
+
+        XYSeriesCollection dataset = new XYSeriesCollection();
+        dataset.addSeries(series);
+        PriceAnalyticsGraph priceAnalyticsGraph = new PriceAnalyticsGraph();
+        JFreeChart chart =  priceAnalyticsGraph.createChart(dataset, "PriceAnalytics",productName);
+        return chart!=null;
+    }
+
 
     /**
      *  this method gets data to create line chart for all products in the folder productDemandTrend

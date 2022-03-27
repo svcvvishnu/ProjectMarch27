@@ -37,6 +37,9 @@ public class ScreenFactory {
     @Autowired
     private MerchantMenuScreen userupdateMenu;
 
+    @Autowired
+    private PriceAnalyticsScreen priceAnalyticsScreen;
+
     public Screen getScreen(String screen){
         switch (screen){
             case Constants.LOGIN: return loginScreen;
@@ -47,6 +50,7 @@ public class ScreenFactory {
             case Constants.LOGOUT: return logOutScreen;
             case Constants.PRODUCTS: return viewProductsScreen;
             case Constants.SUBSCRIPTIONS: return subscriptionScreen;
+            case Constants.PRICE_ANALYTICS: return priceAnalyticsScreen;
             default: throw new InvalidScreenException("No such screen");
         }
     }
