@@ -47,7 +47,6 @@ public class ProductService {
         Product product = new Product(name,description);
         productRepository.save(product);
         System.out.println("Product "+product.getProductId()+" added");
-       // LOGGER.info("Product {} is added",product.getProductName());
 
         return product;
     }
