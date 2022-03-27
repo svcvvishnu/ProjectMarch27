@@ -65,7 +65,12 @@ public class MerchantServiceTests {
         Assertions.assertFalse(merchantService.removeMerchant("johndoe2@xyz.com"));
     }
 
-
-
+//
+//    @Test
+//    @Order(5)
+//    public void testResetPassword(){
+//        Merchant actualMerchant = merchantService.resetMerchantPassword("zig@zag1.com","q1w2e3r4","zigzag");
+//        Merchant merchant = merchantService.resetMerchantPassword(actualMerchant.getEmail(),"q1w2e3r4","abcd" );
+//    }
 
 }

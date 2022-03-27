@@ -136,6 +136,28 @@ public class MerchantServiceTests {
         Assertions.assertEquals("password cannot be null or empty or blank",passwordNullException.getMessage());
     }
 
+    @Test
+    public void testResetMerchantPassword()  {
+        when(mockedMerchantRepository.findByEmail(any(String.class))).thenReturn(merchant);
+
+        Merchant actualMerchant= merchantService.resetMerchantPassword("johndoe@xyz.com","q1w2e3r4","");
+        Assertions.assertEquals(merchant, actualMerchant);
+    }
+
+    @Test
+    public void testInputParametersForResetMerchantPassword(){
+
+        IllegalArgumentException emailNullException=Assertions.assertThrows(IllegalArgumentException.class, () -> merchantService.resetMerchantPassword(null,null,null));
+        Assertions.assertEquals("email cannot be null or empty or blank",emailNullException.getMessage());
+        IllegalArgumentException emailEmptyException=Assertions.assertThrows(IllegalArgumentException.class, () -> merchantService.resetMerchantPassword("","",""));
+        Assertions.assertEquals("email cannot be null or empty or blank",emailEmptyException.getMessage());
+//        IllegalArgumentException emailMissingDomainNameException=Assertions.assertThrows(IllegalArgumentException.class, () -> merchantService.resetMerchantPassword("test_email"));
+//        Assertions.assertEquals("Given email or se is not valid",emailMissingDomainNameException.getMessage());
+
+
+
+    }
+
 
 
 }
