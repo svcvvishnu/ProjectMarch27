@@ -37,4 +37,6 @@ public class Constants {
     public static final String PRODUCTS = "products";
     public static final String SUBSCRIPTIONS = "subscriptions";
     public static final String PROFILE = "profile";
+
+    public static final String PRICE_ANALYTICS = "price_analytics";
 }

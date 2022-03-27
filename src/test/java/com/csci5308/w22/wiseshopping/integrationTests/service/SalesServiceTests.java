@@ -38,11 +38,11 @@ public class SalesServiceTests {
     @Test
     public void testGetProductLowestPriceAnalytics() throws SQLException {
        // Multimap<Integer, List<Double>> actualSalesData = salesService.getProductLowestPriceAnalytics("Wired Headphones");
-        HashMap<Integer, Double> sales = salesService.getProductLowestPriceAnalytics("Wired Headphones");
-        for (Map.Entry<Integer, Double> entry : sales.entrySet()) {
-            System.out.println(entry.getKey()+" : "+entry.getValue());
-        }
-        Assertions.assertTrue(sales.size()>0);
+        boolean success = salesService.generateChartForPriceAnalytics("Wired Headphones");
+//        for (Map.Entry<Integer, Double> entry : sales.entrySet()) {
+//            System.out.println(entry.getKey()+" : "+entry.getValue());
+//        }
+        Assertions.assertTrue(success);
 
     }
 

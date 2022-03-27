@@ -67,7 +67,7 @@ public class MerchantScreenTests {
     @Order(1)
     @Test
     public void testMerchantAddStore() {
-        Mockito.when(scanner.next()).thenReturn("a_store")
+        Mockito.when(scanner.nextLine()).thenReturn("a_store")
                 // store details
                 .thenReturn("asdf", "s", "11", "12", "1234567")
                 // location details
@@ -95,7 +95,7 @@ public class MerchantScreenTests {
     public void testMerchantDeleteStore() {
         List<Store> storeList = storeService.getAllStoresBelongingToAMerchant(merchant);
 
-        Mockito.when(scanner.next()).thenReturn("d_store")
+        Mockito.when(scanner.nextLine()).thenReturn("d_store")
                 // first store id
                 .thenReturn(String.valueOf(storeList.get(0).getId()))
                 .thenReturn("d_store")
@@ -112,7 +112,7 @@ public class MerchantScreenTests {
     public void updateStoreTest(){
         List<Store> storeList = storeService.getAllStoresBelongingToAMerchant(merchant);
 
-        Mockito.when(scanner.next()).thenReturn("u_store")
+        Mockito.when(scanner.nextLine()).thenReturn("u_store")
                 // first store id
                 .thenReturn(String.valueOf(storeList.get(0).getId()))
                 // update attribute type

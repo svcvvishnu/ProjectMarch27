@@ -61,7 +61,7 @@ public class UserProfileScreenTest {
     @Test
     public void testViewUserProfile(){
 
-        Mockito.when(scanner.next())
+        Mockito.when(scanner.nextLine())
                 .thenReturn("e_profile").thenReturn("contact:123").thenReturn("done").thenReturn("exit");
         userProfileScreen.setUser(user);
         Assertions.assertTrue(userProfileScreen.render(screenFactory));

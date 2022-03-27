@@ -127,5 +127,20 @@ public class MerchantService {
         return merchantRepository.findMerchantByEmail(email);
     }
 
+    /**
+     * @author Adarsh Kannan
+     */
+    @Transactional
+    public Merchant resetMerchantPassword(String email, String securityCode,String newPassword){
+        if(email==null || email.length()==0 || email.equals(" ")){
+            throw new IllegalArgumentException("email cannot be null or empty or blank");
+        }
+        Merchant merchant = merchantRepository.findByEmail(email);
+        if(securityCode.equals(merchant.getSecurity_code())){
+            merchant.setPassword(newPassword);
+            merchantRepository.save(merchant);
+        }
+        return merchant;
+    }
 
 }

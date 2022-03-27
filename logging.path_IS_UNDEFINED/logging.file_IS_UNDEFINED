@@ -1,0 +1,29 @@
+27-03-2022 02:25:28.370 [restartedMain] INFO  c.c.w.w.WiseshoppingApplication.logStarting - Starting WiseshoppingApplication using Java 11.0.13 on libloaner107 with PID 12180 (C:\Users\AVuser\Desktop\WiseShopping\group8\target\classes started by AVuser in C:\Users\AVuser\Desktop\WiseShopping\group8)
+27-03-2022 02:25:28.370 [restartedMain] INFO  c.c.w.w.WiseshoppingApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+27-03-2022 02:25:28.417 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor.logTo - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+27-03-2022 02:25:28.417 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor.logTo - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+27-03-2022 02:25:29.119 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+27-03-2022 02:25:29.257 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 115 ms. Found 13 JPA repository interfaces.
+27-03-2022 02:25:29.651 [restartedMain] WARN  o.s.c.a.AnnotationConfigApplicationContext.refresh - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Unsatisfied dependency expressed through method 'dataSourceScriptDatabaseInitializer' parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception; nested exception is org.springframework.boot.autoconfigure.jdbc.DataSourceProperties$DataSourceBeanCreationException: Failed to determine a suitable driver class
+27-03-2022 02:25:29.658 [restartedMain] INFO  o.s.b.a.l.ConditionEvaluationReportLoggingListener.logMessage - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+27-03-2022 02:25:29.689 [restartedMain] ERROR o.s.b.d.LoggingFailureAnalysisReporter.report - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+Reason: Failed to determine a suitable driver class
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (no profiles are currently active).
+

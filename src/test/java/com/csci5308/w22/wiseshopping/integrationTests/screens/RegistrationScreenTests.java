@@ -55,7 +55,7 @@ public class RegistrationScreenTests {
 
     @Test
     public void testUserRegistration(){
-        Mockito.when(scanner.next()).thenReturn("user")
+        Mockito.when(scanner.nextLine()).thenReturn("user")
                 // first name
                 .thenReturn("zig")
                 //last name
@@ -72,7 +72,7 @@ public class RegistrationScreenTests {
     }
     @Test
     public void testMerchantRegistration(){
-        Mockito.when(scanner.next()).thenReturn("merchant")
+        Mockito.when(scanner.nextLine()).thenReturn("merchant")
                 // first name
                 .thenReturn("zig")
                 //email

@@ -39,7 +39,7 @@ public interface Screen {
     }
 
     default String scan (Scanner scanner) throws MenuInterruptedException {
-        String s = scanner.next();
+        String s = scanner.nextLine();
         if (s.equals(":")){
             throw new MenuInterruptedException("");
         }
