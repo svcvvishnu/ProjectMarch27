@@ -1,0 +1,63 @@
+package com.csci5308.w22.wiseshopping.models;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartUtils;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.block.BlockBorder;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.chart.title.TextTitle;
+import org.jfree.data.xy.XYDataset;
+
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+
+/**
+ * @author Pavithra Gunasekaran
+ */
+public class PriceAnalyticsGraph {
+    private static final String TITLE = "Product price analytics";
+    private static  final String XAXISLABEL = "Month";
+    private static final String YAXISLABEL = "Price";
+    private static final float STROKESIZE = 2.0f;
+    private static final int CHARTSIZE = 18;
+    public JFreeChart createChart(XYDataset dataset, String chartName, String productName) {
+
+        JFreeChart chart = ChartFactory.createXYLineChart(TITLE,XAXISLABEL,YAXISLABEL,
+                dataset, PlotOrientation.VERTICAL,true,true,false);
+
+        XYPlot plot = chart.getXYPlot();
+
+        XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
+        renderer.setSeriesPaint(0, Color.RED);
+        renderer.setSeriesStroke(0, new BasicStroke(STROKESIZE));
+
+        plot.setRenderer(renderer);
+        plot.setBackgroundPaint(Color.white);
+
+        plot.setRangeGridlinesVisible(true);
+        plot.setRangeGridlinePaint(Color.BLACK);
+
+        plot.setDomainGridlinesVisible(true);
+        plot.setDomainGridlinePaint(Color.BLACK);
+
+        chart.getLegend().setFrame(BlockBorder.NONE);
+
+        chart.setTitle(new TextTitle("Price Analytics for "+productName,
+                        new Font("Serif", java.awt.Font.BOLD, CHARTSIZE)
+                )
+        );
+        try {
+            int width = 450;
+            int height = 400;
+            ChartUtils.saveChartAsPNG(new File("./productPriceAnalyticsCharts/"+ chartName + ".png"), chart, width,height);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return chart;
+    }
+
+}
