@@ -6,9 +6,10 @@ import lombok.*;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.persistence.*;
+import java.security.Timestamp;
 
 /**
- * @author Elizabeth James
+ * @author Adarsh Kannan
  */
 @Getter
 @Setter
@@ -31,6 +32,18 @@ public class Merchant {
     @Column(name =  "email")
     private String email;
 
+    @Column(name="contact")
+    private String contact;
+
+    @Column(name = "register_at" ,columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Timestamp register_at;
+    @Column(name = "security_code")
+    private String security_code;
+
+    public Merchant(int merchantId) {
+        this.id = merchantId;
+    }
+
     public Merchant(String merchantName, String email , String password) {
         this.name = merchantName;
         this.password = Util.encode(password);
@@ -47,11 +60,13 @@ public class Merchant {
 
     }
 
-    public Merchant(int merchantId, String merchantName, String password, String email) {
+    public Merchant(int merchantId, String merchantName, String password, String email,String contact,String security_code) {
         this.id = merchantId;
         this.name = merchantName;
-        this.password = password;
+        this.password = Util.encode(password);
         this.email = email;
+        this.contact= contact;
+        this.security_code=security_code;
     }
 
     public int getId() {
@@ -85,6 +100,26 @@ public class Merchant {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getContact() {
+        return contact;
+    }
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+    public Timestamp getRegister_at() {
+        return register_at;
+    }
+    public void setRegister_at(Timestamp register_at) {
+        this.register_at = register_at;
+    }
+    public String getSecurity_code() {
+        return security_code;
+    }
+    public void setSecurity_code(String security_code) {
+        this.security_code = Util.encode(security_code);
+    }
+
 
     //TODO:  use rest advice for error codes
 }
