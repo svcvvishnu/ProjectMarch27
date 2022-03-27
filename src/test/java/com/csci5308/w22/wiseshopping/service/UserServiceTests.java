@@ -25,7 +25,7 @@ public class UserServiceTests {
     private User user;
     @BeforeEach
     public void setUpUser(){
-        user = new User("John","Doe", "johndoe@xyz.com", "password123","123467890");
+        user = new User("John","Doe", "johndoe@xyz.com", "password123","123467890","123");
     }
     @Test
     public void testRegisterUser() {
