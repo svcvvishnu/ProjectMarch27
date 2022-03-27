@@ -33,6 +33,10 @@ public class User {
     private String contact;
     @Column(name = "register_at" ,columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp register_at;
+    @Column(name = "security_code")
+    private String security_code;
+
+
     public User(int userId) {
         this.id = userId;
     }
@@ -42,6 +46,15 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.contact = contact;
+    }
+
+    public User(String firstName, String lastName, String email, String password, String contact, String security_code) {
+        this.email = email;
+        this.password = Util.encode(password);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.contact = contact;
+        this.security_code=security_code;
     }
 
     public int getUserId() {
@@ -95,5 +108,11 @@ public class User {
     }
     public void setRegister_at(Timestamp register_at) {
         this.register_at = register_at;
+    }
+    public String getSecurity_code() {
+        return security_code;
+    }
+    public void setSecurity_code(String security_code) {
+        this.security_code = Util.encode(security_code);
     }
 }

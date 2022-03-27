@@ -22,7 +22,7 @@ public class UserService {
     UserRepository userRepository;
 
     @Transactional
-    public User registerUser(String firstName, String lastName, String email, String password, String contact) {
+    public User registerUser(String firstName, String lastName, String email, String password, String contact, String securityCode) {
         if (!Util.isValidString(firstName)) {
             throw new IllegalArgumentException("firstName cannot be null or empty or blank");
         }
@@ -41,11 +41,14 @@ public class UserService {
         if (!EmailValidator.getInstance().isValid(email)) {
             throw new IllegalArgumentException("given email is not valid");
         }
+        if (!Util.isValidString(securityCode)) {
+            throw new IllegalArgumentException("given security code is not valid");
+        }
         User user = userRepository.findByEmail(email);
         if (user != null) {
             throw new UserAlreadyRegisteredException(email + " is already registered");
         }
-        user = new User(firstName, lastName, email, password, contact);
+        user = new User(firstName, lastName, email, password, contact,securityCode);
         userRepository.save(user);
         LOGGER.info("User has been successfully registered");
         return user;
@@ -117,5 +120,18 @@ public class UserService {
             return true;
         }
         return false;
+    }
+    @Transactional
+    public User resetPassword(String email, String securityCode, String newPassword){
+        if (email == null || email.length()==0 || email.equals(" ")) {
+            throw new IllegalArgumentException("email cannot be null or empty or blank");
+        }
+        User user = userRepository.findByEmail(email);
+        if(securityCode.equals(user.getSecurity_code())){
+            user.setPassword(newPassword);
+            userRepository.save(user);
+        }
+
+        return user;
     }
 }

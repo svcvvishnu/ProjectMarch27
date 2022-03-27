@@ -76,7 +76,8 @@ public class RegistrationScreen implements Screen {
                 String email = scan(scanner);
                 String password = scan(scanner);
                 String contact = scan(scanner);
-                user = userService.registerUser(firstName, secondName, email, password,contact);
+                String securityCode = scan(scanner);
+                user = userService.registerUser(firstName, secondName, email, password,contact,securityCode);
                 Screen screen = screenFactory.getScreen(Constants.USER_MENU);
                 screen.setUser(user);
                 success = screen.render(screenFactory);

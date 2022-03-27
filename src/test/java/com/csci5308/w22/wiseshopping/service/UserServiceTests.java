@@ -25,36 +25,36 @@ public class UserServiceTests {
     private User user;
     @BeforeEach
     public void setUpUser(){
-        user = new User("John","Doe", "johndoe@xyz.com", "password123","123467890");
+        user = new User("John","Doe", "johndoe@xyz.com", "password123","123467890","123");
     }
     @Test
     public void testRegisterUser() {
         when(mockedUserRepository.save(any(User.class))).thenReturn(user);
-        User actualUser = userService.registerUser("John","Doe", "johndoe@xyz.com", "password123","123467890");
+        User actualUser = userService.registerUser("John","Doe", "johndoe@xyz.com", "password123","123467890","123");
         Assertions.assertEquals(user, actualUser);
     }
 
     @Test
     public void testInputParametersForRegisterUser() {
-        IllegalArgumentException exceptionForName1 = Assertions.assertThrows(IllegalArgumentException.class, () -> userService.registerUser(null, "dummy", "dummy","dummy","dummy"));
+        IllegalArgumentException exceptionForName1 = Assertions.assertThrows(IllegalArgumentException.class, () -> userService.registerUser(null, "dummy", "dummy","dummy","dummy","dummy"));
         Assertions.assertEquals("firstName cannot be null or empty or blank", exceptionForName1.getMessage());
-        IllegalArgumentException exceptionForName2 = Assertions.assertThrows(IllegalArgumentException.class, () -> userService.registerUser("", "dummy", "dummy","dummy","dummy"));
+        IllegalArgumentException exceptionForName2 = Assertions.assertThrows(IllegalArgumentException.class, () -> userService.registerUser("", "dummy", "dummy","dummy","dummy","dummy"));
         Assertions.assertEquals("firstName cannot be null or empty or blank", exceptionForName2.getMessage());
-        IllegalArgumentException exceptionForName3 = Assertions.assertThrows(IllegalArgumentException.class, () -> userService.registerUser(" ", "dummy", "dummy","dummy","dummy"));
+        IllegalArgumentException exceptionForName3 = Assertions.assertThrows(IllegalArgumentException.class, () -> userService.registerUser(" ", "dummy", "dummy","dummy","dummy","dummy"));
         Assertions.assertEquals("firstName cannot be null or empty or blank", exceptionForName3.getMessage());
-        IllegalArgumentException exceptionForEmail1 = Assertions.assertThrows(IllegalArgumentException.class, () -> userService.registerUser("dummy", "dummy",null, "dummy","dummy"));
+        IllegalArgumentException exceptionForEmail1 = Assertions.assertThrows(IllegalArgumentException.class, () -> userService.registerUser("dummy", "dummy",null, "dummy","dummy","dummy"));
         Assertions.assertEquals("email cannot be null or empty or blank", exceptionForEmail1.getMessage());
-        IllegalArgumentException exceptionForEmail2 = Assertions.assertThrows(IllegalArgumentException.class, () -> userService.registerUser("dummy", "dummy","", "dummy","dummy"));
+        IllegalArgumentException exceptionForEmail2 = Assertions.assertThrows(IllegalArgumentException.class, () -> userService.registerUser("dummy", "dummy","", "dummy","dummy","dummy"));
         Assertions.assertEquals("email cannot be null or empty or blank", exceptionForEmail2.getMessage());
-        IllegalArgumentException exceptionForEmail3 = Assertions.assertThrows(IllegalArgumentException.class, () -> userService.registerUser("dummy", "dummy"," ", "dummy","dummy"));
+        IllegalArgumentException exceptionForEmail3 = Assertions.assertThrows(IllegalArgumentException.class, () -> userService.registerUser("dummy", "dummy"," ", "dummy","dummy","dummy"));
         Assertions.assertEquals("email cannot be null or empty or blank", exceptionForEmail3.getMessage());
-        IllegalArgumentException exceptionForPassword1 = Assertions.assertThrows(IllegalArgumentException.class, () -> userService.registerUser("dummy", "dummy", "dummy", null,"dummy"));
+        IllegalArgumentException exceptionForPassword1 = Assertions.assertThrows(IllegalArgumentException.class, () -> userService.registerUser("dummy", "dummy", "dummy", null,"dummy","dummy"));
         Assertions.assertEquals("password cannot be null or empty or blank", exceptionForPassword1.getMessage());
-        IllegalArgumentException exceptionForPassword2 = Assertions.assertThrows(IllegalArgumentException.class, () -> userService.registerUser("dummy", "dummy", "dummy", "", "dummy"));
+        IllegalArgumentException exceptionForPassword2 = Assertions.assertThrows(IllegalArgumentException.class, () -> userService.registerUser("dummy", "dummy", "dummy", "", "dummy","dummy"));
         Assertions.assertEquals("password cannot be null or empty or blank", exceptionForPassword2.getMessage());
-        IllegalArgumentException exceptionForPassword3 = Assertions.assertThrows(IllegalArgumentException.class, () -> userService.registerUser("dummy", "dummy", "dummy", " ","dummy"));
+        IllegalArgumentException exceptionForPassword3 = Assertions.assertThrows(IllegalArgumentException.class, () -> userService.registerUser("dummy", "dummy", "dummy", " ","dummy","dummy"));
         Assertions.assertEquals("password cannot be null or empty or blank", exceptionForPassword3.getMessage());
-        IllegalArgumentException exceptionForEmail4 = Assertions.assertThrows(IllegalArgumentException.class, () -> userService.registerUser("dummy", "dummy", "dummy","dummy", "dummy"));
+        IllegalArgumentException exceptionForEmail4 = Assertions.assertThrows(IllegalArgumentException.class, () -> userService.registerUser("dummy", "dummy", "dummy","dummy", "dummy","dummy"));
         Assertions.assertEquals("given email is not valid", exceptionForEmail4.getMessage());
     }
 
