@@ -1,15 +1,14 @@
 package com.csci5308.w22.wiseshopping.service;
 
-import com.csci5308.w22.wiseshopping.models.Cart;
-import com.csci5308.w22.wiseshopping.models.Product;
-import com.csci5308.w22.wiseshopping.models.ProductInCart;
-import com.csci5308.w22.wiseshopping.models.Store;
+import com.csci5308.w22.wiseshopping.models.*;
 import com.csci5308.w22.wiseshopping.repository.ProductInCartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 /**
  * @author Pavithra Gunasekaran
@@ -66,5 +65,16 @@ public class ProductInCartService {
         }
         productInCartRepository.delete(productInCart);
         return true;
+    }
+
+    @Transactional
+    public List<ProductInCart> getStoresByLocationAndMerchant(Cart cart, Location location, Merchant merchant) {
+        if(location == null && merchant == null) {
+            throw new IllegalArgumentException("Both location and merchant cannot be null");
+        }
+        if (location == null) return productInCartRepository.findByCartAndMerchant(cart.getId(), merchant.getId());
+        if (merchant == null) return productInCartRepository.findByCartAndLocation(cart.getId(), location.getId());
+
+        return productInCartRepository.findByCartAndLocationAndMerchant(cart.getId(), location.getId(), merchant.getId());
     }
 }

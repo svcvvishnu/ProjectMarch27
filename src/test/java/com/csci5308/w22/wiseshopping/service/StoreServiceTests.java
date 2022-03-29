@@ -121,8 +121,7 @@ public class StoreServiceTests {
     }
 
     //Test for filtering stores
-    //@Test
-    // TODO:  fix this test case
+    @Test
     public void testGetStoresByLocationAndMerchant(){
         List<Store> stores = new ArrayList<>();
         stores.add(new Store());
@@ -132,16 +131,12 @@ public class StoreServiceTests {
         Location loc = mock(Location.class);
         Merchant merchant = mock(Merchant.class);
 
-        when(loc.getId()).thenReturn(1);
-        when(merchant.getId()).thenReturn(2);
-
-        //when(mockedStoreRepository.findByLocationAndMerchant(1,2)).thenReturn(stores);
+        when(mockedStoreRepository.findByLocationAndMerchant(any(),any())).thenReturn(stores);
         List<Store> result = storeService.getStoresByLocationAndMerchant(loc, merchant);
         Assertions.assertEquals(3,result.size());
     }
 
-    //@Test
-    //TODO - fix these test cases
+    @Test
     public void testGetStoresByMerchant(){
         List<Store> stores = new ArrayList<>();
         stores.add(new Store());
@@ -149,24 +144,19 @@ public class StoreServiceTests {
 
         Merchant merchant = mock(Merchant.class);
 
-        when(merchant.getId()).thenReturn(2);
-
-        when(mockedStoreRepository.findByMerchantID(2)).thenReturn(stores);
+        when(mockedStoreRepository.findByMerchant(any())).thenReturn(stores);
         List<Store> result = storeService.getStoresByLocationAndMerchant(null,merchant);
         Assertions.assertEquals(2,result.size());
     }
 
-    //@Test
-    //TODO :  fix this test cases
+    @Test
     public void testGetStoresByLocation(){
         List<Store> stores = new ArrayList<>();
         stores.add(new Store());
 
         Location loc = mock(Location.class);
 
-        when(loc.getId()).thenReturn(1);
-
-        //when(mockedStoreRepository.findByLocationID(1)).thenReturn(stores);
+        when(mockedStoreRepository.findByLocation(loc)).thenReturn(stores);
         List<Store> result = storeService.getStoresByLocationAndMerchant(loc, null);
         Assertions.assertEquals(1,result.size());
     }

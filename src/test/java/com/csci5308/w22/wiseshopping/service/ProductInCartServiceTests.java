@@ -12,7 +12,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
@@ -88,6 +92,66 @@ public class ProductInCartServiceTests {
     @Test
     public void testRemoveProductInCart(){
         Assertions.assertTrue(productInCartService.remove(productInCart));
+    }
+
+    //Test for filtering stores
+    @Test
+    public void testGetStoresByLocationAndMerchant(){
+        List<ProductInCart> productsInCart = new ArrayList<>();
+        productsInCart.add(new ProductInCart());
+        productsInCart.add(new ProductInCart());
+        productsInCart.add(new ProductInCart());
+
+        Cart cart = mock(Cart.class);
+        Location loc = mock(Location.class);
+        Merchant merchant = mock(Merchant.class);
+
+        when(cart.getId()).thenReturn(1);
+        when(loc.getId()).thenReturn(1);
+        when(merchant.getId()).thenReturn(1);
+        when(mockedProductInCartRepository.findByCartAndLocationAndMerchant(1,1,1)).thenReturn(productsInCart);
+        List<ProductInCart> result = productInCartService.getStoresByLocationAndMerchant(cart, loc, merchant);
+        Assertions.assertEquals(3,result.size());
+    }
+
+    @Test
+    public void testGetStoresByMerchant(){
+        List<ProductInCart> productsInCart = new ArrayList<>();
+        productsInCart.add(new ProductInCart());
+        productsInCart.add(new ProductInCart());
+
+        Cart cart = mock(Cart.class);
+        Merchant merchant = mock(Merchant.class);
+
+        when(cart.getId()).thenReturn(2);
+        when(merchant.getId()).thenReturn(2);
+        when(mockedProductInCartRepository.findByCartAndMerchant(2,2)).thenReturn(productsInCart);
+        List<ProductInCart> result = productInCartService.getStoresByLocationAndMerchant(cart, null, merchant);
+        Assertions.assertEquals(2,result.size());
+    }
+
+    @Test
+    public void testGetStoresByLocation(){
+        List<ProductInCart> productsInCart = new ArrayList<>();
+        productsInCart.add(new ProductInCart());
+        productsInCart.add(new ProductInCart());
+
+        Cart cart = mock(Cart.class);
+        Location loc = mock(Location.class);
+
+        when(cart.getId()).thenReturn(3);
+        when(loc.getId()).thenReturn(3);
+        when(mockedProductInCartRepository.findByCartAndLocation(3,3)).thenReturn(productsInCart);
+        List<ProductInCart> result = productInCartService.getStoresByLocationAndMerchant(cart, loc, null);
+        Assertions.assertEquals(2,result.size());
+    }
+
+    @Test
+    public void testGetStoresByNoLocationAndMerchant(){
+        Cart cart = mock(Cart.class);
+        IllegalArgumentException ex = Assertions.assertThrows(IllegalArgumentException.class,
+                () -> productInCartService.getStoresByLocationAndMerchant(cart,null, null));
+        Assertions.assertEquals("Both location and merchant cannot be null",ex.getMessage());
     }
 
 }

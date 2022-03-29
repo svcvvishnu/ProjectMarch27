@@ -9,6 +9,8 @@ import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServic
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.List;
+
 /**
  * @author Pavithra Gunasekaran
  */
@@ -87,21 +89,27 @@ public class ProductInCartServiceTests {
         Assertions.assertTrue(productInCartService.removeProductInCart(productInCart));
     }
 
+    @Test
+    @Order(3)
+    public void testGetStoresByLocationAndMerchant(){
+        List<ProductInCart> result = productInCartService.getStoresByLocationAndMerchant(cart, location, merchant);
+        Assertions.assertEquals(1, result.size());
+        ProductInCart p = result.get(0);
+        Assertions.assertEquals(cart, p.getCart());
+        Assertions.assertEquals(location, p.getStore().getLocation());
+        Assertions.assertEquals(merchant, p.getStore().getMerchant());
+    }
+
     @AfterAll
     public void cleanUp(){
 //        productInCartService.remove(productInCart);
         cartService.remove(cart);
         userService.removeUser(user.getEmail());
-
-
-
         storeService.remove(store);
         locationService.remove(location);
         merchantService.removeMerchant(merchant.getEmail());
 
         productService.remove(product);
-
-
     }
 
 }
